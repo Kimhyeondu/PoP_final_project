@@ -1,0 +1,111 @@
+#navbar {
+  background: white;
+  color: rgb(13, 26, 38);
+  position: fixed;
+  top: 0;
+  height: 80px;
+  line-height: 60px;
+  width: 100%;
+  z-index: 5;
+}
+
+.nav-wrapper {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-gap:5px;
+  grid-template-columns: 1fr 3fr 1.5fr;
+  grid-template-areas:
+   "a b c . . . ";
+}
+
+.logo img{
+  display: inline-block;
+  margin-top: 15px;
+  height: 60px;
+  grid-area: a;
+}
+
+#menu {
+  display: inline-block;
+  list-style: none;
+  margin-top: 10px;
+  transition: transform 0.5s ease-out;
+  -webkit-transition: transform 0.5s ease-out;
+  grid-area: b;
+}
+
+#logout {
+  display: inline-block;
+  list-style: none;
+  margin-top: 10px;
+  margin-right: 10px;
+  transition: transform 0.5s ease-out;
+  -webkit-transition: transform 0.5s ease-out;
+  grid-area: c;
+  width: 100%;
+
+}
+
+#navbar li {
+  display: inline-block;
+}
+
+#navbar li a {
+  color: rgb(13, 26, 38);
+  display: block;
+  font-size: 1em;
+  height: 50px;
+  letter-spacing: 1px;
+  margin: 0 20px;
+  padding: 0 4px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+}
+
+#navbar li a:hover {
+  color: rgb(28, 121, 184);
+  transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+}
+
+#navbar li a:before, #navbar li a:after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 1px;
+  bottom: -1px;
+  background: rgb(13, 26, 38);
+}
+
+#navbar li a:before {
+  left: 0;
+  transition: 0.5s;
+}
+
+#navbar li a:after {
+  background: rgb(13, 26, 38);
+  right: 0;
+}
+
+#navbar li a:hover:before {
+  background: rgb(13, 26, 38);
+  width: 100%;
+  transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+#navbar li a:hover:after {
+  background: transparent;
+  width: 100%;
+}
+
+#all-container{
+  z-index: 3;
+  padding-top: 80px;
+
+}
