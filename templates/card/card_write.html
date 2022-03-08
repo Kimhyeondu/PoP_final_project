@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}선물고르기{% endblock %}
+
+{% block head %}
+<link rel='stylesheet' href="{% static 'css/card/card_write.css' %}">
+<style>
+#navbar{
+    display: none;
+}
+#all-container{
+    padding: 0;
+}
+.main_container {
+    max-width: 540px;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: gray;
+
+}
+</style>
+{% endblock %}
+
+{% block main %}
+    <div class="main_container">
+        이전으로
+    </div>
+    <script src="{% static 'js/card/card_write.js' %}"></script>
+    <script>
+
+    </script>
+{% endblock %}
