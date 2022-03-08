@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.conf.urls.static import static
+
 """pop_final_project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,10 +17,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 
 urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path('', include('user.urls')),
-                  path('', include('post.urls')),
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("admin/", admin.site.urls),
+    path("", include("user.urls")),
+    path("", include("post.urls")),
+    path("card/", include("card.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
