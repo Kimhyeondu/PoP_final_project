@@ -41,7 +41,7 @@
 
        <ul id="logout">
            <li>{{ username.user}}님 안녕하세요!</li>
-          <li><a href="">로그아웃</a></li>
+          <li><a href="/logout/">로그아웃</a></li>
        </ul>
   </div>
 </nav>
@@ -55,6 +55,8 @@
 
 </div>
 <script src="/static/js/base.js"></script>
+{% block script %}
+{% endblock %}
 </body>
 
 </html>
