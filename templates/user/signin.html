@@ -9,5 +9,34 @@
 {% endblock %}
 
 {% block main %}
+    <form action="/signin/" method="post">
+        {% csrf_token %}
+        <label for="username">아이디</label>
+        <input type="text" id="username" name="username" >
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" >
+        <button>로그인</button>
+    </form>
+    <button class="button is-small" id="kakao-btn">
+        <span class="icon">
+          <i class="fas fa-comment"></i>
+        </span>
+        <span>카카오톡으로 로그인하기</span>
+    </button>
     <script src="{% static 'js/signin.js' %}"></script>
+    {% if msg %}
+        <script>
+            alert('{{msg}}')
+        </script>
+    {% endif %}
+   
+{% endblock %}
+{% block script %}
+<script>
+    const kakaoBtn = document.getElementById('kakao-btn')
+    kakaoBtn.addEventListener('click', () => {
+        window.location.href = '/kakao'
+    })
+</script>
+
 {% endblock %}
