@@ -1,8 +1,10 @@
 from django.contrib import auth
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import JsonResponse
+from django.views.generic import FormView
+from .forms import LoginForm, SignUpForm
 from .models import User
 import os
 import requests
@@ -30,17 +32,48 @@ def edit_user(request):
     # else:
     #     return render(request, 'user/edit_profile.html', {'error2': ' ID 또는 패스워드를 확인해주세요!'})
 
-def sign_in(request):
-    if request.method == 'GET':
-        return render(request, "user/signin.html", {})
-    username = request.POST.get('username','')
-    password = request.POST.get('password','')
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect(reverse('user:mypage'))
-    else:
-        return render(request, "user/signin.html", {'msg':'아이디 혹은 비밀번호가 다릅니다.'})
+# def sign_in(request):
+#     if request.method == 'GET':
+#         return render(request, "user/signin.html", {})
+#     username = request.POST.get('username','')
+#     password = request.POST.get('password','')
+#     user = authenticate(request, username=username, password=password)
+#     if user is not None:
+#         login(request, user)
+#         return redirect(reverse('user:mypage'))
+#     else:
+#         return render(request, "user/signin.html", {'msg':'아이디 혹은 비밀번호가 다릅니다.'})
+
+class LoginView(FormView):
+    form_class = LoginForm
+    success_url = reverse_lazy("user:mypage")
+    template_name = "user/signin.html"
+
+    def form_valid(self, form):
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=username, password=password)
+        if user is not None:
+            login(self.request, user)
+        return super().form_valid(form)
+
+
+class SignUpView(FormView):
+    form_class = SignUpForm
+    success_url = reverse_lazy("user:mypage")
+    template_name = "user/signup.html"
+
+    def form_valid(self, form):
+        form.save()
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=username, password=password)
+        if user is not None:
+            login(self.request, user)
+        return super().form_valid(form)
+
+
+
 def is_id(request):
     username = request.POST.get('username','')
     try:
@@ -57,36 +90,36 @@ def is_email(request):
     except:
         return JsonResponse({'msg':'사용하셔도 좋습니다.'})
 
-def sign_up(request):
+# def sign_up(request):
     
-    if request.method == 'GET':
-        return render(request, "user/signup.html")
-    username = request.POST.get('username','')
-    email = request.POST.get('email','')
-    password1 = request.POST.get('password1','')
-    password2 = request.POST.get('password2','')
-    #비밀번호 일치하지 않으면 돌려보냄
-    if password1 != password2:
-        return JsonResponse({'msg':'비밀번호가 일치하지 않습니다.'})
-    try:
+#     if request.method == 'GET':
+#         return render(request, "user/signup.html")
+#     username = request.POST.get('username','')
+#     email = request.POST.get('email','')
+#     password1 = request.POST.get('password1','')
+#     password2 = request.POST.get('password2','')
+#     #비밀번호 일치하지 않으면 돌려보냄
+#     if password1 != password2:
+#         return JsonResponse({'msg':'비밀번호가 일치하지 않습니다.'})
+#     try:
 
-        #아이디가 존재하는지 확인 후 오류가 난다면 없다는 뜻
-        user = User.objects.get(username=username)
-        #아이디 존재
-        if user:
-            return JsonResponse({'msg':'아이디가 이미 사용중입니다. 중복확인을 해주세요.'})
+#         #아이디가 존재하는지 확인 후 오류가 난다면 없다는 뜻
+#         user = User.objects.get(username=username)
+#         #아이디 존재
+#         if user:
+#             return JsonResponse({'msg':'아이디가 이미 사용중입니다. 중복확인을 해주세요.'})
 
-    #새로운 아이디를 만드는 곳        
-    except User.DoesNotExist:
-        try:
-            #이메일도 primary 해야하기에 다시한번 확인
-            user = User.objects.get(email=email)
-            if user:
-                return JsonResponse({'msg':'이메일이 이미 사용중입니다. 중복확인을 해주세요.'})
-        except User.DoesNotExist:
-                user = User.objects.create_user(username=username,password=password1,email=email)
-                login(request,user)
-                return JsonResponse({'ok':'ok'})
+#     #새로운 아이디를 만드는 곳        
+#     except User.DoesNotExist:
+#         try:
+#             #이메일도 primary 해야하기에 다시한번 확인
+#             user = User.objects.get(email=email)
+#             if user:
+#                 return JsonResponse({'msg':'이메일이 이미 사용중입니다. 중복확인을 해주세요.'})
+#         except User.DoesNotExist:
+#                 user = User.objects.create_user(username=username,password=password1,email=email)
+#                 login(request,user)
+#                 return JsonResponse({'ok':'ok'})
     
 
 def to_kakao(request):
