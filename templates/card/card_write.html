@@ -211,7 +211,7 @@ textarea{
             <h3>메시지 쓰기</h3>
             <textarea name="message" id="message" cols="30" rows="10"></textarea>
             <div class="next_wrap">
-                {% csrf_token %}
+                <div id="cs">{% csrf_token %}</div>                
                 <button id="msg_next" class="next_button">메시지 분석하기</button>
             </div>
             
@@ -272,7 +272,7 @@ textarea{
         // 메시지 페이지
         const msgNext = document.getElementById("msg_next")
         const message = document.getElementById("message")
-        const csrftoken = document.querySelector(".next_wrap input").value
+        const csrftoken = document.querySelector("#cs input").value
         const modal_wrap = document.createElement("div")
         modal_wrap.className = "modal_wrap"
         modal_wrap.innerHTML = "<div class='modal_div'>잠시만 기다려 주세요</div>"
@@ -288,7 +288,7 @@ textarea{
                 method:"POST",
                 body: data,
                 credentials: 'same-origin',
-                redirect: "follow"
+                redirect: "follow",
             }).then(response=>{
                 // HTTP 301 response
                 if (response.redirected) {
