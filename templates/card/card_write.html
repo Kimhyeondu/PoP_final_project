@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}선물고르기{% endblock %}
+{% block title %}메시지 작성하기{% endblock %}
 
 {% block head %}
 <script src="https://kit.fontawesome.com/719ecf5a78.js" crossorigin="anonymous"></script>
@@ -14,10 +14,10 @@
     padding: 0;
 }
 .main_container {
-    max-width: 540px;
+    max-width: 500px;
     height: 100vh;
     margin: 0 auto;
-    background-color: gray;
+    background-color: #FBFFE2;
     position: relative;
     z-index: 4;
     overflow: hidden;
@@ -30,15 +30,15 @@
 }
 .main_container #deco_page {
     z-index: 10;
-    background-color: ivory;
+    background-color: #FBFFE2;
 }
 .main_container #gift_page {
     z-index: 8;
-    background-color: ivory;
+    background-color: #FBFFE2;
 }
 .main_container #msg_page {
     z-index: 6;
-    background-color: ivory;
+    background-color: #FBFFE2;
 }
 .main_container .moved {
     animation-duration: 0.8s;
@@ -69,10 +69,10 @@
 
 .main_container .sub_container .prev_button {
     text-decoration: none;
-    color: black;
+    color: #FF9999;
     font-size: 1.25rem;
     font-weight: bold;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     border-radius: 10px;
     padding: 5px;
     width: 130px;
@@ -89,23 +89,29 @@
 .main_container .sub_container .next_button {
     text-decoration: none;
     text-align: center;
-    color: black;
+    color: #FBFFE2;
     font-size: 1.25rem;
     font-weight: bold;
-    border: 2px solid black;
+    border: none;
     border-radius: 10px;
     padding: 5px;
     width: 100%;
     margin: 0 10px;
     cursor: pointer;
-    
+    background-color: #FFAFAF;
 }
+
+h3 {
+    color: #FF9999;
+    font-weight: bold;
+}
+
 
 /* 여기부터는 장식페이지 */
 .deco_img {
     width: 100%;
     height: 300px;
-    background-color: bisque;
+    background-color: #FFEBCC;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -116,63 +122,15 @@
 }
 
 
-/* 선물페이지 */
-.search_wrap {
-    display: flex;
-    flex-direction: row;
-}
-.search_wrap .search_button {
-    width: 10%;
-    height: 30px;
-    border-radius: 7px 0 0 7px;
-    border: 0px solid black;
-    cursor: pointer;
-}
-.search_wrap #search_gift {
-    width: 90%;
-    height: 30px;
-    border-radius: 0 5px 5px 0;
-    border: 0px solid black;
-}
-.gift_box_container {
-    width: 100%;
-}
-.gift_box_container .gift_tag {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-top: 5px;
-}
-.gift_box_container .gift_box_wrap {
-    /* display: flex;
-    flex-direction: row; */
-    white-space: nowrap;
-    background-color: white;
-    /* margin: 10px; */
-    overflow: auto;
-    height: 150px;
-    width: 100%;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-.gift_box_container .gift_box_wrap::-webkit-scrollbar{
-    display: none;
-}
-.gift_box_container .gift_box_wrap .gift_box {
-    display: inline-block;
-    width: 120px;
-    height: 150px;
-    background-color: gray;
-}
-.gift_box_container .gift_box_wrap .gift_box .gift_img {
-    display: block;
-    width: 120px;
-    height: 120px;
-    background-color: cadetblue;
-}
 
 /* 여기부터는 메시지 페이지 */
 #message{
     width: 100%;
+}
+textarea{
+    background-color: #FFEBCC;
+    color: #FF9999;
+    border: none;
 }
 
 </style>
@@ -182,7 +140,7 @@
     <div class="main_container">
         <!-- 장식선택 페이지 -->
         <div class="sub_container" id="deco_page" >
-            <div id="deco_prev" class="prev_button"><i class="fa-solid fa-chevron-left"></i> 이전으로</div>
+            <div id="deco_prev" class="prev_button"><i class="fa-solid fa-chevron-left"></i> 홈으로</div>
             <h3>장식 커스텀하기</h3>
             <div class="deco_img">
                 <img src="" alt="이미지를 선택하세요" id="preview_image">
@@ -197,57 +155,16 @@
         </div>
 
 
-        <!-- 선물 선택 페이지 -->
-        <div class="sub_container" id="gift_page">
-            <div id="gift_prev" class="prev_button"><i class="fa-solid fa-chevron-left"></i> 홈으로</div>
-            <h3>선물 고르기</h3>
-            <div class="search_wrap">
-                <button class="search_button"><i class="fa-solid fa-magnifying-glass"></i></button>
-                <input type="text" id="search_gift" name="search_gift" placeholder="검색하기">
-            </div>            
-
-            <!-- django for문 써서 만들기 -->
-            <div class="gift_box_container">
-                <div class="gift_tag">"기념일" 관련 선물</div>
-                <div class="gift_box_wrap">
-                    <div class="gift_box"><img src="" alt="" class="gift_img">1</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">2</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">3</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">4</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">5</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">6</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">7</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">8</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">9</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">10</div>
-                </div>
-            </div>
-
-            <div class="gift_box_container">
-                <div class="gift_tag">"#태그" 관련 선물</div>
-                <div class="gift_box_wrap">
-                    <div class="gift_box"><img src="" alt="" class="gift_img">1</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">2</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">3</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">4</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">5</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">6</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">7</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">8</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">9</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">10</div>
-                </div>
-            </div>
-
-            <div class="next_wrap"><div id="gift_next" class="next_button">다음으로</div></div>            
-        </div>
-
         <!-- 메시지 페이지 -->
         <div class="sub_container" id="msg_page">
             <div id="msg_prev" class="prev_button"><i class="fa-solid fa-chevron-left"></i> 이전으로</div>
             <h3>메시지 쓰기</h3>
             <textarea name="message" id="message" cols="30" rows="10"></textarea>
-            <div class="next_wrap"><div id="msg_next" class="next_button">보내기</div></div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="next_wrap"><button id="msg_next" class="next_button">메시지 분석하기</button></div>
+            </form>
+            
         </div>
     </div>
     <script src="{% static 'js/card/card_write.js' %}"></script>
@@ -257,22 +174,13 @@
         const deco_prev = document.querySelector("#deco_prev");
         const deco_next = document.querySelector("#deco_next");
 
-        const gift_page = document.querySelector("#gift_page");
-        const gift_prev = document.querySelector("#gift_prev");
-        const gift_next = document.querySelector("#gift_next");
-
         const msg_page = document.querySelector("#msg_page");
         const msg_prev = document.querySelector("#msg_prev");
         const msg_next = document.querySelector("#msg_next");
 
         deco_next.addEventListener("click", ()=>{deco_page.className = "sub_container moved";});
-        gift_next.addEventListener("click", ()=>{gift_page.className = "sub_container moved";});
 
-        gift_prev.addEventListener("click", ()=>{deco_page.className = "sub_container back";});
-        msg_prev.addEventListener("click", ()=>{gift_page.className = "sub_container back";});
-
-        // 선물페이지
-
+        msg_prev.addEventListener("click", ()=>{deco_page.className = "sub_container back";});
 
         // 장식페이지
         function readImage(input) {
