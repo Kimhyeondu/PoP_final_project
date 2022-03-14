@@ -291,6 +291,7 @@ textarea{
                 redirect: "follow",
             }).then(response=>{
                 // HTTP 301 response
+                document.querySelector("body").removeChild(document.querySelector(".modal_wrap"))
                 if (response.redirected) {
                     window.location.href = response.url;
                 }
