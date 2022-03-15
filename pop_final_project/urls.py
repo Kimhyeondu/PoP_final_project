@@ -18,10 +18,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from ninja import NinjaAPI
+
+from card.apis.v1.card_router import router as card_router
+
+api = NinjaAPI()
+api.add_router("/card/", card_router)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("user.urls")),
     path("", include("post.urls")),
     path("card/", include("card.urls")),
+    path("api/v1/", api.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
