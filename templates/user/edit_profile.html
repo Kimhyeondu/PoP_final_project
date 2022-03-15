@@ -10,5 +10,62 @@
 
 {% block main %}
 
+    <div class="edit-box">
+            <form method="POST" action="/edit_user/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="edit_box_box">
+                    <div class="flex">
+                        <img id="blah" src=../media/{{ image }} >
+                    </div>
+                    <div class="flex-colum" >
+                        <p style="color: #FF9292;">bbb6045</p>
+                        <label for="input_file" id="edit_pro_label">프로필 사진 변경</label>
+                        <input type="file" id="input_file" onchange="readURL(this);" name="imgs"/>
+                    </div>
+                    <div class="flex-colum" id="tagbox">
+                        <h1 style="text-align: left; color: #FF9999; margin-top: 20px;">선호 태그 설정</h1>
+                        <ul id="tag-list" tabindex="0" role="listbox" aria-labelledby="colorOptions" aria-multiselectable="true">
+                            <li class='tag-item' role="option" > 다이어트 <span class='del-btn' idx='" + counter + "'></span>
+                            </li>
+                            <li class='tag-item' role="option" > 캠핑 <span class='del-btn' idx='" + counter + "'></span></li>
+                            <li class='tag-item' role="option"> 자동차 <span class='del-btn' idx='" + counter + "'></span>
+                            </li>
+                            <li class='tag-item' role="option"> 골프 <span class='del-btn' idx='" + counter + "'></span></li>
+                            <li class='tag-item' role="option"> 요리 <span class='del-btn' idx='" + counter + "'></span></li>
+                            <li class='tag-item' role="option"> 음악 <span class='del-btn' idx='" + counter + "'></span></li>
+                            <li class='tag-item' role="option"> 책 <span class='del-btn' idx='" + counter + "'></span></li>
+                            <li class='tag-item' role="option"> 술 <span class='del-btn' idx='" + counter + "'></span></li>
+                            <li class='tag-item' role="option"> 게임 <span class='del-btn' idx='" + counter + "'></span></li>
+                            <li class='tag-item' role="option"> 등산 <span class='del-btn' idx='" + counter + "'></span></li>
+
+                        </ul>
+{#                        <input type="text" id="tag" size="20" placeholder="태그입력"/>#}
+                    </div>
+
+                    <div class="flex">
+
+                    </div>
+
+
+                    {#                    <div class="flex">#}
+{#                        <label for="input_id"> 변경할 아이디</label><br>#}
+{#                        <input type="text" placeholder="변경할 id 입력" name="title" id="input_id">#}
+{#                    </div>#}
+
+
+                    {#                            {% if error %}#}
+                    {#                                <div class="alert alert-danger" role="alert">#}
+                    {#                                    {{ error }}#}
+                    {#                                </div>#}
+                    {#                            {% endif %}#}
+                    <input type="submit"  role="button" id="rebert_button" value="수정하기">
+                     <input type="submit"  id="submit_button" value="작성하기">
+                </div>
+            </form>
+
+
+    </div>
+
+
     <script src="{% static 'js/edit_profile.js' %}"></script>
 {% endblock %}

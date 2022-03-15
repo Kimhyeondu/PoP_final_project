@@ -1,0 +1,207 @@
+form {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.edit-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    height: 90vh;
+    background-color: #faffe1;
+    padding: 10px;
+}
+
+
+#edit_box_box {
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+    justify-items: center;
+    justify-content: center;
+    margin: auto;
+    padding-top: 10%;
+}
+
+.flex {
+    display: flex;
+    text-align: left;
+    justify-items: center;
+    align-items: center;
+    padding-bottom: 3%;
+
+}
+
+.flex-colum {
+    display: flex;
+    text-align: center;
+    flex-flow: column;
+    justify-items: center;
+    padding-bottom: 3%;
+
+}
+
+.flex > p {
+    padding-top: 5%;
+    line-height: 100%;
+    padding-right: 70px;
+    width: 40%;
+}
+
+.flex > img {
+    margin: auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+
+}
+
+
+#edit_pro_label {
+    margin: auto;
+    display: inline-block;
+    color: white;
+    background-color: #FFAFAF;
+    padding: 0.5em 0.75em;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: 0.25em;;
+}
+
+#edit_pro_label:hover {
+    color: black;
+    background-color: #FF9292;
+
+}
+
+.flex-colum input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+
+}
+
+
+/*태그관련 css*/
+#tagbox {
+    text-align: left;
+}
+
+ul {
+
+    text-align: left;
+    padding: 16px;
+}
+
+ul li {
+    display: inline-block;
+    margin: 5px;
+    font-size: 14px;
+    letter-spacing: -.5px;
+}
+/*ul li.tag-item*/
+
+[role="option"] {
+    padding: 4px 8px;
+    color: white;
+    background-color: #FFAFAF;
+
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: 0.25em;;
+}
+/*
+[role="option"][aria-selected]{
+            padding: 4px 8px;
+
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: 0.25em;;
+    color: black;
+    background-color: #FF9292;
+
+}
+*/
+
+#tag-list>.active{
+        padding: 4px 8px;
+
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: 0.25em;;
+    color: black;
+    background-color: #FF9292;
+}
+
+.del-btn {
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+/*태그관련 css*/
+
+#submit_button {
+    color: white;
+    background-color: #FFAFAF;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+        padding: 0.5em 0.75em;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: 0.25em;
+}
+
+#rebert_button {
+    color: white;
+    background-color: #FFAFAF;
+    position: absolute;
+    bottom: 55px;
+    width: 100%;
+        padding: 0.5em 0.75em;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: 0.25em;
+}
+
+#submit_button:hover {
+    color: black;
+    background-color: #FF9292;
+}
+#rebert_button:hover {
+    color: black;
+    background-color: #FF9292;
+}
