@@ -1,0 +1,110 @@
+* {
+    font-size: 14px;
+}
+.container {
+    max-width: 500px;
+    height: 800px;
+    margin: 0 auto;
+    background-color: #FBFFE2;
+}
+.container .nav{
+    margin-bottom: 8%;
+    padding: 5%;
+}
+.container .nav p {
+    font-size: 5rem;
+    margin: 0;
+    line-height: 0;
+    cursor: pointer;
+    color : #FF9999;
+}
+.container .message-wrapper {
+    width: 80%;
+    margin: 1rem auto;
+
+}
+.container .message-wrapper .send_user {
+    display: flex;
+    justify-content: space-evenly;
+    width: 70%;
+    margin: 0 auto 4%;
+}
+.container .message-wrapper .send_user span:first-child{
+    font-size: 1.6rem;
+    text-decoration: underline;
+    text-underline-position: under;
+    color: dimgray;
+    font-weight: bolder;
+}
+.container .message-wrapper .send_user span:last-child {
+    font-size: 1.5rem;
+}
+.container .message-wrapper .btns {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 auto;
+}
+.container .message-wrapper .btns span {
+    cursor: pointer;
+}
+.container .message-wrapper .btns span:last-child {
+    margin-left: 1.4rem;
+}
+.container .message-wrapper .content{
+    width: 92%;
+    min-height: 20rem;
+    margin: 0 4%;
+    background-color: #FFE8E8;
+    /*#FF9999*/
+    border-radius: 1.8rem;
+}
+.container .message-wrapper .content p {
+    font-size: 1.3rem;
+    letter-spacing: 0.1rem;
+    padding: 1.2rem 1.5rem;
+    line-height: 2.4rem;
+}
+.container .gifticon {
+    margin: 0 auto 10%;
+    width: 39%;
+    height: 29%;
+    /*background-color: #FF9999;*/
+}
+.container .gifticon img {
+    width: 100%;
+    height: 100%;
+}
+
+.container .modal {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(3px);
+}
+.container .modal .overlay {
+    background: white;
+    width: 50%;
+    height: 30%;
+    border-radius: 1rem;
+    margin: 45% 16%;
+}
+.container .modal .overlay .wrapper {
+    padding-top: 3rem;
+}
+.container .modal .overlay .wrapper p {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+.container .modal .overlay .wrapper button {
+    width: 8rem;
+    height: 3rem;
+    border: none;
+    border-radius: 2rem;
+    margin-left : 2rem;
+    cursor: pointer;
+}
+.container .modal .overlay .wrapper button:last-child {
+    background-color: #FF9999;
+}
