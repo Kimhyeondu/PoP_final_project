@@ -1,7 +1,7 @@
 from ninja import schema
 
 
-# class CardRequest(schema):
-#     msg: str
-#     id: int
+class CardRequest(schema):
+    msg: str
+    id: int
 
