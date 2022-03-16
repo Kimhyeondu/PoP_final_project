@@ -1,0 +1,47 @@
+/*#navbar{*/
+/*    display: none;*/
+/*}*/
+#container{
+    /*border : 1px solid lightgray;*/
+    max-width:500px;
+    height: 800px;
+    background-color: #faffe1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.background{
+    width: 95%;
+    height: 70%;
+    background-image: url("/static/img/yellow_background.jpg");
+    background-size: cover;
+    color: black;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.text_box{
+    font-size:15px;
+    /*background-color: #FFEBCC;*/
+}
+.startbutton{
+    margin-top: 14%;
+
+    width:95%;
+    height: 10%;
+    background-color: rgba(255, 175, 175, 1);
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s linear;
+}
+.startbutton:hover{
+    transform: scale(1.02);
+}
+.text{
+    margin-top: 5%;
+    font-size: 25px;
+}
