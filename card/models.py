@@ -31,3 +31,5 @@ class Message(TimeStampedModel):
     gift = models.ForeignKey(Gift, on_delete=models.CASCADE)
     msg = models.TextField(blank=True)
     deco = models.CharField(max_length=200, blank=True)
+    top = models.IntegerField(default=0)
+    left = models.IntegerField(default=0)

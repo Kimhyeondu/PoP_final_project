@@ -5,35 +5,36 @@ from card.models import Gift, Message
 from asgiref.sync import sync_to_async
 
 
-async def gift_create(gift_name, gift_img, gift_desc, tags):
+async def create_gift(gift_name, gift_img, gift_desc="", tags=None):
     result = await sync_to_async(Gift.objects.create)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc)
-    tag_slugs_list = list(map(lambda x: x.strip(), tags.strip().split(",")))
-    await sync_to_async(result.tags.add)(*tag_slugs_list)
-    await sync_to_async(result.save)()
+    if tags:
+        tag_slugs_list = list(map(lambda x: x.strip(), tags.strip().split(",")))
+        await sync_to_async(result.tags.add)(*tag_slugs_list)
+        await sync_to_async(result.save)()
     return cast(Gift, result)
 
 @sync_to_async
-def gift_get(*args, **kwargs):
+def get_gift(*args, **kwargs):
     return Gift.objects.get(*args, **kwargs)
 
 
 @sync_to_async
-def gift_list_all():
+def all_list_gift():
     return list(Gift.objects.all())
 
 
 @sync_to_async
-def gift_list_by_filter(*args, **kwargs):
-    return Gift.objects.filter(*args, **kwargs).distinct()
+def filter_list_gift(*args, **kwargs):
+    return list(Gift.objects.filter(*args, **kwargs).distinct())
 
 
 @sync_to_async
-def gift_list_by_search(keyword):
-    return Gift.objects.filter(Q(gift_name__icontains=keyword) | Q(gift_desc__icontains=keyword) | Q(tags__name=keyword)).distinct()
+def search_list_gift(keyword):
+    return list(Gift.objects.filter(Q(gift_name__icontains=keyword) | Q(gift_desc__icontains=keyword) | Q(tags__name=keyword)).distinct())
 
 
-async def gift_update(id, gift_name = None, gift_img = None, gift_desc = None, tags = None):
-    gift = await gift_get(id=id)
+async def update_gift(id, gift_name = None, gift_img = None, gift_desc = None, tags = None):
+    gift = await get_gift(id=id)
     if gift_name:
         gift.gift_name = gift_name
     if gift_img:
@@ -47,7 +48,7 @@ async def gift_update(id, gift_name = None, gift_img = None, gift_desc = None, t
     await sync_to_async(gift.save)()
 
 
-async def gift_delete(id):
-    gift = await gift_get(id=id)
+async def delete_gift(id):
+    gift = await get_gift(id=id)
     await sync_to_async(gift.delete)()
 
