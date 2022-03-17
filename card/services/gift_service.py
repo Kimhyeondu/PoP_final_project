@@ -1,6 +1,5 @@
 from typing import cast, List
 
-from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from card.models import Gift, Message
 from asgiref.sync import sync_to_async
@@ -33,11 +32,22 @@ def gift_list_by_search(keyword):
     return Gift.objects.filter(Q(gift_name__icontains=keyword) | Q(gift_desc__icontains=keyword) | Q(tags__name=keyword)).distinct()
 
 
+async def gift_update(id, gift_name = None, gift_img = None, gift_desc = None, tags = None):
+    gift = await gift_get(id=id)
+    if gift_name:
+        gift.gift_name = gift_name
+    if gift_img:
+        gift.gift_img = gift_img
+    if gift_desc:
+        gift.gift_desc = gift_desc
+    if tags:
+        tag_slugs_list = list(map(lambda x: x.strip(), tags.strip().split(",")))
+        await sync_to_async(gift.tags.clear)()        
+        await sync_to_async(gift.tags.add)(*tag_slugs_list)
+    await sync_to_async(gift.save)()
 
-def gift_update(gift_name, gift_img, gift_desc, tags):
-    pass
 
-
-def gift_delete(q):
-    pass
+async def gift_delete(id):
+    gift = await gift_get(id=id)
+    await sync_to_async(gift.delete)()
 
