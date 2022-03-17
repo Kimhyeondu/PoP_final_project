@@ -26,10 +26,11 @@ class Message(TimeStampedModel):
     class Meta:
         db_table = "message"
     
-    from_user = models.ForeignKey(User, related_name="from_user",on_delete=models.CASCADE)
     to_user = models.ForeignKey(User, related_name="to_user",on_delete=models.CASCADE)
     gift = models.ForeignKey(Gift, on_delete=models.CASCADE)
     msg = models.TextField(blank=True)
     deco = models.CharField(max_length=200, blank=True)
+    title = models.CharField(max_length=200, blank=True)
+    author = models.CharField(max_length=200, blank=True)
     top = models.IntegerField(default=0)
     left = models.IntegerField(default=0)

@@ -1,11 +1,7 @@
 import os
 import shutil
-import tempfile
-from PIL import Image
 
-from django.db import connection
 from django.test import TestCase, override_settings
-from django.test.utils import CaptureQueriesContext
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from pop_final_project.settings import BASE_DIR, MEDIA_ROOT
@@ -40,6 +36,21 @@ class TestGiftService(TestCase):
         finally:
             tearDownModule()
 
+    
+    def test_gift_create_with_error(self):
+        gift_name = "sample_name"
+        gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        
+        try:
+            with self.assertRaises(TypeError):
+                async_to_sync(create_gift)(gift_name=gift_name)
+            with self.assertRaises(TypeError):
+                async_to_sync(create_gift)(gift_img=gift_img)
+            with self.assertRaises(TypeError):
+                async_to_sync(create_gift)()    
+        finally:
+            tearDownModule()
+
 
     def test_gift_get(self):
         gift_name = "sample_name"
@@ -63,6 +74,27 @@ class TestGiftService(TestCase):
             tearDownModule()
 
 
+    def test_gift_get_with_error(self):
+        gift_name = "sample_name"
+        gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        gift_desc = "sample_description"
+        tags = "다이어트"
+        async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
+        async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
+        
+        try:
+            with self.assertRaises(Gift.DoesNotExist):
+                new_gift = async_to_sync(get_gift)(id = 100)
+            with self.assertRaises(Gift.MultipleObjectsReturned):
+                new_gift = async_to_sync(get_gift)(gift_name = gift_name)
+            with self.assertRaises(Gift.MultipleObjectsReturned):
+                new_gift = async_to_sync(get_gift)()
+            with self.assertRaises(ValueError):
+                new_gift = async_to_sync(get_gift)(id="add")
+        finally:
+            tearDownModule()
+
+
     def test_gift_list_all(self):
         for i in range(5):
             gift_name = "test"+str(i)
@@ -78,6 +110,21 @@ class TestGiftService(TestCase):
                 self.assertEqual(5, len(gift_list))
                 for i in range(5):
                     self.assertEqual(gift_list[i].gift_name, "test{}".format(str(i)))
+        finally:
+            tearDownModule()
+
+    
+    def test_gift_list_all_with_error(self):
+        for i in range(5):
+            gift_name = "test"+str(i)
+            gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+            gift_desc = "sample_description"
+            tags = "다이어트"
+            async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
+        
+        try:
+            with self.assertRaises(TypeError):
+                gift_list = async_to_sync(all_list_gift)(id=1)
         finally:
             tearDownModule()
 
