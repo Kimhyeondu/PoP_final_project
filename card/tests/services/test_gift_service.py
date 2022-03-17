@@ -129,6 +129,14 @@ class TestGiftService(TestCase):
             tearDownModule()
 
 
+    def test_gift_list_all_without_list(self):
+        try:
+            gift_list = async_to_sync(all_list_gift)()
+            self.assertEqual(0, len(gift_list))
+        finally:
+            tearDownModule()
+
+
     def test_gift_list_by_filter(self):
         for i in range(3):
             gift_name = "test"+str(i)
@@ -158,6 +166,22 @@ class TestGiftService(TestCase):
             tearDownModule()
 
 
+    def test_gift_list_by_filter_without_list(self):
+        try:
+            gift_list = async_to_sync(filter_list_gift)()
+            self.assertEqual(0, len(gift_list))
+        finally:
+            tearDownModule()
+
+
+    def test_gift_list_by_filter_with_error(self):
+        try:
+            with self.assertRaises(ValueError):
+                gift_list = async_to_sync(filter_list_gift)(id="add")
+        finally:
+            tearDownModule()
+
+
     def test_gift_list_by_search(self):
         for i in range(3):
             gift_name = "test"+str(i)
@@ -183,6 +207,22 @@ class TestGiftService(TestCase):
                 self.assertEqual(4, len(gift_list_2))
                 for i in range(3):
                     self.assertEqual(gift_list_1[i].gift_name, "test{}".format(str(i)))
+        finally:
+            tearDownModule()
+
+
+    def test_gift_list_by_search_without_list(self):
+        try:
+            gift_list = async_to_sync(search_list_gift)("add")
+            self.assertEqual(0, len(gift_list))
+        finally:
+            tearDownModule()
+
+
+    def test_gift_list_by_search_with_error(self):
+        try:
+            with self.assertRaises(TypeError):
+                gift_list = async_to_sync(search_list_gift)()
         finally:
             tearDownModule()
 
