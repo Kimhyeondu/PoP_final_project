@@ -58,7 +58,7 @@ function getitem() {
             let tagg=tag.text().split("\n",1);   //널문자 제거를위해 \n을기준으로 자름
             console.log(tagg)
             rr[l] = tagg;
-            alert(rr[l]);
+            // alert(rr[l]);
             l+=1;       //클릭된 요소가 있을때만 추가되도록 설정
         }
 
@@ -69,23 +69,34 @@ function getitem() {
 
     shuffle(rr)
     for (let i = 0; i < rr.length; i++) {
-        console.log(rr[i])
+        var temp='taginput'+i
+        var temphtml=`<input type="text" id= "${temp}" style="display: none;"  name="${temp}" >`
+        var temp2='#'+temp
+        $('#tempspace').append(temphtml)
+        $(temp2).val(rr[i]);
     }
-    $.ajax({
-        type: "POST",
-        url: "/edit_user",
-        dataType: 'json',
-        data: rr,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (rr) {
-            alert(rr)
-        },
-        error:function (){
-            alert("error_send")
-        }
-    });
+    var tag_count_html=`<input type="text" id= "tag_count" style="display: none;"  name="tag_count" >`
+    $('#tempspace').append(tag_count_html)
+    $('#tag_count').val(rr.length);
+
+
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/edit_user",
+    //     dataType: 'json',
+    //     data: rr,
+    //     cache: false,
+    //     contentType: false,
+    //     processData: false,
+    //     success: function (rr) {
+    //         alert(rr)
+    //     },
+    //     error:function (){
+    //         alert("error_send")
+    //     }
+    // });
+
+
 
 
 

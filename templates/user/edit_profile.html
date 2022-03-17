@@ -17,7 +17,7 @@
                 <div class="flex">
                     <img id="blah" src=../media/{{ image }} >
                 </div>
-                <div class="flex-colum">
+                <div class="flex-colum" id="tempspace">
                     <p style="color: #FF9292;">bbb6045</p>
                     <label for="input_file" id="edit_pro_label">프로필 사진 변경</label>
                     <input type="file" id="input_file" onchange="readURL(this);" name="imgs"/>
@@ -51,10 +51,12 @@
                                                                                 idx='" + counter + "'></span></li>
 
                     </ul>
+
                     {#                        <input type="text" id="tag" size="20" placeholder="태그입력"/>#}
                 </div>
 
                 <div class="flex">
+
 
                 </div>
 
