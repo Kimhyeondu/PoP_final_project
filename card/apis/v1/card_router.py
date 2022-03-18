@@ -16,7 +16,7 @@ async def gift_list(request: HttpRequest, card_request: GiftRequest = Form(...))
     return result
 
 
-@router.post("/search/", response = {200 : List[CardResponse], 202: ErrorMessage})
+@router.post("/search/", response = {200: List[CardResponse], 202: ErrorMessage})
 async def search_gift(request: HttpRequest, keyword: SearchRequest = Form(...)):
     code, result = await search_gift_list_service(keyword.keyword)
     return code, result

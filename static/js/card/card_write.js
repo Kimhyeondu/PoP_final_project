@@ -111,7 +111,10 @@ async function msgToGift() {
 msgNext.addEventListener("click", msgToGift);
 
 // 선물 페이지
+const $search = document.querySelector("#search_gift")
+const $searchButton = document.querySelector(".search_button")
 const gcCont = document.querySelector(".gift_cont_container")
+
 function showRecommendList(jsondata) {
     gcCont.innerHTML = ""
     // let reList = jsondata[0]
@@ -141,27 +144,64 @@ function fetchSearch(data) {
             credentials: 'same-origin',
             redirect: "follow",
         }).then((response) => {
-            receive(response.json());
+            receive(response);
         }).catch((err)=>{
             console.info(err);
         }); 
     }); 
 }
 
+function showSearchList(jsondata) {
+    console.log(jsondata)
+    gcCont.innerHTML = ""
+    let $reListCon = document.createElement("div")
+    $reListCon.className = "gift_box_container"
+    $reListCon.innerHTML = '<div class="gift_tag">검색 결과</div>'
+    let $reWrap = document.createElement("div")
+    $reWrap.className = "gift_box_wrap"
+    $reListCon.appendChild($reWrap)
+    jsondata.forEach(e => {
+        let gBox = document.createElement("div")
+        gBox.className = "gift_box"
+        gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.gift_name}" class="gift_img">${e.gift_name}`
+        $reWrap.append(gBox)
+    });
+    gcCont.appendChild($reListCon);
+}
 
-async function searchGift(keyword) {
+
+function showSearchErr(jsondata) {
+    console.log(jsondata)
+    gcCont.innerHTML = ""
+    let $reListCon = document.createElement("div")
+    $reListCon.className = "gift_box_container"
+    $reListCon.innerHTML = `<div class="gift_tag">${jsondata.err_msg}</div>`
+    gcCont.appendChild($reListCon);
+}
+
+
+async function searchGift() {
+    let keyword = $search.value
     let data = new FormData();
     data.append("keyword", keyword);
-    // data.append('csrfmiddlewaretoken', csrftoken);
-    // document.querySelector("body").appendChild(modal_wrap);
 
-    let jsonData = await fetchSearch(data);
-
-    // showRecommendList(jsonData);
-    // console.log(jsonData);
-    // document.querySelector("body").removeChild(document.querySelector(".modal_wrap"));
-    // msg_page.className = "sub_container moved";
+    let response = await fetchSearch(data);
+    let code = await response.status
+    let jsondata = await response.json()
+    if (code === 200) {
+        showSearchList(jsondata);
+    } else {
+        showSearchErr(jsondata);
+    }
 }
+
+$search.addEventListener('keyup', (e)=>{
+    if (e.keyCode === 13) {
+        searchGift();
+    }  
+});
+
+$searchButton.addEventListener("click", searchGift)
 
 // 미리보기 페이지
 const csrftoken = document.querySelector("#cs input").value;

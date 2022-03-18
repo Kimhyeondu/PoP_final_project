@@ -12,7 +12,7 @@ async def recommend_gift_list(id:int, msg:str = ""):
 
 async def search_gift_list_service(keyword:str = None):
     if not keyword:
-        return 204, {"err_msg":"검색어를 입력하세요."}
+        return 202, {"err_msg":"검색어를 입력하세요."}
     else:
         glist = await search_list_gift(keyword)
         if glist:
@@ -20,5 +20,5 @@ async def search_gift_list_service(keyword:str = None):
                 item.gift_tags = await sync_to_async(list)(item.tags.names())
             return 200, glist
         else:
-            return 204, {"err_msg":"검색 결과가 없습니다."}
+            return 202, {"err_msg":"검색 결과가 없습니다."}
 
