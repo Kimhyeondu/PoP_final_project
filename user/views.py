@@ -20,10 +20,23 @@ def mypage(request):
 
 
 def edit_user(request):
+    tags = [""]
     if request.method == "GET":
+        print("yagho")
         return render(request, "user/edit_profile.html", {})
 
     if request.method == "POST":
+        tagcount= int(request.POST.get('tag_count',''))
+        print(tagcount)
+
+        for i in range(0,tagcount):
+            tag=request.POST.get(f'taginput{i}', '')
+            #'데이터' 형식으로 들어오는데 양끝 '문자 제거
+            tag=tag[:-1][1:]
+            tags[0]=tag
+            print(tags[0])
+
+
         return render(request, "user/edit_profile.html", {})
 
     # true_user = auth.authenticate(request, username=username, password=password)

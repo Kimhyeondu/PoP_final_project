@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'user',
+    "card",
     'taggit'
 
 ]
@@ -130,3 +131,8 @@ MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'user.User'
+
+try:
+    from pop_final_project.local_settings import *
+except ImportError:
+    pass

@@ -168,7 +168,7 @@ ul li {
 #submit_button {
     color: white;
     background-color: #FFAFAF;
-    position: absolute;
+    /*position: absolute;*/
     bottom: 10px;
     width: 100%;
         padding: 0.5em 0.75em;
@@ -184,7 +184,7 @@ ul li {
 #rebert_button {
     color: white;
     background-color: #FFAFAF;
-    position: absolute;
+    /*position: absolute;*/
     bottom: 55px;
     width: 100%;
         padding: 0.5em 0.75em;
