@@ -133,6 +133,36 @@ function showRecommendList(jsondata) {
     });
 }
 
+function fetchSearch(data) {
+    return new Promise((receive) => { 
+        fetch("/api/v1/card/search/", {
+            method:"POST",
+            body: data,
+            credentials: 'same-origin',
+            redirect: "follow",
+        }).then((response) => {
+            receive(response.json());
+        }).catch((err)=>{
+            console.info(err);
+        }); 
+    }); 
+}
+
+
+async function searchGift(keyword) {
+    let data = new FormData();
+    data.append("keyword", keyword);
+    // data.append('csrfmiddlewaretoken', csrftoken);
+    // document.querySelector("body").appendChild(modal_wrap);
+
+    let jsonData = await fetchSearch(data);
+
+    // showRecommendList(jsonData);
+    // console.log(jsonData);
+    // document.querySelector("body").removeChild(document.querySelector(".modal_wrap"));
+    // msg_page.className = "sub_container moved";
+}
+
 // 미리보기 페이지
 const csrftoken = document.querySelector("#cs input").value;
 
@@ -144,9 +174,7 @@ function fetchPostMessage(data) {
             credentials: 'same-origin',
             redirect: "follow",
         }).then((response) => {
-            return response.json();
-        }).then((data) => { 
-            receive(JSON.stringify(data));
+            receive(response.json());
         }).catch((e)=>{
             console.info(err + " url : " + url);
         }); 
@@ -170,6 +198,11 @@ function postMessage() {
     // data.append("author", author.innerText)
 
     console.log(data)
+    console.log(csrftoken)
+    console.log(toUserId)
+    console.log(giftId)
+    console.log(message.value)
+    console.log(decoSelected.innerText)
 
 
 }
