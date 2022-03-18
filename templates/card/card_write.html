@@ -41,8 +41,7 @@
             <div id="msg_prev" class="prev_button"><i class="fa-solid fa-chevron-left"></i> 이전으로</div>
             <h3>메시지 쓰기</h3>
             <textarea name="message" id="message" cols="30" rows="10"></textarea>
-            <div class="next_wrap">
-                <div id="cs">{% csrf_token %}</div>                
+            <div class="next_wrap">            
                 <button id="msg_next" class="next_button">메시지 분석하기</button>
             </div>
             
@@ -57,38 +56,29 @@
                 <input type="text" id="search_gift" name="search_gift" placeholder="검색하기">
             </div>            
 
-            <!-- django for문 써서 만들기 -->
-            <div class="gift_box_container">
-                <div class="gift_tag">"기념일" 관련 선물</div>
-                <div class="gift_box_wrap">
-                    <div class="gift_box"><img src="" alt="" class="gift_img">1</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">2</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">3</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">4</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">5</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">6</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">7</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">8</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">9</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">10</div>
+            <!-- js for문 써서 만들기 -->
+            <div class="gift_cont_container">
+                <div class="gift_box_container">
+                    <div class="gift_tag">추천 선물</div>
+                    <div class="gift_box_wrap">
+                        <div class="gift_box"><img src="" alt="" class="gift_img">1</div>
+                        <div class="gift_box"><img src="" alt="" class="gift_img">2</div>
+                        <div class="gift_box"><img src="" alt="" class="gift_img">3</div>
+                        <div class="gift_box"><img src="" alt="" class="gift_img">4</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="gift_box_container">
-                <div class="gift_tag">"#태그" 관련 선물</div>
-                <div class="gift_box_wrap">
-                    <div class="gift_box"><img src="" alt="" class="gift_img">1</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">2</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">3</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">4</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">5</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">6</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">7</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">8</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">9</div>
-                    <div class="gift_box"><img src="" alt="" class="gift_img">10</div>
+                <div class="gift_box_container">
+                    <div class="gift_tag"><span id="tag_span"></span> 관련 선물</div>
+                    <div class="gift_box_wrap">
+                        <div class="gift_box"><img src="" alt="" class="gift_img">1</div>
+                        <div class="gift_box"><img src="" alt="" class="gift_img">2</div>
+                        <div class="gift_box"><img src="" alt="" class="gift_img">3</div>
+                        <div class="gift_box"><img src="" alt="" class="gift_img">4</div>
+                    </div>
                 </div>
             </div>
+            
 
             <div class="next_wrap"><div id="gift_next" class="next_button">다음으로</div></div>            
         </div>
@@ -98,8 +88,11 @@
             <div id="view_prev" class="prev_button"><i class="fa-solid fa-chevron-left"></i> 이전으로</div>
             <h3>미리 보기</h3>
             <div class="gifticon_wrap"></div>
-            <textarea name="message_result" id="message_result" cols="30" rows="10"></textarea>
-            <div class="next_wrap"><div id="view_next" class="next_button">보내기</div></div>
+            <textarea name="message_result" id="message_result" cols="30" rows="10" disabled></textarea>
+            <div class="next_wrap">
+                <div id="cs">{% csrf_token %}</div>
+                <div id="view_next" class="next_button">메시지 작성 완료</div>
+            </div>
         </div>
 
 

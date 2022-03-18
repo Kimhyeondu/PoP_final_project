@@ -3,5 +3,11 @@ from card.models import Gift, Message
 
 
 # Register your models here.
-admin.site.register(Gift)
-admin.site.register(Message)
+@admin.register(Gift)
+class GiftAdmin(admin.ModelAdmin):
+    list_display = ("gift_name", "gift_desc")
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ("id", "to_user_id", "gift_id")
