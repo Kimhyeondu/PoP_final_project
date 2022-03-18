@@ -1,7 +1,10 @@
-from ninja import schema
+from ninja import Schema
 
 
-class CardRequest(schema):
-    msg: str
+class GiftRequest(Schema):
     id: int
+    msg: str
 
+
+class SearchRequest(Schema):
+    keyword: str
