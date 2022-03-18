@@ -5,6 +5,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.main, name="main"),
+    path("", views.first_page, name="first page"),
+    path("<int:xx>", views.main, name="main"),
     path("upload", views.upload, name="upload"),
 ]
