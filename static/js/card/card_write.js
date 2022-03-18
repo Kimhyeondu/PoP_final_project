@@ -59,33 +59,120 @@ decoList.forEach(element => {
 
 
 // 메시지 페이지
+const pathname = window.location.pathname
+const toUserId = pathname.split("/")[pathname.split("/").length - 1]
 const msgNext = document.getElementById("msg_next")
 const message = document.getElementById("message")
-const csrftoken = document.querySelector("#cs input").value
+const messageResult = document.getElementById("message_result")
 const modal_wrap = document.createElement("div")
 modal_wrap.className = "modal_wrap"
 modal_wrap.innerHTML = "<div class='modal_div'>잠시만 기다려 주세요</div>"
 
-function postToGift() {
-    let data = new FormData();
-    data.append("img",preview_image.src);
-    data.append("msg",message.innerText);
-    data.append('csrfmiddlewaretoken', csrftoken);
-    document.querySelector("body").appendChild(modal_wrap)
 
-    fetch("/card/write/", {
-        method:"POST",
-        body: data,
-        credentials: 'same-origin',
-        redirect: "follow",
-    }).then(response=>{
-        // HTTP 301 response
-        document.querySelector("body").removeChild(document.querySelector(".modal_wrap"))
-        msg_page.className = "sub_container moved";
-    }).catch(e => {
-        console.info(err + " url: " + url);
-    })
+function fetchRecommend(data) {
+    return new Promise((receive) => { 
+        fetch("/api/v1/card/", {
+            method:"POST",
+            body: data,
+            credentials: 'same-origin',
+            redirect: "follow",
+        }).then((response) => {
+            receive(response.json());
+        }).catch((err)=>{
+            console.info(err);
+        }); 
+    }); 
 }
 
-msgNext.addEventListener("click", postToGift)
+async function postToGift() {
+    let data = new FormData();
+    data.append("id", toUserId);
+    data.append("msg", message.value);
+    // data.append('csrfmiddlewaretoken', csrftoken);
+    document.querySelector("body").appendChild(modal_wrap);
 
+    let jsonData = await fetchRecommend(data);
+
+    showRecommendList(jsonData);
+    console.log(jsonData);
+    document.querySelector("body").removeChild(document.querySelector(".modal_wrap"));
+    msg_page.className = "sub_container moved";
+}
+
+async function msgToGift() {
+    if (message.value.length > 0) {
+        messageResult.value = message.value
+        await postToGift();
+    } else {
+        alert("메시지를 입력하세요");
+    };
+}
+
+msgNext.addEventListener("click", msgToGift);
+
+// 선물 페이지
+const gcCont = document.querySelector(".gift_cont_container")
+function showRecommendList(jsondata) {
+    gcCont.innerHTML = ""
+    // let reList = jsondata[0]
+    // let tagList = jsondata[1]
+    jsondata.forEach(giftList => {
+        let $reListCon = document.createElement("div")
+        $reListCon.className = "gift_box_container"
+        $reListCon.innerHTML = '<div class="gift_tag">추천 선물</div>'
+        let $reWrap = document.createElement("div")
+        $reWrap.className = "gift_box_wrap"
+        $reListCon.appendChild($reWrap)
+        giftList.forEach(e => {
+            let gBox = document.createElement("div")
+            gBox.className = "gift_box"
+            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.gift_name}" class="gift_img">${e.gift_name}`
+            $reWrap.append(gBox)
+        });
+        gcCont.appendChild($reListCon)
+    });
+}
+
+// 미리보기 페이지
+const csrftoken = document.querySelector("#cs input").value;
+
+function fetchPostMessage(data) {
+    return new Promise((receive) => { 
+        fetch(pathname, {
+            method:"POST",
+            body: data,
+            credentials: 'same-origin',
+            redirect: "follow",
+        }).then((response) => {
+            return response.json();
+        }).then((data) => { 
+            receive(JSON.stringify(data));
+        }).catch((e)=>{
+            console.info(err + " url : " + url);
+        }); 
+    }); 
+}
+
+
+function postMessage() {
+    let giftId = 1
+    let decoSelected = document.getElementsByClassName("deco_selec selected")
+    let title = document.querySelector("#title")
+    let author = document.querySelector("#author")
+
+    let data = new FormData();
+    data.append("csrfmiddlewaretoekn", csrftoken)
+    data.append("to_user_id", toUserId)
+    data.append("gift_id", giftId)
+    data.append("msg", message.value)
+    data.append("deco", decoSelected.innerText)
+    // data.append("title", title.innerText)
+    // data.append("author", author.innerText)
+
+    console.log(data)
+
+
+}
+
+
+view_next.addEventListener("click", postMessage)
