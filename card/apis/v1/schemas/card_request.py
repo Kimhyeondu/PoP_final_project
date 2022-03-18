@@ -1,7 +1,8 @@
-from ninja import schema
+from ninja import Schema
 
 
-class CardRequest(schema):
-    msg: str
+class CardRequest(Schema):
     id: int
+    msg: str
+
 
