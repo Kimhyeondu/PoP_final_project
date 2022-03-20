@@ -9,7 +9,7 @@ from card.services.gift_service import *
 from card.models import Gift, Message
 from asgiref.sync import sync_to_async, async_to_sync
 
-# 잘못된값 없는값 
+# 제대로 된 값, 잘못된 값, 없는값 
 # CRUD - create,get,filter,update,delete
 TEST_DIR = os.path.join(BASE_DIR, "test_data")
 
@@ -20,7 +20,7 @@ class TestGiftService(TestCase):
         gift_name = "sample_name"
         gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         gift_desc = "sample_description"
-        tags = "다이어트, 요리, 골프"
+        tags = "다이어트, 요리, 골프" 
         
         try:
             with self.assertNumQueries(42):
