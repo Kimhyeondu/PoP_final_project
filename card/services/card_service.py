@@ -1,5 +1,6 @@
 from card.models import Gift, Message
 from .gift_service import all_list_gift, search_list_gift
+from .message_service import update_msg
 from asgiref.sync import sync_to_async
 
 async def recommend_gift_list(id:int, msg:str = ""):
@@ -21,4 +22,9 @@ async def search_gift_list_service(keyword:str = None):
             return 200, glist
         else:
             return 202, {"err_msg":"검색 결과가 없습니다."}
+
+
+async def decoration_move_service(id:int, top:int, left:int):
+    await update_msg(id=id, top=top, left=left)
+    return
 

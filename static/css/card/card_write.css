@@ -218,7 +218,7 @@ h3 {
     /* background-color: white; */
     /* margin: 10px; */
     overflow: auto;
-    height: 150px;
+    height: 160px;
     width: 100%;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -234,12 +234,19 @@ h3 {
     background-color: #FFEBCC;
     text-align: center;
     margin-right: 5px;
+    border: transparent 2px solid;
 }
+
+.gift_box_container .gift_box_wrap .selected_gift {
+    border: red 2px solid;
+}
+
+
 .gift_box_container .gift_box_wrap .gift_box .gift_img {
     display: block;
-    width: 130px;
-    height: 130px;
-    background-color: cadetblue;
+    width: 128px;
+    height: 128px;
+    /* background-color: cadetblue; */
 }
 
 /* 여기부터는 메시지 페이지 */
@@ -249,7 +256,32 @@ h3 {
     background-color: #FFEBCC;
     margin-bottom: 10px;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+.gifticon_wrap #preview_img{
+    width: 75%;
+    height: 75%;
+}
+.gifticon_wrap .preview_input_wrap{
+    width: 100%;
+}
+.gifticon_wrap .gifticon_label {
+    width: 20%;
+    display: inline-block;
+    color: #FF9999;
+}
+.gifticon_wrap .gifticon_input {
+    width: 75%;
+    display: inline-block;
+    border: none;
+    border-bottom: #FF9999 solid 1px;
+    color: #FF9999;
+    background-color: #FFEBCC;
+}
+
 #message_result {
     width: 100%;
     height: 35%;
