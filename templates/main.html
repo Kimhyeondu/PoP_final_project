@@ -10,7 +10,7 @@
 
 {% block main %}
     <div id="container">
-        <form method="GET" action="/card/write">
+        <form method="GET" action="/card/write/{{ user.id }}">
             <div class="background">
                 {% if not listall %}
                     <div class="text_box">

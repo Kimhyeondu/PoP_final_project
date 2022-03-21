@@ -8,3 +8,9 @@ class GiftRequest(Schema):
 
 class SearchRequest(Schema):
     keyword: str
+
+
+class MoveRequest(Schema):
+    id: int
+    top: int
+    left: int

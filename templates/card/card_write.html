@@ -57,6 +57,8 @@
             </div>            
 
             <!-- js for문 써서 만들기 -->
+            <div class="gift_search_container">
+            </div>
             <div class="gift_cont_container">
                 <div class="gift_box_container">
                     <div class="gift_tag">추천 선물</div>
@@ -80,14 +82,25 @@
             </div>
             
 
-            <div class="next_wrap"><div id="gift_next" class="next_button">다음으로</div></div>            
+            <div class="next_wrap"><div id="gift_next" class="next_button">이 선물 선택하기</div></div>            
         </div>
 
         <!-- 미리보기 페이지 -->
         <div class="sub_container" id="view_page">
             <div id="view_prev" class="prev_button"><i class="fa-solid fa-chevron-left"></i> 이전으로</div>
             <h3>미리 보기</h3>
-            <div class="gifticon_wrap"></div>
+            <div class="gifticon_wrap">
+                <img id="preview_img" src="" alt="">
+                <div class="preview_input_wrap">
+                    <label for="title" class="gifticon_label">상품 이름</label>
+                    <input type="text" id="title" class="gifticon_input" placeholder="재미있는 상품 이름을 붙여주세요">
+                </div>
+                <div class="preview_input_wrap">
+                    <label for="author" class="gifticon_label">보내는 이</label>
+                    <input type="text" id="author" id="title" class="gifticon_input" placeholder="당신의 이름을 적어주세요">
+                </div>
+                
+            </div>
             <textarea name="message_result" id="message_result" cols="30" rows="10" disabled></textarea>
             <div class="next_wrap">
                 <div id="cs">{% csrf_token %}</div>
@@ -95,9 +108,6 @@
             </div>
         </div>
 
-
-
-        
     </div>
     <script src="{% static 'js/card/card_write.js' %}"></script>
     <script>

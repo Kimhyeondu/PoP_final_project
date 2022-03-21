@@ -16,7 +16,7 @@ const view_prev = document.querySelector("#view_prev");
 const view_next = document.querySelector("#view_next");
 
 deco_next.addEventListener("click", ()=>{deco_page.className = "sub_container moved";});
-gift_next.addEventListener("click", ()=>{gift_page.className = "sub_container moved";});
+
 
 msg_prev.addEventListener("click", ()=>{deco_page.className = "sub_container back";});        
 gift_prev.addEventListener("click", ()=>{msg_page.className = "sub_container back";});        
@@ -113,10 +113,14 @@ msgNext.addEventListener("click", msgToGift);
 // 선물 페이지
 const $search = document.querySelector("#search_gift")
 const $searchButton = document.querySelector(".search_button")
-const gcCont = document.querySelector(".gift_cont_container")
+const $gcCont = document.querySelector(".gift_cont_container")
+const $gsCont = document.querySelector(".gift_search_container")
+let giftWrap = document.querySelectorAll(".gift_box_wrap");
+
 
 function showRecommendList(jsondata) {
-    gcCont.innerHTML = ""
+    $gcCont.innerHTML = ""
+    $gsCont.innerHTML = ""
     // let reList = jsondata[0]
     // let tagList = jsondata[1]
     jsondata.forEach(giftList => {
@@ -129,10 +133,14 @@ function showRecommendList(jsondata) {
         giftList.forEach(e => {
             let gBox = document.createElement("div")
             gBox.className = "gift_box"
-            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.gift_name}" class="gift_img">${e.gift_name}`
+            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img">${e.gift_name}`
             $reWrap.append(gBox)
         });
-        gcCont.appendChild($reListCon)
+        $gcCont.appendChild($reListCon)
+        giftWrap = document.querySelectorAll(".gift_box_wrap");
+        giftWrap.forEach(element => {
+            element.addEventListener("click", giftSelect)
+        });
     });
 }
 
@@ -152,8 +160,8 @@ function fetchSearch(data) {
 }
 
 function showSearchList(jsondata) {
-    console.log(jsondata)
-    gcCont.innerHTML = ""
+    // console.log(jsondata)
+    $gsCont.innerHTML = ""
     let $reListCon = document.createElement("div")
     $reListCon.className = "gift_box_container"
     $reListCon.innerHTML = '<div class="gift_tag">검색 결과</div>'
@@ -163,20 +171,28 @@ function showSearchList(jsondata) {
     jsondata.forEach(e => {
         let gBox = document.createElement("div")
         gBox.className = "gift_box"
-        gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.gift_name}" class="gift_img">${e.gift_name}`
+        gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img">${e.gift_name}`
         $reWrap.append(gBox)
     });
-    gcCont.appendChild($reListCon);
+    $gsCont.appendChild($reListCon);
+    giftWrap = document.querySelectorAll(".gift_box_wrap");
+    giftWrap.forEach(element => {
+        element.addEventListener("click", giftSelect)
+    });
 }
 
 
 function showSearchErr(jsondata) {
-    console.log(jsondata)
-    gcCont.innerHTML = ""
+    // console.log(jsondata)
+    $gsCont.innerHTML = ""
     let $reListCon = document.createElement("div")
     $reListCon.className = "gift_box_container"
     $reListCon.innerHTML = `<div class="gift_tag">${jsondata.err_msg}</div>`
-    gcCont.appendChild($reListCon);
+    $gsCont.appendChild($reListCon);
+    giftWrap = document.querySelectorAll(".gift_box_wrap");
+    giftWrap.forEach(element => {
+        element.addEventListener("click", giftSelect)
+    });
 }
 
 
@@ -203,8 +219,46 @@ $search.addEventListener('keyup', (e)=>{
 
 $searchButton.addEventListener("click", searchGift)
 
+
+function giftSelect(event) {
+    // console.info(event)
+    giftWrap.forEach(el => {        
+        Array.from(el.children).forEach(e=>{
+            e.className = "gift_box"
+        })
+    })
+    if (event.target.className === "gift_img"){
+        event.target.parentNode.className = "gift_box selected_gift"
+    } else if (event.target.className = "gift_box_wrap") {
+    } else if (event.target.className = "gift_box") {
+        event.target.className = "gift_box selected_gift"
+    }
+    
+}
+
+giftWrap.forEach(element => {
+    element.addEventListener("click", giftSelect)
+});
+
+
+
+function giftPageMoved() {
+    let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0];
+    $previewImage.src = giftSelected.firstChild.src;
+    $previewImage.alt = giftSelected.firstChild.alt;
+    gift_page.className = "sub_container moved";
+    title.value = giftSelected.innerText
+}
+
+
+gift_next.addEventListener("click", giftPageMoved);
+
 // 미리보기 페이지
+const title = document.querySelector("#title")
+const author = document.querySelector("#author")
 const csrftoken = document.querySelector("#cs input").value;
+const $previewImage = document.getElementById("preview_img")
+
 
 function fetchPostMessage(data) {
     return new Promise((receive) => { 
@@ -222,29 +276,28 @@ function fetchPostMessage(data) {
 }
 
 
-function postMessage() {
-    let giftId = 1
-    let decoSelected = document.getElementsByClassName("deco_selec selected")
-    let title = document.querySelector("#title")
-    let author = document.querySelector("#author")
+async function postMessage() {
+    let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0]
+    let giftId = giftSelected.firstChild.alt
+    let decoSelected = document.getElementsByClassName("deco_selec selected")[0]
+    if (title.value === "") {
+        return alert("상품 제목을 붙여주세요!")
+    } else if (author.value === "") {
+        return alert("보내는 이를 적어주세요!")
+    }
 
     let data = new FormData();
-    data.append("csrfmiddlewaretoekn", csrftoken)
+    data.append("csrfmiddlewaretoken", csrftoken)
     data.append("to_user_id", toUserId)
     data.append("gift_id", giftId)
     data.append("msg", message.value)
     data.append("deco", decoSelected.innerText)
-    // data.append("title", title.innerText)
-    // data.append("author", author.innerText)
+    data.append("title", title.value)
+    data.append("author", author.value)
 
-    console.log(data)
-    console.log(csrftoken)
-    console.log(toUserId)
-    console.log(giftId)
-    console.log(message.value)
-    console.log(decoSelected.innerText)
-
-
+    let server_msg = await fetchPostMessage(data)
+    alert(server_msg.server)
+    window.location.pathname = toUserId
 }
 
 
