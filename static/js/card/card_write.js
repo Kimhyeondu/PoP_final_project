@@ -244,10 +244,15 @@ giftWrap.forEach(element => {
 
 function giftPageMoved() {
     let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0];
-    $previewImage.src = giftSelected.firstChild.src;
-    $previewImage.alt = giftSelected.firstChild.alt;
-    gift_page.className = "sub_container moved";
-    title.value = giftSelected.innerText
+    try {
+        $previewImage.src = giftSelected.firstChild.src;
+        $previewImage.alt = giftSelected.firstChild.alt;
+        gift_page.className = "sub_container moved";
+        title.value = giftSelected.innerText;
+    } catch (error) {
+        alert("선물을 선택하세요!")
+    }
+    
 }
 
 

@@ -18,7 +18,7 @@ class Gift(TimeStampedModel):
 
     gift_name = models.CharField(max_length=200)
     gift_desc = models.TextField(blank=True)
-    gift_img = models.ImageField()
+    gift_img = models.ImageField(upload_to="gift/")
     tags = TaggableManager(blank=True)
 
 
@@ -34,3 +34,11 @@ class Message(TimeStampedModel):
     author = models.CharField(max_length=200, blank=True)
     top = models.IntegerField(default=0)
     left = models.IntegerField(default=0)
+
+
+class Decoration(TimeStampedModel):
+    class Meta:
+        db_table = "decoration"
+
+    deco_name = models.CharField(max_length=200)
+    deco_img = models.ImageField(upload_to="deco/")
