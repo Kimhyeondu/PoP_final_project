@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>받은 메시지 확인</title>
+
+    <!-- JQuery -->
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <!--css-->
+    {% load static %}
+    <link href="{% static 'css/card_read.css' %}" rel="stylesheet" type="text/css">
+    <link href="/static/css/card/card_read.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <p onclick="history.back()">&#171;</p>
+            <span id="delete-btn">삭제</span>
+        </div>
+        <div class="gifticon">
+            <img src="/static/img/gifticon.jpeg"/>
+        </div>
+        <div class="message-wrapper">
+            {% if message.author is not None %}
+            <div class="send_user">
+                <span>작성자</span>
+                <span>{{ card.author }}</span>
+            </div>
+            {% endif %}
+            <div class="content">
+                <p>{{ card.msg }}</p>
+            </div>
+        </div>
+        <div class="modal" id="modal">
+            <div class="overlay">
+                <div class="wrapper">
+                    <p>메시지를 삭제하시겠습니까?</p>
+                    <button id="close-modal">아니요</button>
+                    <button onclick="delete()">네</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--js-->
+    <script src='{% static 'js/card_read.js' %}'></script>
+    <script src="/static/js/card/card_read.js"></script>
+</body>
+</html>
