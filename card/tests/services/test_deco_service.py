@@ -3,15 +3,16 @@ import shutil
 import tempfile
 from PIL import Image
 
-from django.test import TestCase, override_settings, TransactionTestCase
-from django.core.files.uploadedfile import SimpleUploadedFile, UploadedFile
+from django.test import override_settings, TransactionTestCase
 
 from pop_final_project.settings import BASE_DIR, MEDIA_ROOT
 from card.services.deco_service import *
 from card.models import Gift, Message, Decoration
 from asgiref.sync import sync_to_async, async_to_sync
 
+
 TEST_DIR = os.path.join(BASE_DIR, "test_data")
+
 
 def get_temporary_image(temp_file):
     size = (200, 200)
@@ -21,7 +22,6 @@ def get_temporary_image(temp_file):
     return temp_file
 
 
-
 @override_settings(MEDIA_ROOT = (TEST_DIR + '/media'))
 class TestDecorationService(TransactionTestCase):
     reset_sequences = True
@@ -29,7 +29,6 @@ class TestDecorationService(TransactionTestCase):
     def test_create_deco(self):
         temp_file = tempfile.NamedTemporaryFile()
         test_image = get_temporary_image(temp_file).name
-        # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         deco_name = "test_deco"
         deco_img = test_image
         try:
@@ -42,13 +41,65 @@ class TestDecorationService(TransactionTestCase):
             tearDownModule()
 
     def test_get_deco(self):
-        pass
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        deco_img = test_image
+        async_to_sync(create_deco)(deco_name="test_deco1", deco_img=deco_img)
+        async_to_sync(create_deco)(deco_name="test_deco2", deco_img=deco_img)
+        try:
+            with self.assertNumQueries(2):
+                new_deco1 = async_to_sync(get_deco)(id=1)
+                new_deco2 = async_to_sync(get_deco)(id=2)
+                self.assertEqual(new_deco1.deco_name, "test_deco1")
+                self.assertEqual(new_deco1.deco_img, deco_img)
+                self.assertEqual(new_deco2.deco_name, "test_deco2")
+                self.assertEqual(new_deco2.deco_img, deco_img)
+                
+        finally:
+            tearDownModule()
+
             
     def test_all_list_deco(self):
-        pass
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        deco_img = test_image
+        async_to_sync(create_deco)(deco_name="test_deco1", deco_img=deco_img)
+        async_to_sync(create_deco)(deco_name="test_deco2", deco_img=deco_img)
+        try:
+            with self.assertNumQueries(1):
+                new_deco_list = async_to_sync(all_list_deco)()
+                self.assertEqual(new_deco_list[0].deco_name, "test_deco1")
+                self.assertEqual(new_deco_list[0].deco_img, deco_img)
+                self.assertEqual(new_deco_list[1].deco_name, "test_deco2")
+                self.assertEqual(new_deco_list[1].deco_img, deco_img)
+                self.assertEqual(len(new_deco_list), 2)
+                
+        finally:
+            tearDownModule()
 
-    def delete_deco(self):
-        pass
+
+    def test_delete_deco(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        deco_img = test_image
+        async_to_sync(create_deco)(deco_name="test_deco1", deco_img=deco_img)
+        async_to_sync(create_deco)(deco_name="test_deco2", deco_img=deco_img)
+        async_to_sync(create_deco)(deco_name="test_deco3", deco_img=deco_img)
+        async_to_sync(create_deco)(deco_name="test_deco4", deco_img=deco_img)
+        try:
+            with self.assertNumQueries(9):
+                new_deco_list1 = async_to_sync(all_list_deco)()
+                self.assertEqual(len(new_deco_list1), 4)
+                async_to_sync(delete_deco)(id=1)
+                new_deco_list2 = async_to_sync(all_list_deco)()
+                self.assertEqual(len(new_deco_list2), 3)
+                async_to_sync(delete_deco)(id=2)
+                async_to_sync(delete_deco)(id=4)
+                new_deco_list3 = async_to_sync(all_list_deco)()
+                self.assertEqual(len(new_deco_list3), 1)
+                
+        finally:
+            tearDownModule()
 
 
 def tearDownModule():
