@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from taggit.managers import TaggableManager
@@ -10,7 +11,7 @@ class User(AbstractUser):
     LOGIN_KAKAO = 'kakao'
     LOGIN_CHOICES = ((LOGIN_EMAIL,'Email'),(LOGIN_KAKAO, 'Kakao'))
     login_method = models.CharField(choices=LOGIN_CHOICES, max_length=20, default=LOGIN_EMAIL)
-    profile_img = models.ImageField(upload_to='profile_img/')
+    profile_img = models.ImageField(upload_to='avatar/',)
     tag = TaggableManager(blank=True)
     
     def __str__(self):
