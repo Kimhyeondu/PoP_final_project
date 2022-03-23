@@ -1,7 +1,10 @@
 import os
 import shutil
-from django.test import TestCase, override_settings
-from django.core.files.uploadedfile import SimpleUploadedFile
+import tempfile
+from PIL import Image
+
+from django.test import TestCase, override_settings, TransactionTestCase
+from django.core.files.uploadedfile import SimpleUploadedFile,UploadedFile
 from asgiref.sync import sync_to_async, async_to_sync
 
 from card.services.message_service import *
@@ -13,11 +16,22 @@ from pop_final_project.settings import BASE_DIR, MEDIA_ROOT
 # CRUD - create,get,filter,update,delete
 TEST_DIR = os.path.join(BASE_DIR, "test_data")
 
+def get_temporary_image(temp_file):
+    size = (200, 200)
+    color = (255, 0, 0, 0)
+    image = Image.new("RGBA", size, color)
+    image.save(temp_file, 'png')
+    return temp_file
+
+
 @override_settings(MEDIA_ROOT = (TEST_DIR + '/media'))
-class TestMessageService(TestCase):
+class TestMessageService(TransactionTestCase):
+    reset_sequences = True
 
     def test_create_msg(self):
-        test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         user1 = User.objects.create(username="username2", profile_img=test_image, email="test2@email.com", login_method=User.LOGIN_EMAIL)
         gift1 = async_to_sync(create_gift)(gift_name="gift_name", gift_img=test_image, gift_desc="gift_desc", tags="다이어트")
         to_user_id = user1.id
@@ -28,7 +42,6 @@ class TestMessageService(TestCase):
         author = "author"
         top = 0
         left = 0
-
         try:
             with self.assertNumQueries(3):
                 new_message = async_to_sync(create_msg)(to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author, top=top, left=left)
@@ -43,7 +56,9 @@ class TestMessageService(TestCase):
 
 
     def test_get_msg(self):
-        test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         user1 = User.objects.create(username="username2", profile_img=test_image, email="test2@email.com", login_method=User.LOGIN_EMAIL)
         gift1 = async_to_sync(create_gift)(gift_name="gift_name", gift_img=test_image, gift_desc="gift_desc", tags="다이어트")
         to_user_id = user1.id
@@ -72,7 +87,9 @@ class TestMessageService(TestCase):
 
 
     def test_all_list_msg(self):
-        test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
             User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
@@ -90,7 +107,9 @@ class TestMessageService(TestCase):
 
 
     def test_filter_list_msg(self):
-        test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
             User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
@@ -115,7 +134,9 @@ class TestMessageService(TestCase):
 
 
     def test_list_to_user_msg(self):
-        test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
             User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
@@ -140,7 +161,9 @@ class TestMessageService(TestCase):
 
 
     def test_update_msg(self):
-        test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
             User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
@@ -171,7 +194,9 @@ class TestMessageService(TestCase):
 
 
     def test_delete_msg(self):
-        test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
             User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")

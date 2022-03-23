@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse, reverse_lazy
 from django.http import JsonResponse
 from django.views.generic import FormView
+from django.contrib import messages
+from .mixins import LogoutOnlyView
 from .forms import LoginForm, SignUpForm
 from .models import User
 import os
@@ -15,7 +17,7 @@ def log_out(request):
     return redirect(reverse('user:signin'))
 
 def mypage(request):
-    return render(request, "user/mypage.html", {})
+    return render(request, "user/edit_profile.html", {})
 
 
 def edit_user(request):
@@ -57,7 +59,7 @@ def edit_user(request):
 #     else:
 #         return render(request, "user/signin.html", {'msg':'아이디 혹은 비밀번호가 다릅니다.'})
 
-class LoginView(FormView):
+class LoginView(LogoutOnlyView, FormView):
     form_class = LoginForm
     success_url = reverse_lazy("user:mypage")
     template_name = "user/signin.html"
@@ -67,11 +69,12 @@ class LoginView(FormView):
         password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=username, password=password)
         if user is not None:
+            messages.success(self.request, f'어서오세요 {username}님 !')
             login(self.request, user)
         return super().form_valid(form)
 
 
-class SignUpView(FormView):
+class SignUpView(LogoutOnlyView, FormView):
     form_class = SignUpForm
     success_url = reverse_lazy("user:mypage")
     template_name = "user/signup.html"
@@ -82,6 +85,7 @@ class SignUpView(FormView):
         password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=username, password=password)
         if user is not None:
+            messages.success(self.request,f'환영합니다 {username}님 !')
             login(self.request, user)
         return super().form_valid(form)
 

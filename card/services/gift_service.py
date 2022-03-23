@@ -5,13 +5,14 @@ from card.models import Gift, Message
 from asgiref.sync import sync_to_async
 
 
-async def create_gift(gift_name, gift_img, gift_desc="", tags=None):
-    result = await sync_to_async(Gift.objects.create)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc)
+@sync_to_async
+def create_gift(gift_name, gift_img, gift_desc="", tags=None):
+    result = Gift.objects.create(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc)
     if tags:
         tag_slugs_list = list(map(lambda x: x.strip(), tags.strip().split(",")))
-        await sync_to_async(result.tags.add)(*tag_slugs_list)
-        await sync_to_async(result.save)()
-    return cast(Gift, result)
+        result.tags.add(*tag_slugs_list)
+        result.save()
+    return result
 
 @sync_to_async
 def get_gift(*args, **kwargs):

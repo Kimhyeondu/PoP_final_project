@@ -45,13 +45,25 @@ view_prev.addEventListener("click", ()=>{gift_page.className = "sub_container ba
 const previewImage = document.getElementById("preview_image")
 const decoList = Array.from(document.querySelector(".deco_selec_wrap").children);
 
+decoList[0].className = "deco_selec selected"
+previewImage.src = decoList[0].firstChild.src
+previewImage.alt = decoList[0].firstChild.alt
+
 decoList.forEach(element => {
     element.addEventListener("click", (e) => {
         decoList.forEach(el => {
             el.className = "deco_selec"
         })
-        previewImage.alt = e.target.innerText
-        e.target.className = "deco_selec selected"
+        if (e.target.className === "deco_selec") {
+            previewImage.src = e.target.firstChild.src
+            previewImage.alt = e.target.firstChild.alt
+            e.target.className = "deco_selec selected"
+        } else if (e.target.className === "deco_radio_img"){
+            previewImage.src = e.target.src
+            previewImage.alt = e.target.alt
+            e.target.parentNode.className = "deco_selec selected"
+        }
+        
     
     })
 });
@@ -113,6 +125,7 @@ msgNext.addEventListener("click", msgToGift);
 // 선물 페이지
 const $search = document.querySelector("#search_gift")
 const $searchButton = document.querySelector(".search_button")
+const $glCont = document.querySelector(".gift_list_container_wrap")
 const $gcCont = document.querySelector(".gift_cont_container")
 const $gsCont = document.querySelector(".gift_search_container")
 let giftWrap = document.querySelectorAll(".gift_box_wrap");
@@ -179,6 +192,7 @@ function showSearchList(jsondata) {
     giftWrap.forEach(element => {
         element.addEventListener("click", giftSelect)
     });
+    
 }
 
 
@@ -209,6 +223,7 @@ async function searchGift() {
     } else {
         showSearchErr(jsondata);
     }
+    $glCont.scrollTo(0,0)
 }
 
 $search.addEventListener('keyup', (e)=>{
@@ -218,6 +233,17 @@ $search.addEventListener('keyup', (e)=>{
 });
 
 $searchButton.addEventListener("click", searchGift)
+
+function nameSelectedGift() {    
+    try {
+        let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0];
+        let $src = giftSelected.firstChild.src;
+        gift_next.innerHTML = `<div class="gift_button_span">${giftSelected.innerText}</div><div class="gift_button_span_two"> 선택하기</div>`
+
+    } catch (error) {
+        gift_next.innerHTML = `<div class="gift_button_span_two">선물을 선택하세요</div>`
+    }
+}
 
 
 function giftSelect(event) {
@@ -229,11 +255,11 @@ function giftSelect(event) {
     })
     if (event.target.className === "gift_img"){
         event.target.parentNode.className = "gift_box selected_gift"
-    } else if (event.target.className = "gift_box_wrap") {
-    } else if (event.target.className = "gift_box") {
+    } else if (event.target.className === "gift_box_wrap") {
+    } else if (event.target.className === "gift_box") {
         event.target.className = "gift_box selected_gift"
     }
-    
+    nameSelectedGift()
 }
 
 giftWrap.forEach(element => {
@@ -284,7 +310,7 @@ function fetchPostMessage(data) {
 async function postMessage() {
     let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0]
     let giftId = giftSelected.firstChild.alt
-    let decoSelected = document.getElementsByClassName("deco_selec selected")[0]
+    let decoSelected = previewImage.src
     if (title.value === "") {
         return alert("상품 제목을 붙여주세요!")
     } else if (author.value === "") {
@@ -296,7 +322,7 @@ async function postMessage() {
     data.append("to_user_id", toUserId)
     data.append("gift_id", giftId)
     data.append("msg", message.value)
-    data.append("deco", decoSelected.innerText)
+    data.append("deco", decoSelected)
     data.append("title", title.value)
     data.append("author", author.value)
 
