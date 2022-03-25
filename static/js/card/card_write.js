@@ -291,6 +291,17 @@ const title = document.querySelector("#title")
 const author = document.querySelector("#author")
 const csrftoken = document.querySelector("#cs input").value;
 const $previewImage = document.getElementById("preview_img")
+const titleBtn = document.querySelector("#title_btn")
+const authorBtn = document.querySelector("#author_btn")
+
+titleBtn.addEventListener("click", ()=>{
+    title.select()
+})
+
+authorBtn.addEventListener("click", ()=>{
+    author.select()
+})
+
 
 
 function fetchPostMessage(data) {
@@ -333,5 +344,6 @@ async function postMessage() {
     window.location.pathname = toUserId
 }
 
+// 353*720
 
 view_next.addEventListener("click", postMessage)

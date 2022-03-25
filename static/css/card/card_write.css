@@ -307,23 +307,54 @@ h3 {
 }
 
 /* 여기부터는 메시지 페이지 */
-.gifticon_wrap{
+.gi_con_wrap{
     width: 100%;
-    height: 35%;
-    background-color: #FFEBCC;
-    margin-bottom: 10px;
-    border-radius: 10px;
+    height: 80%;
+    background-color: #FA837F;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.gifticon_container{
+    width: 353px;
+    height: 720px;
+    background-image: url("/static/img/gifticon.jpeg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.gifticon_wrap{
+    width: 100%;
+    /* height: 35%; */
+    background-color: transparent;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
 }
 .gifticon_wrap #preview_img{
-    width: 75%;
-    height: 75%;
+    width: 230px;
+    height: 230px;
 }
 .gifticon_wrap .preview_input_wrap{
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* align-items: center; */
+    position: relative;
+}
+#ttwrap {
+    margin-top: 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 .gifticon_wrap .gifticon_label {
     width: 25%;
@@ -331,18 +362,29 @@ h3 {
     color: #FF9999;
 }
 .gifticon_wrap .gifticon_input {
-    width: 70%;
+    width: 220px;
     display: inline-block;
     border: none;
     border-bottom: #FF9999 solid 1px;
     color: #FF9999;
-    background-color: #FFEBCC;
+    background-color: transparent;
+    text-align: center;
 }
-
+.fa-pen-to-square{
+    position: absolute;
+    right: 5px;
+    bottom: 1px;
+    font-size: 1rem;
+    color: #999999;
+    cursor: pointer;
+}
+.tarea_wrap {
+    padding: 40px;
+    margin-top: 40px; 
+}
 #message_result {
     width: 100%;
-    height: 35%;
-    background-color: #FFEBCC;
+    background-color: transparent;
     color: #FF9999;
     border: none;
 }
@@ -351,3 +393,4 @@ h3 {
 #base_contain{
     height: 100vh;
 }
+
