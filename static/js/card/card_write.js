@@ -16,7 +16,9 @@ const view_prev = document.querySelector("#view_prev");
 const view_next = document.querySelector("#view_next");
 
 deco_next.addEventListener("click", ()=>{deco_page.className = "sub_container moved";});
-
+deco_prev.addEventListener("click",()=>{
+    window.location.pathname = toUserId
+})
 
 msg_prev.addEventListener("click", ()=>{deco_page.className = "sub_container back";});        
 gift_prev.addEventListener("click", ()=>{msg_page.className = "sub_container back";});        
