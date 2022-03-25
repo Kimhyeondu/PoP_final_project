@@ -4,10 +4,10 @@
 
 {% block head %}
 <script src="https://kit.fontawesome.com/719ecf5a78.js" crossorigin="anonymous"></script>
-<link rel='stylesheet' href="{% static 'css/card/card_write.css' %}">
-<!-- <link rel='stylesheet' href="/static/css/card/card_write.css"> -->
+<!-- <link rel='stylesheet' href="{% static 'css/card/card_write.css' %}"> -->
+<link rel='stylesheet' href="/static/css/card/card_write.css">
 <style>
-
+    
 </style>
 {% endblock %}
 
@@ -90,19 +90,26 @@
         <div class="sub_container" id="view_page">
             <div id="view_prev" class="prev_button"><i class="fa-solid fa-chevron-left"></i> 이전으로</div>
             <h3>완성 페이지</h3>
-            <div class="gifticon_wrap">
-                <img id="preview_img" src="" alt="">
-                <div class="preview_input_wrap">
-                    <label for="title" class="gifticon_label">상품 이름</label>
-                    <input type="text" id="title" class="gifticon_input" placeholder="재미있는 상품 이름을 붙여주세요">
-                </div>
-                <div class="preview_input_wrap">
-                    <label for="author" class="gifticon_label">보내는 이</label>
-                    <input type="text" id="author" id="title" class="gifticon_input" placeholder="당신의 이름을 적어주세요">
-                </div>
-                
+            <div class="gi_con_wrap">
+                <div class="gifticon_container">
+                    <div class="gifticon_wrap">
+                        <img id="preview_img" src="" alt="">
+                        <div class="preview_input_wrap" id="ttwrap">
+                            <!-- <label for="title" class="gifticon_label">상품 이름</label> -->
+                            <input type="text" id="title" class="gifticon_input" placeholder="재미있는 상품 이름을 붙여주세요"><i id="title_btn" class="fa-solid fa-pen-to-square"></i>
+                        </div>
+                        <div class="preview_input_wrap">
+                            <!-- <label for="author" class="gifticon_label">보내는 이</label> -->
+                            <input type="text" id="author" id="title" class="gifticon_input" placeholder="당신의 이름을 적어주세요"><i id="author_btn" class='fa-solid fa-pen-to-square'></i>
+                        </div>
+                    </div>
+                    <div class="tarea_wrap">
+                        <textarea name="message_result" id="message_result" cols="30" rows="10" disabled></textarea>
+                    </div>
+                    
+                </div>    
             </div>
-            <textarea name="message_result" id="message_result" cols="30" rows="10" disabled></textarea>
+                    
             <div class="next_wrap">
                 <div id="cs">{% csrf_token %}</div>
                 <div id="view_next" class="next_button">메시지 작성 완료</div>
@@ -110,8 +117,8 @@
         </div>
 
     </div>
-    <script src="{% static 'js/card/card_write.js' %}"></script>
-    <!-- <script src="/static/js/card/card_write.js"></script> -->
+    <!-- <script src="{% static 'js/card/card_write.js' %}"></script> -->
+    <script src="/static/js/card/card_write.js"></script>
     <script>
         
     </script>

@@ -23,7 +23,6 @@ async def card_write(request:HttpRequest, id:int):
             return JsonResponse({"server":"저장 완료!"})
         deco_list = await all_list_deco()
         return await sync_to_async(render)(request, "card/card_write.html", {"to_user_id":id, "deco_list":deco_list})
-    except:
-        
+    except User.DoesNotExist:        
         raise Http404("존재하지 않는 유저입니다.")
     
