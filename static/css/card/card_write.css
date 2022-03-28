@@ -319,7 +319,7 @@ h3 {
 .gifticon_container{
     width: 353px;
     height: 720px;
-    background-image: url("/static/img/gifticon.jpeg");
+    background-image: url("https://sparta-team11.s3.ap-northeast-2.amazonaws.com/img/gifticon.jpeg");
     background-size: cover;
     background-position: center;
     position: relative;
