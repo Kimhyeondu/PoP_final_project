@@ -1,5 +1,19 @@
 $(document).ready(function () {
     $('#modal').hide();
+    $('.popup').hide();
+})
+
+// 기프티콘 미리보기 이미지 클릭 시 모달 나오게
+jQuery('.preview').click(function() {
+   if($('.popup').css('display') === 'none') {
+       jQuery('.popup').show();
+   } else {
+       jQuery('.popup').hide();
+   }
+});
+// 기프티콘 모달 끄기
+jQuery('#close-icon').click(function() {
+    $('.popup').hide();
 })
 
 // '삭제' 클릭하면 모달 나오게
@@ -11,25 +25,14 @@ jQuery('#delete-btn').click(function() {
    }
 });
 
-// 모달에서 '아니오' 클릭하면 모달 끄기
+// 삭제 확인 모달에서 '아니요' 클릭하면 모달 끄기
 jQuery('#close-modal').click(function() {
     $('#modal').hide();
 });
 
 // 카드 삭제하기
-function delete(){
-    // var url = jQuery('#origin').attr("src");
-    // var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-    //
-    // $.ajax({
-    //     url: 'http://127.0.0.1:8000/card/delete/id',
-    //     data: {'url': src},
-    //     beforeSend: function(xhr) {
-    //         xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    //     },
-    //     method: "POST",
-    //     success: function (response){
-    //         alert('삭제완료!!!')
-    //     }
-    // })
+function delete_message(){
+    const url = window.location.href;
+    const arr = url.split('/');
+    window.location.replace(`http://127.0.0.1:8000/card/delete/${arr[5]}`);
 }

@@ -12,7 +12,7 @@
 
     <!--css-->
     {% load static %}
-    <link href="{% static 'css/card_read.css' %}" rel="stylesheet" type="text/css">
+{#    <link href="{% static 'css/card_read.css' %}" rel="stylesheet" type="text/css">#}
     <link href="/static/css/card/card_read.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -24,6 +24,12 @@
         <div class="gifticon">
             <img class="preview" src="{% static 'img/gifticon.jpeg' %}"/>
 {#            <img class="zoom-icon" src="{% static 'img/zoom.png' %}"/>#}
+        </div>
+        <div class="popup">
+            <div class="overlay">
+                <p class="close-icon"><img id="close-icon" src="/static/img/close.png"/></p>
+                <img class="preview" src="{% static 'img/gifticon.jpeg' %}"/>
+            </div>
         </div>
         <div class="message-wrapper">
             <div class="send_user">
