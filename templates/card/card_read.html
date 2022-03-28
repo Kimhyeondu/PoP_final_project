@@ -22,15 +22,14 @@
             <span id="delete-btn">삭제</span>
         </div>
         <div class="gifticon">
-            <img src="/static/img/gifticon.jpeg"/>
+            <img class="preview" src="{% static 'img/gifticon.jpeg' %}"/>
+{#            <img class="zoom-icon" src="{% static 'img/zoom.png' %}"/>#}
         </div>
         <div class="message-wrapper">
-            {% if message.author is not None %}
             <div class="send_user">
                 <span>작성자</span>
                 <span>{{ card.author }}</span>
             </div>
-            {% endif %}
             <div class="content">
                 <p>{{ card.msg }}</p>
             </div>
@@ -40,15 +39,14 @@
                 <div class="wrapper">
                     <p>메시지를 삭제하시겠습니까?</p>
                     <button id="close-modal">아니요</button>
-                    <button onclick="delete()">네</button>
+                    <button onclick="delete_message()">네</button>
                 </div>
             </div>
         </div>
     </div>
 
-
     <!--js-->
-    <script src='{% static 'js/card_read.js' %}'></script>
+{#    <script src="{% static 'js/card_read.js' %}"></script>#}
     <script src="/static/js/card/card_read.js"></script>
 </body>
 </html>

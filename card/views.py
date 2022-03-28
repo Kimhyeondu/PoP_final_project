@@ -3,8 +3,8 @@ from asgiref.sync import async_to_sync
 from django.http import Http404, HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
 
-from card.models import Message
-from card.services.message_service import create_msg
+from card.models import Message, Gift
+from card.services.message_service import create_msg, delete_msg
 from user.models import User
 
 
@@ -31,11 +31,12 @@ def card_write(request:HttpRequest, id:int):
 
 
 
-def card_read(request, message_id:int) -> Message:
+def card_read(request:HttpRequest, message_id:int) -> Message:
     card = Message.objects.get(id=message_id)
-    return render(request, "card/card_read.html", {"card" : card})
+    gift = Gift.objects.get(id=card.gift_id)
+    return render(request, "card/card_read.html", {"card" : card, "gift":gift})
 
 
-def card_delete(request, message_id:int) -> None:
+def card_delete(request:HttpRequest, message_id:int) -> None:
     Message.objects.filter(id=message_id).delete()
-    return redirect('/users/mypage')
+    return redirect('/')
