@@ -3,7 +3,7 @@ import shutil
 import tempfile
 from PIL import Image
 
-from django.test import override_settings, TransactionTestCase
+from django.test import override_settings, TransactionTestCase, tag
 
 from pop_final_project.settings import BASE_DIR, MEDIA_ROOT
 from card.services.deco_service import *
@@ -22,6 +22,8 @@ def get_temporary_image(temp_file):
     return temp_file
 
 
+
+@tag("deco")
 @override_settings(MEDIA_ROOT = (TEST_DIR + '/media'))
 class TestDecorationService(TransactionTestCase):
     reset_sequences = True

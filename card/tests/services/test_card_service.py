@@ -4,7 +4,7 @@ import tempfile
 from PIL import Image
 
 from asgiref.sync import async_to_sync
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings, tag
 
 from card.services.card_service import *
 from card.services.gift_service import create_gift
@@ -21,7 +21,7 @@ def get_temporary_image(temp_file):
     image.save(temp_file, 'png')
     return temp_file
 
-
+@tag("service")
 @override_settings(MEDIA_ROOT = (TEST_DIR + '/media'))
 class TestCardService(TestCase):
     def test_recommend_gift_list(self):

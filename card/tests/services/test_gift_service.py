@@ -3,7 +3,7 @@ import shutil
 import tempfile
 from PIL import Image
 
-from django.test import TestCase, override_settings, TransactionTestCase
+from django.test import TestCase, override_settings, TransactionTestCase, tag
 from django.core.files.uploadedfile import SimpleUploadedFile, UploadedFile
 
 from pop_final_project.settings import BASE_DIR, MEDIA_ROOT
@@ -23,6 +23,8 @@ def get_temporary_image(temp_file):
     return temp_file
 
 
+
+@tag("gift")
 @override_settings(MEDIA_ROOT = (TEST_DIR + '/media'))
 class TestGiftService(TransactionTestCase):
     reset_sequences = True

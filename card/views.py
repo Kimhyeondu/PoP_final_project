@@ -12,12 +12,12 @@ async def card_write(request:HttpRequest, id:int):
     try:
         await sync_to_async(User.objects.get)(id=id)
         if request.method == "POST":
-            to_user_id = request.POST["to_user_id"]
-            gift_id = request.POST["gift_id"]
-            msg = request.POST["msg"]
-            deco = request.POST["deco"]
-            title = request.POST["title"]
-            author = request.POST["author"]
+            to_user_id = request.POST.get("to_user_id")
+            gift_id = request.POST.get("gift_id")
+            msg = request.POST.get("msg")
+            deco = request.POST.get("deco")
+            title = request.POST.get("title")
+            author = request.POST.get("author")
             await create_msg(to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author)
             
             return JsonResponse({"server":"저장 완료!"})
