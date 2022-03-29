@@ -1,6 +1,7 @@
 from django.contrib import auth
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
 from django.http import JsonResponse
 from django.views.generic import FormView
@@ -16,29 +17,31 @@ def log_out(request):
     logout(request)
     return redirect(reverse('user:signin'))
 
+@login_required
 def mypage(request):
-    return render(request, "user/edit_profile.html", {})
-
-
-def edit_user(request):
-    tags = [""]
+    user = User.objects.get(id=request.user.id)
     if request.method == "GET":
-        print("yagho")
-        return render(request, "user/edit_profile.html", {})
-
+        tag_list = list(user.tag.names())
+        return render(request, "user/edit_profile.html", {'tag_list':tag_list})
     if request.method == "POST":
-        tagcount= int(request.POST.get('tag_count',''))
-        print(tagcount)
-
-        for i in range(0,tagcount):
+        tags = []
+        # print(request.POST, request.FILES)
+        tagcount= int(request.POST.get('tag_count','0'))
+        # print(tagcount)
+        for i in range(tagcount):
             tag=request.POST.get(f'taginput{i}', '')
             #'데이터' 형식으로 들어오는데 양끝 '문자 제거
             tag=tag[:-1][1:]
-            tags[0]=tag
-            print(tags[0])
+            tags.append(tag)
+            # print(tags[-1])
+        # print(tags)
+        if request.FILES:
+            user.profile_img = request.FILES.get("imgs")
+        user.tag.clear()
+        user.tag.add(*tags)
+        user.save()
+        return redirect("/mypage")
 
-
-        return render(request, "user/edit_profile.html", {})
 
     # true_user = auth.authenticate(request, username=username, password=password)
     # if true_user is not None:

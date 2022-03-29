@@ -4,11 +4,12 @@ import tempfile
 from PIL import Image
 
 from asgiref.sync import async_to_sync
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings, tag
 
 from card.services.card_service import *
 from card.services.gift_service import create_gift
 from card.services.message_service import create_msg
+from user.models import User
 from pop_final_project.settings import BASE_DIR, MEDIA_ROOT
 
 TEST_DIR = os.path.join(BASE_DIR, "test_data")
@@ -21,7 +22,7 @@ def get_temporary_image(temp_file):
     image.save(temp_file, 'png')
     return temp_file
 
-
+@tag("service")
 @override_settings(MEDIA_ROOT = (TEST_DIR + '/media'))
 class TestCardService(TestCase):
     def test_recommend_gift_list(self):
@@ -61,6 +62,12 @@ class TestCardService(TestCase):
 
 
     def test_decoration_move_service(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        User.objects.create(username="username", profile_img=test_image, email="test@email.com", login_method=User.LOGIN_EMAIL)
+        async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
+        async_to_sync(create_msg)(to_user_id=1, gift_id=1, msg="msg1", deco="deco", author="author", title="title")
+        
         pass
 
 

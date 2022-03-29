@@ -3,7 +3,7 @@ import shutil
 import tempfile
 from PIL import Image
 
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings, tag
 from pop_final_project.settings import BASE_DIR, MEDIA_ROOT
 
 
@@ -19,6 +19,8 @@ def get_temporary_image(temp_file):
     return temp_file
 
 
+
+@tag("router")
 @override_settings(MEDIA_ROOT = (TEST_DIR + '/media'))
 class TestCardRouter(TestCase):
     def test_gift_list(self):
