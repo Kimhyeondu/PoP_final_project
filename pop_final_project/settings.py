@@ -154,6 +154,8 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'user.User'
 
+LOGIN_URL = "/signin/"
+LOGIN_REDIRECT_URL = "/"
 
 # 테스트 시 RDS와 S3 연결 끊음
 if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage

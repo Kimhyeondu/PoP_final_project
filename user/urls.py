@@ -11,7 +11,6 @@ urlpatterns = [
     # path('tweet/comment/delete/<int:id>', views.delete_comment, name='delete-comment'),
     # path('tweet/comment/like/<int:id>',views.comment_like,name='comment_like'),
     path("mypage/", views.mypage, name="mypage"),
-    path("edit_user/", views.edit_user),
     path("signin/", views.LoginView.as_view(), name="signin"),
     path("signup/", views.SignUpView.as_view(), name="signup"),
     path("is_id/", views.is_id, name="isid"),
