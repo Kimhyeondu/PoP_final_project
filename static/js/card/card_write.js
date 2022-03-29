@@ -16,7 +16,9 @@ const view_prev = document.querySelector("#view_prev");
 const view_next = document.querySelector("#view_next");
 
 deco_next.addEventListener("click", ()=>{deco_page.className = "sub_container moved";});
-gift_next.addEventListener("click", ()=>{gift_page.className = "sub_container moved";});
+deco_prev.addEventListener("click",()=>{
+    window.location.pathname = toUserId
+})
 
 msg_prev.addEventListener("click", ()=>{deco_page.className = "sub_container back";});        
 gift_prev.addEventListener("click", ()=>{msg_page.className = "sub_container back";});        
@@ -45,13 +47,25 @@ view_prev.addEventListener("click", ()=>{gift_page.className = "sub_container ba
 const previewImage = document.getElementById("preview_image")
 const decoList = Array.from(document.querySelector(".deco_selec_wrap").children);
 
+decoList[0].className = "deco_selec selected"
+previewImage.src = decoList[0].firstChild.src
+previewImage.alt = decoList[0].firstChild.alt
+
 decoList.forEach(element => {
     element.addEventListener("click", (e) => {
         decoList.forEach(el => {
             el.className = "deco_selec"
         })
-        previewImage.alt = e.target.innerText
-        e.target.className = "deco_selec selected"
+        if (e.target.className === "deco_selec") {
+            previewImage.src = e.target.firstChild.src
+            previewImage.alt = e.target.firstChild.alt
+            e.target.className = "deco_selec selected"
+        } else if (e.target.className === "deco_radio_img"){
+            previewImage.src = e.target.src
+            previewImage.alt = e.target.alt
+            e.target.parentNode.className = "deco_selec selected"
+        }
+        
     
     })
 });
@@ -113,10 +127,15 @@ msgNext.addEventListener("click", msgToGift);
 // 선물 페이지
 const $search = document.querySelector("#search_gift")
 const $searchButton = document.querySelector(".search_button")
-const gcCont = document.querySelector(".gift_cont_container")
+const $glCont = document.querySelector(".gift_list_container_wrap")
+const $gcCont = document.querySelector(".gift_cont_container")
+const $gsCont = document.querySelector(".gift_search_container")
+let giftWrap = document.querySelectorAll(".gift_box_wrap");
+
 
 function showRecommendList(jsondata) {
-    gcCont.innerHTML = ""
+    $gcCont.innerHTML = ""
+    $gsCont.innerHTML = ""
     // let reList = jsondata[0]
     // let tagList = jsondata[1]
     jsondata.forEach(giftList => {
@@ -129,10 +148,14 @@ function showRecommendList(jsondata) {
         giftList.forEach(e => {
             let gBox = document.createElement("div")
             gBox.className = "gift_box"
-            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.gift_name}" class="gift_img">${e.gift_name}`
+            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img">${e.gift_name}`
             $reWrap.append(gBox)
         });
-        gcCont.appendChild($reListCon)
+        $gcCont.appendChild($reListCon)
+        giftWrap = document.querySelectorAll(".gift_box_wrap");
+        giftWrap.forEach(element => {
+            element.addEventListener("click", giftSelect)
+        });
     });
 }
 
@@ -152,8 +175,8 @@ function fetchSearch(data) {
 }
 
 function showSearchList(jsondata) {
-    console.log(jsondata)
-    gcCont.innerHTML = ""
+    // console.log(jsondata)
+    $gsCont.innerHTML = ""
     let $reListCon = document.createElement("div")
     $reListCon.className = "gift_box_container"
     $reListCon.innerHTML = '<div class="gift_tag">검색 결과</div>'
@@ -163,20 +186,29 @@ function showSearchList(jsondata) {
     jsondata.forEach(e => {
         let gBox = document.createElement("div")
         gBox.className = "gift_box"
-        gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.gift_name}" class="gift_img">${e.gift_name}`
+        gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img">${e.gift_name}`
         $reWrap.append(gBox)
     });
-    gcCont.appendChild($reListCon);
+    $gsCont.appendChild($reListCon);
+    giftWrap = document.querySelectorAll(".gift_box_wrap");
+    giftWrap.forEach(element => {
+        element.addEventListener("click", giftSelect)
+    });
+    
 }
 
 
 function showSearchErr(jsondata) {
-    console.log(jsondata)
-    gcCont.innerHTML = ""
+    // console.log(jsondata)
+    $gsCont.innerHTML = ""
     let $reListCon = document.createElement("div")
     $reListCon.className = "gift_box_container"
     $reListCon.innerHTML = `<div class="gift_tag">${jsondata.err_msg}</div>`
-    gcCont.appendChild($reListCon);
+    $gsCont.appendChild($reListCon);
+    giftWrap = document.querySelectorAll(".gift_box_wrap");
+    giftWrap.forEach(element => {
+        element.addEventListener("click", giftSelect)
+    });
 }
 
 
@@ -193,6 +225,7 @@ async function searchGift() {
     } else {
         showSearchErr(jsondata);
     }
+    $glCont.scrollTo(0,0)
 }
 
 $search.addEventListener('keyup', (e)=>{
@@ -203,8 +236,73 @@ $search.addEventListener('keyup', (e)=>{
 
 $searchButton.addEventListener("click", searchGift)
 
+function nameSelectedGift() {    
+    try {
+        let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0];
+        let $src = giftSelected.firstChild.src;
+        gift_next.innerHTML = `<div class="gift_button_span">${giftSelected.innerText}</div><div class="gift_button_span_two"> 선택하기</div>`
+
+    } catch (error) {
+        gift_next.innerHTML = `<div class="gift_button_span_two">선물을 선택하세요</div>`
+    }
+}
+
+
+function giftSelect(event) {
+    // console.info(event)
+    giftWrap.forEach(el => {        
+        Array.from(el.children).forEach(e=>{
+            e.className = "gift_box"
+        })
+    })
+    if (event.target.className === "gift_img"){
+        event.target.parentNode.className = "gift_box selected_gift"
+    } else if (event.target.className === "gift_box_wrap") {
+    } else if (event.target.className === "gift_box") {
+        event.target.className = "gift_box selected_gift"
+    }
+    nameSelectedGift()
+}
+
+giftWrap.forEach(element => {
+    element.addEventListener("click", giftSelect)
+});
+
+
+
+function giftPageMoved() {
+    let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0];
+    try {
+        $previewImage.src = giftSelected.firstChild.src;
+        $previewImage.alt = giftSelected.firstChild.alt;
+        gift_page.className = "sub_container moved";
+        title.value = giftSelected.innerText;
+    } catch (error) {
+        alert("선물을 선택하세요!")
+    }
+    
+}
+
+
+gift_next.addEventListener("click", giftPageMoved);
+
 // 미리보기 페이지
+const title = document.querySelector("#title")
+const author = document.querySelector("#author")
 const csrftoken = document.querySelector("#cs input").value;
+const $previewImage = document.getElementById("preview_img")
+const titleBtn = document.querySelector("#title_btn")
+const authorBtn = document.querySelector("#author_btn")
+
+titleBtn.addEventListener("click", ()=>{
+    title.select()
+})
+
+authorBtn.addEventListener("click", ()=>{
+    author.select()
+})
+
+
 
 function fetchPostMessage(data) {
     return new Promise((receive) => { 
@@ -222,30 +320,30 @@ function fetchPostMessage(data) {
 }
 
 
-function postMessage() {
-    let giftId = 1
-    let decoSelected = document.getElementsByClassName("deco_selec selected")
-    let title = document.querySelector("#title")
-    let author = document.querySelector("#author")
+async function postMessage() {
+    let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0]
+    let giftId = giftSelected.firstChild.alt
+    let decoSelected = previewImage.src
+    if (title.value === "") {
+        return alert("상품 제목을 붙여주세요!")
+    } else if (author.value === "") {
+        return alert("보내는 이를 적어주세요!")
+    }
 
     let data = new FormData();
-    data.append("csrfmiddlewaretoekn", csrftoken)
+    data.append("csrfmiddlewaretoken", csrftoken)
     data.append("to_user_id", toUserId)
     data.append("gift_id", giftId)
     data.append("msg", message.value)
-    data.append("deco", decoSelected.innerText)
-    // data.append("title", title.innerText)
-    // data.append("author", author.innerText)
+    data.append("deco", decoSelected)
+    data.append("title", title.value)
+    data.append("author", author.value)
 
-    console.log(data)
-    console.log(csrftoken)
-    console.log(toUserId)
-    console.log(giftId)
-    console.log(message.value)
-    console.log(decoSelected.innerText)
-
-
+    let server_msg = await fetchPostMessage(data)
+    alert(server_msg.server)
+    window.location.pathname = toUserId
 }
 
+// 353*720
 
 view_next.addEventListener("click", postMessage)

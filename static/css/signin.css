@@ -27,7 +27,7 @@
 .img-box {
     width: 75%;
     height: 360px;
-    background-image: url('/static/img/logo.png');
+    background-image: url('https://sparta-team11.s3.ap-northeast-2.amazonaws.com/img/logo.png');
     background-position: center;
 }
 #kakao-btn {

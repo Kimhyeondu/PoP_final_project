@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,8 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'user',
     "card",
-    'taggit'
-
+    'taggit',
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -73,16 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "pop_final_project.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 
 # Password validation
@@ -120,6 +112,36 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+# AWS S3
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+with open(os.path.join(BASE_DIR, 'aws.json')) as f:
+    secrets = json.loads(f.read())
+
+AWS_S3_REGION_NAME = 'ap-northeast-2'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_ACCESS_KEY_ID = secrets['S3']['ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = secrets['S3']['SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = secrets['S3']['STORAGE_BUCKET_NAME']
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_ADDRESSING_STYLE = "virtual"
+
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'project',
+        'USER': secrets['RDS']['USER'],
+        'PASSWORD': secrets['RDS']['PASSWORD'],
+        'HOST': secrets['RDS']['ENDPOINT'],
+        'PORT': '3306',
+    }
+}
+
+
 # 미디어 파일을 관리할 루트 media 디렉터리
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # 각 media file에 대한 URL prefix
@@ -131,6 +153,18 @@ MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'user.User'
+
+
+# 테스트 시 RDS와 S3 연결 끊음
+if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+    del DEFAULT_FILE_STORAGE
+    del STATICFILES_STORAGE
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 try:
     from pop_final_project.local_settings import *

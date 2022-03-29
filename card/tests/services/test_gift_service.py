@@ -1,8 +1,10 @@
 import os
 import shutil
+import tempfile
+from PIL import Image
 
-from django.test import TestCase, override_settings
-from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase, override_settings, TransactionTestCase
+from django.core.files.uploadedfile import SimpleUploadedFile, UploadedFile
 
 from pop_final_project.settings import BASE_DIR, MEDIA_ROOT
 from card.services.gift_service import *
@@ -13,17 +15,29 @@ from asgiref.sync import sync_to_async, async_to_sync
 # CRUD - create,get,filter,update,delete
 TEST_DIR = os.path.join(BASE_DIR, "test_data")
 
+def get_temporary_image(temp_file):
+    size = (200, 200)
+    color = (255, 0, 0, 0)
+    image = Image.new("RGBA", size, color)
+    image.save(temp_file, 'png')
+    return temp_file
+
+
 @override_settings(MEDIA_ROOT = (TEST_DIR + '/media'))
-class TestGiftService(TestCase):
+class TestGiftService(TransactionTestCase):
+    reset_sequences = True
 
     def test_gift_create(self):
         gift_name = "sample_name"
-        gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         gift_desc = "sample_description"
         tags = "다이어트, 요리, 골프" 
         
         try:
-            with self.assertNumQueries(42):
+            with self.assertNumQueries(36):
                 new_gift = async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
                 
                 self.assertEqual(new_gift.gift_name, gift_name)
@@ -39,7 +53,10 @@ class TestGiftService(TestCase):
     
     def test_gift_create_with_error(self):
         gift_name = "sample_name"
-        gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         
         try:
             with self.assertRaises(TypeError):
@@ -54,15 +71,17 @@ class TestGiftService(TestCase):
 
     def test_gift_get(self):
         gift_name = "sample_name"
-        gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         gift_desc = "sample_description"
         tags = "다이어트"
         async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
         
         try:
             with self.assertNumQueries(2):
-                new_gift = async_to_sync(get_gift)(id = 1)
-                
+                new_gift = async_to_sync(get_gift)(id=1)
                 self.assertEqual(new_gift.gift_name, gift_name)
                 self.assertEqual(new_gift.gift_img, gift_img)
                 self.assertEqual(new_gift.gift_desc, gift_desc)
@@ -76,7 +95,10 @@ class TestGiftService(TestCase):
 
     def test_gift_get_with_error(self):
         gift_name = "sample_name"
-        gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         gift_desc = "sample_description"
         tags = "다이어트"
         async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
@@ -96,9 +118,12 @@ class TestGiftService(TestCase):
 
 
     def test_gift_list_all(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(5):
             gift_name = "test"+str(i)
-            gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
             gift_desc = "sample_description"
             tags = "다이어트"
             async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
@@ -115,9 +140,12 @@ class TestGiftService(TestCase):
 
     
     def test_gift_list_all_with_error(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(5):
             gift_name = "test"+str(i)
-            gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
             gift_desc = "sample_description"
             tags = "다이어트"
             async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
@@ -130,15 +158,17 @@ class TestGiftService(TestCase):
 
 
     def test_gift_list_by_filter(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(3):
             gift_name = "test"+str(i)
-            gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
             gift_desc = "sample_description"
             tags = "다이어트"
             async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
         for i in range(3,7):
             gift_name = "test"+str(i)
-            gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
             gift_desc = "sample_description"
             tags = "골프"
             async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
@@ -159,15 +189,17 @@ class TestGiftService(TestCase):
 
 
     def test_gift_list_by_search(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(3):
             gift_name = "test"+str(i)
-            gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
             gift_desc = "sample_description"
             tags = "다이어트"
             async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
         for i in range(3,7):
             gift_name = "test"+str(i)
-            gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
             gift_desc = "sample_description"
             tags = "골프"
             async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
@@ -188,15 +220,18 @@ class TestGiftService(TestCase):
 
 
     def test_gift_update(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,4):
             gift_name = "test"+str(i)
-            gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
             gift_desc = "sample_description"
             tags = "다이어트"
             async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
         
         try:
-            with self.assertNumQueries(33):
+            with self.assertNumQueries(30):
                 async_to_sync(update_gift)(id=2, gift_name="thisissecond")
                 async_to_sync(update_gift)(id=3, tags="요리, 골프")
 
@@ -222,15 +257,18 @@ class TestGiftService(TestCase):
 
 
     def test_gift_delete(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file).name
+        gift_img = test_image
+        # gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,4):
             gift_name = "test"+str(i)
-            gift_img = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
             gift_desc = "sample_description"
             tags = "다이어트"
             async_to_sync(create_gift)(gift_name=gift_name, gift_img=gift_img, gift_desc=gift_desc, tags=tags)
         
         try:
-            with self.assertNumQueries(5):
+            with self.assertNumQueries(6):
                 async_to_sync(delete_gift)(id=2)
                 gift_list = async_to_sync(all_list_gift)()
                 self.assertEqual(len(gift_list), 2)
