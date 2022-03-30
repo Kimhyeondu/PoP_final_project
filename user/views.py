@@ -74,7 +74,10 @@ class LoginView(LogoutOnlyView, FormView):
         if user is not None:
             messages.success(self.request, f'어서오세요 {username}님 !')
             login(self.request, user)
+            if user.tag.names():
+                self.success_url = "/"
         return super().form_valid(form)
+
 
 
 class SignUpView(LogoutOnlyView, FormView):

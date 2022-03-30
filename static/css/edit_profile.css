@@ -98,13 +98,13 @@ form {
     text-align: left;
 }
 
-ul {
+#edit_box_box ul {
 
-    text-align: left;
+    /* text-align: left; */
     padding: 16px;
 }
 
-ul li {
+#edit_box_box ul li {
     display: inline-block;
     margin: 5px;
     font-size: 14px;
@@ -179,6 +179,7 @@ ul li {
     border: 1px solid #ebebeb;
     border-bottom-color: #e2e2e2;
     border-radius: 0.25em;
+    text-decoration: none;
 }
 
 #rebert_button {
