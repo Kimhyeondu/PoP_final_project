@@ -19,7 +19,7 @@
                     {% if user.profile_img %}
                     <img id="blah" src="{{ user.profile_img.url }}" >
                     {% else %}
-                    <img id="blah" src="/static/img/anonymous.png" alt="프로필 이미지를 업데이트하세요">
+                    <img id="blah" src="{% static 'img/anonymous.png' %}" alt="프로필 이미지를 업데이트하세요">
                     {% endif %}
                 </div>
                 <div class="flex-colum" id="tempspace">
