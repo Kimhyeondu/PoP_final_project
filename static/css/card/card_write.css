@@ -290,6 +290,15 @@ h3 {
     margin: auto;
     /* background-color: cadetblue; */
 }
+.gift_img_name {
+    width: 160px;
+    height: 49px;
+    /* white-space: nowrap;  */
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    margin: auto;
+}
 
 .gift_button_span {
     max-width: 225px;
@@ -319,7 +328,7 @@ h3 {
 .gifticon_container{
     width: 353px;
     height: 720px;
-    background-image: url("/static/img/gifticon.jpeg");
+    background-image: url("https://sparta-team11.s3.ap-northeast-2.amazonaws.com/img/gifticon.jpeg");
     background-size: cover;
     background-position: center;
     position: relative;

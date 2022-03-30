@@ -1,1 +1,0 @@
-web: gunicorn pop_final_project.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000

@@ -148,7 +148,7 @@ function showRecommendList(jsondata) {
         giftList.forEach(e => {
             let gBox = document.createElement("div")
             gBox.className = "gift_box"
-            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img">${e.gift_name}`
+            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
             $reWrap.append(gBox)
         });
         $gcCont.appendChild($reListCon)
@@ -323,7 +323,7 @@ function fetchPostMessage(data) {
 async function postMessage() {
     let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0]
     let giftId = giftSelected.firstChild.alt
-    let decoSelected = previewImage.src
+    let decoSelected = previewImage.src.split("?")[0]
     if (title.value === "") {
         return alert("상품 제목을 붙여주세요!")
     } else if (author.value === "") {

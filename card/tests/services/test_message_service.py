@@ -3,7 +3,7 @@ import shutil
 import tempfile
 from PIL import Image
 
-from django.test import TestCase, override_settings, TransactionTestCase
+from django.test import TestCase, override_settings, TransactionTestCase, tag
 from django.core.files.uploadedfile import SimpleUploadedFile,UploadedFile
 from asgiref.sync import sync_to_async, async_to_sync
 
@@ -24,6 +24,7 @@ def get_temporary_image(temp_file):
     return temp_file
 
 
+@tag("message", "msg")
 @override_settings(MEDIA_ROOT = (TEST_DIR + '/media'))
 class TestMessageService(TransactionTestCase):
     reset_sequences = True

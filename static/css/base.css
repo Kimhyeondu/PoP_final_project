@@ -1,11 +1,24 @@
+@font-face {
+    font-family: "카페24 써라운드 에어";
+    src: url("https://sparta-team11.s3.ap-northeast-2.amazonaws.com/fonts/Cafe24SsurroundAir.ttf");
+}
+
+body{
+    max-width: 500px;
+    position: relative;
+    margin: auto;
+    overflow-x: hidden;
+}
+
 #navbar {
     background: rgba(255, 175, 175, 1);
     color: black;
-    position: fixed;
+    position: absolute;
     top: 0;
     height: 80px;
-    line-height: 60px;
+    line-height: 80px;
     width: 100%;
+    max-width: 100vw;
     z-index: 5;
 }
 
@@ -13,30 +26,30 @@
     margin: auto;
     text-align: center;
     width: 100%;
-    height: 100%;
+    height: 80px;
     display: grid;
     grid-gap: 1px;
     grid-template-columns: 0.5fr 5fr 2fr;
-    grid-template-areas:
-   "a b c . . . ";
+    grid-template-areas: "a b c . . . ";
     font-size: 0.1rem;
 }
 
 .logo img {
     display: inline-block;
-    margin-top: 15px;
-    height: 60px;
+    margin: 0;
+    height: 80px;
     grid-area: a;
 }
 
 #menu {
     display: inline-block;
     list-style: none;
-    margin-top: 10px;
+    margin: 0;
     transition: transform 0.5s ease-out;
     -webkit-transition: transform 0.5s ease-out;
     grid-area: b;
     color: white;
+    height: 80px;
 }
 
 #menu li a {
@@ -46,12 +59,12 @@
 #logout {
     display: inline-block;
     list-style: none;
-    margin-top: 10px;
-    margin-right: 5px;
+    margin: 0;
     transition: transform 0.5s ease-out;
     -webkit-transition: transform 0.5s ease-out;
     grid-area: c;
     width: 100%;
+    height: 80px;
 }
 
 .burger {
@@ -229,7 +242,7 @@
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
-    height: 90vh;
+    height: 100%;
     background-color: #faffe1;
     padding: 10px;
 }

@@ -1,6 +1,7 @@
 from django.contrib import auth
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
 from django.http import JsonResponse
 from django.views.generic import FormView
@@ -18,18 +19,18 @@ def log_out(request):
     logout(request)
     return redirect(reverse('user:signin'))
 
+<<<<<<< HEAD
 
+=======
+@login_required
+>>>>>>> 1ae5581409ec701058b6e4d71a04adc66787e76e
 def mypage(request):
-    return render(request, "user/edit_profile.html", {})
-
-
-def edit_user(request):
-    tags = [""]
+    user = User.objects.get(id=request.user.id)
     if request.method == "GET":
-        print("yagho")
-        return render(request, "user/edit_profile.html", {})
-
+        tag_list = list(user.tag.names())
+        return render(request, "user/edit_profile.html", {'tag_list':tag_list})
     if request.method == "POST":
+<<<<<<< HEAD
         tagcount = int(request.POST.get('tag_count', ''))
         print(tagcount)
 
@@ -41,6 +42,26 @@ def edit_user(request):
             print(tags[0])
         return redirect('/')
         # return render(request, "user/edit_profile.html", {})
+=======
+        tags = []
+        # print(request.POST, request.FILES)
+        tagcount= int(request.POST.get('tag_count','0'))
+        # print(tagcount)
+        for i in range(tagcount):
+            tag=request.POST.get(f'taginput{i}', '')
+            #'데이터' 형식으로 들어오는데 양끝 '문자 제거
+            tag=tag[:-1][1:]
+            tags.append(tag)
+            # print(tags[-1])
+        # print(tags)
+        if request.FILES:
+            user.profile_img = request.FILES.get("imgs")
+        user.tag.clear()
+        user.tag.add(*tags)
+        user.save()
+        return redirect("/mypage")
+
+>>>>>>> 1ae5581409ec701058b6e4d71a04adc66787e76e
 
     # true_user = auth.authenticate(request, username=username, password=password)
     # if true_user is not None:
@@ -74,7 +95,10 @@ class LoginView(LogoutOnlyView, FormView):
         if user is not None:
             messages.success(self.request, f'어서오세요 {username}님 !')
             login(self.request, user)
+            if user.tag.names():
+                self.success_url = "/"
         return super().form_valid(form)
+
 
 
 class SignUpView(LogoutOnlyView, FormView):
