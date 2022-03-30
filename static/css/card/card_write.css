@@ -290,6 +290,15 @@ h3 {
     margin: auto;
     /* background-color: cadetblue; */
 }
+.gift_img_name {
+    width: 160px;
+    height: 49px;
+    /* white-space: nowrap;  */
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    margin: auto;
+}
 
 .gift_button_span {
     max-width: 225px;

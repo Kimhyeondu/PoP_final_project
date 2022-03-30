@@ -148,7 +148,7 @@ function showRecommendList(jsondata) {
         giftList.forEach(e => {
             let gBox = document.createElement("div")
             gBox.className = "gift_box"
-            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img">${e.gift_name}`
+            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
             $reWrap.append(gBox)
         });
         $gcCont.appendChild($reListCon)
