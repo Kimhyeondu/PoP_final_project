@@ -63,7 +63,7 @@ for (let i = 0; box.length; i++) {
     });
 
 
-    document.addEventListener("mousemove", (e) => {
+    box[i].addEventListener("mousemove", (e) => {
         if (isDragging) {
             const diffX = e.clientX - originX;
             const diffY = e.clientY - originY;
@@ -74,7 +74,7 @@ for (let i = 0; box.length; i++) {
         }
     });
 
-    document.addEventListener("mouseup", positionhandler);
+    box[i].addEventListener("mouseup", positionhandler);
 
     // 여기에 ajax씀, url로 보내면 views함수가 실행됨 (origin left top)
 
@@ -91,9 +91,9 @@ for (let i = 0; box.length; i++) {
         data.append("left", left.split("p")[0])
 
         let r = await fetchmsg(data)
-        console.log(id)
-        console.log(top.split("p")[0])
-        console.log(left.split("p")[0])
+        // console.log(id)
+        // console.log(top.split("p")[0])
+        // console.log(left.split("p")[0])
 
     }
 }
