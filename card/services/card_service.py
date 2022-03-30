@@ -1,15 +1,29 @@
 from card.models import Gift, Message
+from user.models import User
 from .gift_service import all_list_gift, search_list_gift, filter_list_gift
 from .message_service import update_msg
 from asgiref.sync import sync_to_async
 
 async def recommend_gift_list(id:int, msg:str = ""):
-    result = await search_list_gift("음악")
-    result1 = result[:10]
-    for item in result1:
+    result = []
+    # 메시지 분석 후 추천 부분
+    # msg_response = msg
+    msg_response = "음악"
+    msg_result = await search_list_gift(msg_response)    
+    msg_result = msg_result[:10]
+    for item in msg_result:
         item.gift_tags = await sync_to_async(list)(item.tags.names())
-    result2 = result1
-    return [result1, result2]
+    result.append(msg_result)
+    # 유저 선호 태그 리스트 
+    user = await sync_to_async(User.objects.get)(id=id)
+    tag_list = await sync_to_async(list)(user.tag.names())
+    for tag in tag_list:
+        tag_result = await search_list_gift(tag)    
+        tag_result = tag_result[:10]
+        for item in tag_result:
+            item.gift_tags = await sync_to_async(list)(item.tags.names())
+        result.append(tag_result)
+    return result
 
 
 async def search_gift_list_service(keyword:str = None):
