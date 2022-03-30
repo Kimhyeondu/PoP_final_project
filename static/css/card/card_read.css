@@ -10,29 +10,31 @@
 }
 
 .container .nav {
-    margin-bottom: 5%;
-    padding: 5%;
+    padding: 3% 5%;
     display: flex;
     justify-content: space-between;
+    text-align: center;
 }
 
-.container .nav p {
-    font-size: 5rem;
-    margin: 0;
-    line-height: 0;
+.container .nav span {
+    font-weight: bolder;
     cursor: pointer;
     color: #FF9999;
 }
 
-.container .nav span {
+.container .nav .back {
+    font-size: 2rem;
+}
+
+.container .nav #delete-btn {
     font-size: 1.2rem;
-    cursor: pointer;
+    margin-top : 0.6rem;
+    letter-spacing: 1px;
 }
 
 .container .message-wrapper {
     width: 80%;
     margin: 1rem auto;
-
 }
 
 .container .message-wrapper .send_user {
@@ -66,7 +68,7 @@
 }
 
 .container .gifticon {
-    margin: 0 auto 8%;
+    margin: 6% auto;
     width: 39%;
     /*height: 29%;*/
 }
