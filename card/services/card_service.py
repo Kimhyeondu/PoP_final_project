@@ -1,14 +1,15 @@
 from card.models import Gift, Message
-from .gift_service import all_list_gift, search_list_gift
+from .gift_service import all_list_gift, search_list_gift, filter_list_gift
 from .message_service import update_msg
 from asgiref.sync import sync_to_async
 
 async def recommend_gift_list(id:int, msg:str = ""):
-    result = await all_list_gift()
-    for item in result:
+    result = await search_list_gift("음악")
+    result1 = result[:10]
+    for item in result1:
         item.gift_tags = await sync_to_async(list)(item.tags.names())
-    result2 = result
-    return [result, result2]
+    result2 = result1
+    return [result1, result2]
 
 
 async def search_gift_list_service(keyword:str = None):
