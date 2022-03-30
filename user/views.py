@@ -19,30 +19,13 @@ def log_out(request):
     logout(request)
     return redirect(reverse('user:signin'))
 
-<<<<<<< HEAD
-
-=======
 @login_required
->>>>>>> 1ae5581409ec701058b6e4d71a04adc66787e76e
 def mypage(request):
     user = User.objects.get(id=request.user.id)
     if request.method == "GET":
         tag_list = list(user.tag.names())
         return render(request, "user/edit_profile.html", {'tag_list':tag_list})
     if request.method == "POST":
-<<<<<<< HEAD
-        tagcount = int(request.POST.get('tag_count', ''))
-        print(tagcount)
-
-        for i in range(0, tagcount):
-            tag = request.POST.get(f'taginput{i}', '')
-            # '데이터' 형식으로 들어오는데 양끝 '문자 제거
-            tag = tag[:-1][1:]
-            tags[0] = tag
-            print(tags[0])
-        return redirect('/')
-        # return render(request, "user/edit_profile.html", {})
-=======
         tags = []
         # print(request.POST, request.FILES)
         tagcount= int(request.POST.get('tag_count','0'))
@@ -61,7 +44,6 @@ def mypage(request):
         user.save()
         return redirect("/mypage")
 
->>>>>>> 1ae5581409ec701058b6e4d71a04adc66787e76e
 
     # true_user = auth.authenticate(request, username=username, password=password)
     # if true_user is not None:
@@ -211,8 +193,7 @@ def from_kakao(request):
 
 
     except:
-        user = User.objects.create(username=username, profile_img=profile_img,
-                                   email=email, login_method=User.LOGIN_KAKAO)
+        user = User.objects.create(username=username, profile_img=profile_img, email=email, login_method=User.LOGIN_KAKAO)
         user.set_unusable_password()
         user.save()
 
