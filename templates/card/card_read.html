@@ -8,26 +8,28 @@
     <title>받은 메시지 확인</title>
 
     <!-- JQuery -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     <!--css-->
     {% load static %}
-{#    <link href="{% static 'css/card_read.css' %}" rel="stylesheet" type="text/css">#}
-    <link href="/static/css/card/card_read.css" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/card/card_read.css' %}" rel="stylesheet" type="text/css">
+    <!--<link href="/static/css/card/card_read.css" rel="stylesheet" type="text/css">-->
 </head>
 <body>
     <div class="container">
         <div class="nav">
-            <p onclick="history.back()">&#171;</p>
+            <span class="back"  onclick="history.back()">&#11013;</span>
+            {% if  user.is_authenticated %}
             <span id="delete-btn">삭제</span>
+            {% endif %}
         </div>
         <div class="gifticon">
             <img class="preview" src="{% static 'img/gifticon.jpeg' %}"/>
-{#            <img class="zoom-icon" src="{% static 'img/zoom.png' %}"/>#}
         </div>
         <div class="popup">
             <div class="overlay">
-                <p class="close-icon"><img id="close-icon" src="/static/img/close.png"/></p>
+                <p class="close-icon"><img id="close-icon" src="{% static 'img/close.png' %}"/></p>
                 <img class="preview" src="{% static 'img/gifticon.jpeg' %}"/>
             </div>
         </div>
@@ -52,7 +54,7 @@
     </div>
 
     <!--js-->
-{#    <script src="{% static 'js/card_read.js' %}"></script>#}
-    <script src="/static/js/card/card_read.js"></script>
+    <script src="{% static 'js/card/card_read.js' %}"></script>
+    <!--<script src="/static/js/card/card_read.js"></script>-->
 </body>
 </html>

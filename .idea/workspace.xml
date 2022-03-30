@@ -2,22 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c270b444-0114-4115-80b2-a812e5cec748" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/idea/PoP_final_project.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/idea/dddd.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/card/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/card/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/card/card_read.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/card/card_read.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/card/card_read.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/card/card_read.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/card/card_read.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/card/card_read.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -68,6 +76,7 @@
       <option name="presentableId" value="Default" />
       <updated>1647601195723</updated>
       <workItem from="1647601200433" duration="296000" />
+      <workItem from="1648639069124" duration="515000" />
     </task>
     <servers />
   </component>
