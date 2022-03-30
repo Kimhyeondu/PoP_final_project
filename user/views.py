@@ -151,14 +151,14 @@ def is_email(request):
 
 def to_kakao(request):
     REST_API_KEY = os.environ.get('REST_API_KEY')
-    REDIRECT_URI = 'http://localhost:8000/kakao/callback'
+    REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
     return redirect(
         f'https://kauth.kakao.com/oauth/authorize?client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&response_type=code')
 
 
 def from_kakao(request):
     REST_API_KEY = os.environ.get('REST_API_KEY')
-    REDIRECT_URI = 'http://localhost:8000/kakao/callback'
+    REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
     code = request.GET.get('code', 'None')
     if code is None:
         # 코드 발급 x
