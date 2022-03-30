@@ -18,6 +18,7 @@ async def main(request, xx):
         return await sync_to_async(render)(request, "main.html")
 
 
+
 def upload(request):
     return redirect(request, "post/upload.html")
 

@@ -11,19 +11,38 @@ from .forms import LoginForm, SignUpForm
 from .models import User
 import os
 import requests
+
+
 # Create your views here.
 
 def log_out(request):
     logout(request)
     return redirect(reverse('user:signin'))
 
+<<<<<<< HEAD
+
+=======
 @login_required
+>>>>>>> 1ae5581409ec701058b6e4d71a04adc66787e76e
 def mypage(request):
     user = User.objects.get(id=request.user.id)
     if request.method == "GET":
         tag_list = list(user.tag.names())
         return render(request, "user/edit_profile.html", {'tag_list':tag_list})
     if request.method == "POST":
+<<<<<<< HEAD
+        tagcount = int(request.POST.get('tag_count', ''))
+        print(tagcount)
+
+        for i in range(0, tagcount):
+            tag = request.POST.get(f'taginput{i}', '')
+            # '데이터' 형식으로 들어오는데 양끝 '문자 제거
+            tag = tag[:-1][1:]
+            tags[0] = tag
+            print(tags[0])
+        return redirect('/')
+        # return render(request, "user/edit_profile.html", {})
+=======
         tags = []
         # print(request.POST, request.FILES)
         tagcount= int(request.POST.get('tag_count','0'))
@@ -42,6 +61,7 @@ def mypage(request):
         user.save()
         return redirect("/mypage")
 
+>>>>>>> 1ae5581409ec701058b6e4d71a04adc66787e76e
 
     # true_user = auth.authenticate(request, username=username, password=password)
     # if true_user is not None:
@@ -49,6 +69,7 @@ def mypage(request):
     #     return redirect('/main')
     # else:
     #     return render(request, 'user/edit_profile.html', {'error2': ' ID 또는 패스워드를 확인해주세요!'})
+
 
 # def sign_in(request):
 #     if request.method == 'GET':
@@ -91,30 +112,31 @@ class SignUpView(LogoutOnlyView, FormView):
         password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=username, password=password)
         if user is not None:
-            messages.success(self.request,f'환영합니다 {username}님 !')
+            messages.success(self.request, f'환영합니다 {username}님 !')
             login(self.request, user)
         return super().form_valid(form)
 
 
-
 def is_id(request):
-    username = request.POST.get('username','')
+    username = request.POST.get('username', '')
     try:
         User.objects.get(username=username)
-        return JsonResponse({'msg':'이미 사용중인 아이디 입니다.'})
+        return JsonResponse({'msg': '이미 사용중인 아이디 입니다.'})
     except:
-        return JsonResponse({'msg':'사용하셔도 좋습니다.'})
+        return JsonResponse({'msg': '사용하셔도 좋습니다.'})
+
 
 def is_email(request):
-    email = request.POST.get('email','')
+    email = request.POST.get('email', '')
     try:
         User.objects.get(email=email)
-        return JsonResponse({'msg':'이미 사용중인 이메일 입니다.'})
+        return JsonResponse({'msg': '이미 사용중인 이메일 입니다.'})
     except:
-        return JsonResponse({'msg':'사용하셔도 좋습니다.'})
+        return JsonResponse({'msg': '사용하셔도 좋습니다.'})
+
 
 # def sign_up(request):
-    
+
 #     if request.method == 'GET':
 #         return render(request, "user/signup.html")
 #     username = request.POST.get('username','')
@@ -143,7 +165,7 @@ def is_email(request):
 #                 user = User.objects.create_user(username=username,password=password1,email=email)
 #                 login(request,user)
 #                 return JsonResponse({'ok':'ok'})
-    
+
 
 def to_kakao(request):
     REST_API_KEY = os.environ.get('REST_API_KEY')
@@ -190,7 +212,7 @@ def from_kakao(request):
 
     except:
         user = User.objects.create(username=username, profile_img=profile_img,
-                                                email=email, login_method=User.LOGIN_KAKAO)
+                                   email=email, login_method=User.LOGIN_KAKAO)
         user.set_unusable_password()
         user.save()
 

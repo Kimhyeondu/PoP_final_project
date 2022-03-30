@@ -35,6 +35,12 @@
     /*background-color: #FFEBCC;*/
 }
 
+.background img {
+    position: absolute;
+    width: 100px;
+}
+
+
 .area_box {
     position: absolute;
     width: 30%;
@@ -42,8 +48,8 @@
 
     cursor: pointer;
     background-color: deeppink;
-    top: 0;
-    left: 0;
+    /*top: 0;*/
+    /*left: 0;*/
 }
 
 .startbutton {
