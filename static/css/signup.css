@@ -14,6 +14,7 @@
     height: 360px;
     background-image: url('https://sparta-team11.s3.ap-northeast-2.amazonaws.com/img/logo.png');
     background-position: center;
+    background-size: cover;
 }
 
 button {
