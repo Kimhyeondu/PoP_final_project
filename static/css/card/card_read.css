@@ -139,6 +139,7 @@
     }
 
     .container .popup {
+        z-index: 5;
         position: absolute;
         top: 0;
         width: 500px;
@@ -203,6 +204,7 @@
     }
 
     .container .popup {
+        z-index: 5;
         position: absolute;
         top: 0;
         width: 96vw;
