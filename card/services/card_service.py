@@ -9,7 +9,7 @@ import httpx
 
 async def use_api_reco(msg:str):
     data = {"msg": msg}
-    url = ""
+    url = "http://15.165.45.206:8000/api/v1/pororo/"
     async with httpx.AsyncClient() as client:
         r = await client.post(url, data=data)
         jsondata = r.json()
@@ -20,12 +20,12 @@ async def use_api_reco(msg:str):
 async def recommend_gift_list(id:int, msg:str = ""):
     result = []
     # 메시지 분석 후 추천 부분
-    # msg_response = await use_api_reco(msg)
-    # msg_result = await search_list_gift(msg_response)    
-    # msg_result = msg_result[:10]
-    # for item in msg_result:
-    #     item.gift_tags = await sync_to_async(list)(item.tags.names())
-    # result.append(msg_result)
+    msg_response = await use_api_reco(msg)
+    msg_result = await search_list_gift(msg_response)    
+    msg_result = msg_result[:10]
+    for item in msg_result:
+        item.gift_tags = await sync_to_async(list)(item.tags.names())
+    result.append(msg_result)
 
     # 유저 선호 태그 리스트 
     user = await sync_to_async(User.objects.get)(id=id)
