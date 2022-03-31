@@ -33,8 +33,21 @@
 }
 
 .container .message-wrapper {
-    width: 80%;
-    margin: 1rem auto;
+    width: 100%;
+    /* margin: 1rem auto; */
+}
+
+.container .message-wrapper .sended_title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    height: 55px;
+    /* white-space: nowrap; */
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    width: 100%;
+    margin-top: 20px;
+    line-height: 110%;
+    text-align: center;
 }
 
 .container .message-wrapper .send_user {
@@ -45,39 +58,59 @@
 }
 
 .container .message-wrapper .send_user span:first-child {
-    text-decoration: underline;
+    /* text-decoration: underline; */
     text-underline-position: under;
     color: dimgray;
     font-weight: bolder;
 }
 
 .container .message-wrapper .content {
-    width: 92%;
-    min-height: 20rem;
-    margin: 0 4%;
-    background-color: #FFEBCC;
-    border-radius: 1.8rem;
+    margin-top: 80px;
+    width: 100%;
+    padding: 10px;
+    /* min-height: 20rem; */
+    /* margin: 0 4%; */
+    /* background-color: #FFEBCC; */
+    /* border-radius: 1.8rem; */
 }
 
 .container .message-wrapper .content p {
     font-size: 1.3rem;
     letter-spacing: 0.1rem;
-    padding: 1.2rem 1.5rem;
+    /* padding: 1.2rem 1.5rem; */
     line-height: 2.4rem;
     color: #FF9999;
 }
 
+
+.container .gifticon_container {
+    width: 273px;
+    height: 640px;
+    background-image: url("https://sparta-team11.s3.ap-northeast-2.amazonaws.com/img/gifticon2.png");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: auto;
+    padding: 40px;
+}
+
 .container .gifticon {
-    margin: 6% auto;
-    width: 39%;
-    /*height: 29%;*/
+    /* margin: 6% auto; */
+    width: 230px;
+    height: 230px;
+    margin-bottom: 20px;
 }
 
 .container .gifticon .preview {
-    width: 100%;
-    height: 13rem;
+    width: 230px;
+    height: 230px;
     cursor: pointer;
 }
+
 
 .container .modal {
     position: absolute;

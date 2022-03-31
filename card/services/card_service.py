@@ -4,12 +4,23 @@ from user.models import User
 from .gift_service import all_list_gift, search_list_gift, filter_list_gift
 from .message_service import update_msg, get_msg
 from asgiref.sync import sync_to_async
+import httpx
+
+
+async def use_api_reco(msg:str):
+    data = {"msg": msg}
+    url = ""
+    async with httpx.AsyncClient() as client:
+        r = await client.post(url, data=data)
+        jsondata = r.json()
+        tag = jsondata["tag"]
+        return tag
+
 
 async def recommend_gift_list(id:int, msg:str = ""):
     result = []
     # 메시지 분석 후 추천 부분
-    # msg_response = msg
-    # msg_response = "음악"
+    # msg_response = await use_api_reco(msg)
     # msg_result = await search_list_gift(msg_response)    
     # msg_result = msg_result[:10]
     # for item in msg_result:
