@@ -136,29 +136,29 @@ let giftWrap = document.querySelectorAll(".gift_box_wrap");
 function showRecommendList(jsondata) {
     $gcCont.innerHTML = ""
     $gsCont.innerHTML = ""
-    let reList = [jsondata[0]];
-    reList.forEach(giftList => {
-        let $reListCon = document.createElement("div")
-        $reListCon.className = "gift_box_container"
-        $reListCon.innerHTML = '<div class="gift_tag">메시지 기반 추천 선물</div>'
-        let $reWrap = document.createElement("div")
-        $reWrap.className = "gift_box_wrap"
-        $reListCon.appendChild($reWrap)
-        giftList.forEach(e => {
-            let gBox = document.createElement("div")
-            gBox.className = "gift_box"
-            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
-            $reWrap.append(gBox)
-        });
-        $gcCont.appendChild($reListCon)
-        giftWrap = document.querySelectorAll(".gift_box_wrap");
-        giftWrap.forEach(element => {
-            element.addEventListener("click", giftSelect)
-        });
-    });
+    // let reList = [jsondata[0]];
+    // reList.forEach(giftList => {
+    //     let $reListCon = document.createElement("div")
+    //     $reListCon.className = "gift_box_container"
+    //     $reListCon.innerHTML = '<div class="gift_tag">메시지 기반 추천 선물</div>'
+    //     let $reWrap = document.createElement("div")
+    //     $reWrap.className = "gift_box_wrap"
+    //     $reListCon.appendChild($reWrap)
+    //     giftList.forEach(e => {
+    //         let gBox = document.createElement("div")
+    //         gBox.className = "gift_box"
+    //         gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
+    //         $reWrap.append(gBox)
+    //     });
+    //     $gcCont.appendChild($reListCon)
+    //     giftWrap = document.querySelectorAll(".gift_box_wrap");
+    //     giftWrap.forEach(element => {
+    //         element.addEventListener("click", giftSelect)
+    //     });
+    // });
 
     let tagList = jsondata.slice(1);
-    tagList.forEach(giftList => {
+    jsondata.forEach(giftList => {
         let $reListCon = document.createElement("div")
         $reListCon.className = "gift_box_container"
         $reListCon.innerHTML = '<div class="gift_tag">유저 선호 태그 관련 선물</div>'

@@ -91,9 +91,11 @@ for (let i = 0; box.length; i++) {
         data.append("left", left.split("p")[0])
 
         let r = await fetchmsg(data)
-        // console.log(id)
-        // console.log(top.split("p")[0])
-        // console.log(left.split("p")[0])
+        let code = await r.status
+        if (code === 200) {
+            let jsondata = await r.json()
+            window.location.href = jsondata.url
+        }
 
     }
 }
