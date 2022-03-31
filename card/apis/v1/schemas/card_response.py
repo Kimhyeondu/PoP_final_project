@@ -13,3 +13,7 @@ class CardResponse(Schema):
 
 class ErrorMessage(Schema):
     err_msg: str
+
+
+class RedirectUrl(Schema):
+    url: str

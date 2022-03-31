@@ -19,7 +19,7 @@
     min-height: 560px;
     max-width: 95%;
     max-height: 70%;
-    background-image: url("/static/img/yellow_background.jpg");
+    background-image: url("https://sparta-team11.s3.ap-northeast-2.amazonaws.com/img/yellow_background.jpg");
     background-size: cover;
     color: black;
     display: flex;
