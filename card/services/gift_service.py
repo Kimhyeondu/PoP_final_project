@@ -33,6 +33,12 @@ def filter_list_gift(*args, **kwargs):
 def search_list_gift(keyword):
     return list(Gift.objects.filter(Q(gift_name__icontains=keyword) | Q(gift_desc__icontains=keyword) | Q(tags__name=keyword)).distinct())
 
+@sync_to_async
+def search_list_coupon(array):
+    res = []
+    for i in array:
+        res.append(Gift.objects.get(gift_desc=str(i)))
+    return res
 
 async def update_gift(id, gift_name = None, gift_img = None, gift_desc = None, tags = None):
     gift = await get_gift(id=id)

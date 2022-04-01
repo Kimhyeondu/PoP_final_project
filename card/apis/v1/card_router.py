@@ -10,7 +10,7 @@ from card.services.card_service import recommend_gift_list, search_gift_list_ser
 
 router = Router()
 
-@router.post("/",response = List[List[CardResponse]])
+@router.post("/",response =List[CardResponse])
 async def gift_list(request: HttpRequest, card_request: GiftRequest = Form(...)):
     result = await recommend_gift_list(card_request.id, card_request.msg)
     return result
