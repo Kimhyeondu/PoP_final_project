@@ -9,7 +9,7 @@ import httpx
 
 async def use_api_reco(msg:str):
     data = {"msg": msg}
-    url = "http://15.165.45.206:8000/api/v1/pororo/"
+    url = "http://3.37.15.2:8000/api/v1/"
     async with httpx.AsyncClient() as client:
         r = await client.post(url, data=data)
         jsondata = r.json()
