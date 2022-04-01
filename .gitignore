@@ -329,3 +329,5 @@ out/
 # Support for Project snippet scope
 
 # End of https://www.toptal.com/developers/gitignore/api/django,python,pycharm,visualstudiocode
+temp.py
+temp2.py
