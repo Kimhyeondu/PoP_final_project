@@ -280,7 +280,9 @@ h3 {
 }
 
 .gift_box_container .gift_box_wrap .selected_gift {
-    border: red 2px solid;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: #FBD6D2;
 }
 .gift_box_container .gift_box_wrap .gift_box .coupon_img {
     display: block;

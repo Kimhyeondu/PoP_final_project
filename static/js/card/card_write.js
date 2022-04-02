@@ -276,7 +276,7 @@ function giftSelect(event) {
             e.className = "gift_box"
         })
     })
-    if (event.target.className === "gift_img"){
+    if (event.target.className === "gift_img" || event.target.className === "coupon_img"){
         event.target.parentNode.className = "gift_box selected_gift"
     } else if (event.target.className === "gift_box_wrap") {
     } else if (event.target.className === "gift_box") {

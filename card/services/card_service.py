@@ -22,7 +22,7 @@ async def use_api_reco(msg:str):
 async def recommend_gift_list(id:int, msg:str = ""):
     # 메시지 분석 후 추천 부분
     msg_response, index_array = await use_api_reco(msg)
-    content = await search_list_coupon(index_array)
+    msg_request = await search_list_coupon(index_array)
 
     # 유저 선호 태그 리스트
     user_tag = []
@@ -36,7 +36,7 @@ async def recommend_gift_list(id:int, msg:str = ""):
         for item in tag_result:
             item.gift_tags = await sync_to_async(list)(item.tags.names())
         user_tag.append(tag_result)
-    return content + user_tag[0]
+    return msg_request + user_tag[0]
 
 
 async def search_gift_list_service(keyword:str = None):
