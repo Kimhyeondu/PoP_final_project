@@ -20,7 +20,7 @@ async def main(request, username:str):
     if listall:
         return await sync_to_async(render)(request, "main.html", {"listall": listall, "user_id":user_id})
     else:
-        return await sync_to_async(render)(request, "main.html")
+        return await sync_to_async(render)(request, "main.html", {"user_id":user_id})
 
 
 
