@@ -6,6 +6,6 @@ from . import views
 
 urlpatterns = [
     path("", views.first_page, name="first page"),
-    path("<int:xx>", views.main, name="main"),
+    path("<str:username>", views.main, name="main"),
     path("upload", views.upload, name="upload"),
 ]

@@ -5,33 +5,32 @@
 {% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel='stylesheet' href="{% static 'css/main.css' %}" media='screen'>
+
 {% endblock %}
 
 
 {% block main %}
     <div id="container">
-        <form method="GET" action="/card/write/{{ user.id }}">
+        <form method="GET" action="/card/write/{{ user_id }}">
             <div class="background">
                 {% if not listall %}
                     <div class="text_box">
-                        <p><strong>롤링페이퍼 만드는 법!</strong></p>
+                        <p><strong>롤링페이퍼 쓰는 방법</strong></p>
                         <p>1. 밑의 버튼을 클릭! </p>
                         <p>2. 장신구를 선택해주세요!</p>
                         <p>3. 메시지를 작성하고 선물을 선택해주세요!</p>
                         <p>4. 다른 지인에게 링크를 보내 같이 꾸며봐요!</p>
                     </div>
-
                 {% elif listall %}
                     {% for mesg in listall %}
-                        <img src="{{ mesg.deco }}" class="area_box" style="top:{{ mesg.top }}px; left:{{ mesg.left }}px;" alt="{{ mesg.id }}">
+                        <img src="{{ mesg.deco }}" class="area_box"
+                             style="top:{{ mesg.top }}px; left:{{ mesg.left }}px;" alt="{{ mesg.id }}">
                     {% endfor %}
-
                 {% endif %}
             </div>
-            <button class="copyurl" href="#" onclick="clip(); return false;">URL주소복사!</button>
-            <button class="startbutton" type="submit"><strong>화면 꾸미기!</strong></button>
+            <button class="copyurl" href="#" onclick="clip(); return false;">링크 복사하기</button>
+            <button class="startbutton" type="submit"><strong>카드 작성하기</strong></button>
         </form>
-
     </div>
     <script src="{% static 'js/main.js' %}"></script>
 
