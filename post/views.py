@@ -16,6 +16,9 @@ async def CardList(request, username:str):
     else:
         return await sync_to_async(render)(request, "card_list.html", {"user_id":user_id})
 
+async def id_to_username(request, user_id:int):
+    user = await sync_to_async(User.objects.get)(id=user_id)
+    return redirect(f'/{user.username}')
 
 def upload(request):
     return redirect(request, "post/upload.html")
