@@ -106,7 +106,6 @@ async function postToGift() {
     document.querySelector("body").appendChild(modal_wrap);
 
     let jsonData = await fetchRecommend(data);
-
     showRecommendList(jsonData);
     console.log(jsonData);
     document.querySelector("body").removeChild(document.querySelector(".modal_wrap"));
@@ -136,11 +135,12 @@ let giftWrap = document.querySelectorAll(".gift_box_wrap");
 function showRecommendList(jsondata) {
     $gcCont.innerHTML = ""
     $gsCont.innerHTML = ""
-    let reList = [jsondata[0]];
-    reList.forEach(giftList => {
+    // let tagList = jsondata.slice(1);
+    let tagList = [jsondata.slice(6,)];
+    tagList.forEach(giftList => {
         let $reListCon = document.createElement("div")
         $reListCon.className = "gift_box_container"
-        $reListCon.innerHTML = '<div class="gift_tag">메시지 기반 추천 선물</div>'
+        $reListCon.innerHTML = '<div class="gift_tag">유저 선호 태그 관련 선물</div>'
         let $reWrap = document.createElement("div")
         $reWrap.className = "gift_box_wrap"
         $reListCon.appendChild($reWrap)
@@ -157,18 +157,19 @@ function showRecommendList(jsondata) {
         });
     });
 
-    let tagList = jsondata.slice(1);
-    tagList.forEach(giftList => {
+    let reList = [jsondata.slice(0,6)];
+    reList.forEach(giftList => {
         let $reListCon = document.createElement("div")
         $reListCon.className = "gift_box_container"
-        $reListCon.innerHTML = '<div class="gift_tag">유저 선호 태그 관련 선물</div>'
+        $reListCon.innerHTML = '<div class="gift_tag">메시지 기반 추천 선물</div>'
         let $reWrap = document.createElement("div")
         $reWrap.className = "gift_box_wrap"
         $reListCon.appendChild($reWrap)
         giftList.forEach(e => {
             let gBox = document.createElement("div")
             gBox.className = "gift_box"
-            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
+            // gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
+            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="coupon_img"/><div style="display: none;">${e.gift_name}</div>`
             $reWrap.append(gBox)
         });
         $gcCont.appendChild($reListCon)
@@ -275,7 +276,7 @@ function giftSelect(event) {
             e.className = "gift_box"
         })
     })
-    if (event.target.className === "gift_img"){
+    if (event.target.className === "gift_img" || event.target.className === "coupon_img"){
         event.target.parentNode.className = "gift_box selected_gift"
     } else if (event.target.className === "gift_box_wrap") {
     } else if (event.target.className === "gift_box") {

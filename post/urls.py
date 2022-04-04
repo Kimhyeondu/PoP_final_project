@@ -5,7 +5,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.first_page, name="first page"),
-    path("<int:xx>", views.main, name="main"),
+    path("", views.main, name="main"),
+    path("<str:username>", views.CardList, name="CardList"),
     path("upload", views.upload, name="upload"),
 ]

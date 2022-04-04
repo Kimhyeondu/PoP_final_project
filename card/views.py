@@ -3,7 +3,7 @@ from asgiref.sync import async_to_sync, sync_to_async
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
-from card.services.message_service import create_msg, delete_msg
+from card.services.message_service import create_msg
 from card.services.deco_service import all_list_deco
 
 from card.models import Message, Gift
@@ -41,5 +41,7 @@ def card_read(request:HttpRequest, message_id:int) -> Message:
 def card_delete(request:HttpRequest, message_id:int) -> None:
     msg = Message.objects.get(id=message_id)
     user_id = msg.to_user_id
+    user= User.objects.get(id=user_id)
+    name = user.username
     Message.objects.filter(id=message_id).delete()
-    return redirect(f'/{user_id}')
+    return redirect(f'/{name}')

@@ -8,7 +8,7 @@ class CardResponse(Schema):
     gift_name: str
     gift_desc: str
     gift_img: str
-    gift_tags: List[str]
+    # gift_tags: List[str]
 
 
 class ErrorMessage(Schema):

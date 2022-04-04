@@ -45,7 +45,7 @@
                     {% if user.is_authenticated %}
                     <div class="menu">
                         <li>{{ user.username }}님 안녕하세요!</li>
-                        <li><a href="/{{ user.id }}">내 페이지</a></li>
+                        <li><a href="/{{ user.username }}">받은 메시지</a></li>
                         <li><a href="/mypage/">프로필 수정</a></li>
                         <li><a href="/logout/">로그아웃</a></li>
                     </div>

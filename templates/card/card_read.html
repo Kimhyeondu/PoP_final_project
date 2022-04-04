@@ -20,9 +20,7 @@
     <div class="container">
         <div class="nav">
             <span class="back"  onclick="history.back()">&#11013;</span>
-            {% if  user.is_authenticated %}
             <span id="delete-btn">삭제</span>
-            {% endif %}
         </div>
         <div class="popup">
             <div class="overlay">
@@ -39,7 +37,7 @@
                     {{ card.title }}
                 </div>
                 <div class="send_user">
-                    <span>보낸이</span>
+                    <span>From.</span>
                     <span>{{ card.author }}</span>
                 </div>
                 <div class="content">

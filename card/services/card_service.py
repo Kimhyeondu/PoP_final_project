@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from card.models import Gift, Message
 from user.models import User
-from .gift_service import all_list_gift, search_list_gift, filter_list_gift
+from .gift_service import all_list_gift, search_list_gift, filter_list_gift, search_list_coupon
 from .message_service import update_msg, get_msg
 from asgiref.sync import sync_to_async
 import httpx
@@ -14,31 +14,28 @@ async def use_api_reco(msg:str):
         r = await client.post(url, data=data)
         jsondata = r.json()
         tag = jsondata["tag"]
-        return tag
+        array = jsondata["index"]
+        return tag, array
 
 
 async def recommend_gift_list(id:int, msg:str = ""):
-    result = []
     # 메시지 분석 후 추천 부분
-    msg_response = await use_api_reco(msg)
-    msg_result = await search_list_gift(msg_response)    
-    msg_result = msg_result[:10]
-    for item in msg_result:
-        item.gift_tags = await sync_to_async(list)(item.tags.names())
-    result.append(msg_result)
+    msg_response, index_array = await use_api_reco(msg)
+    msg_request = await search_list_coupon(index_array)
 
-    # 유저 선호 태그 리스트 
+    # 유저 선호 태그 리스트
+    user_tag = []
     user = await sync_to_async(User.objects.get)(id=id)
     tag_list = await sync_to_async(list)(user.tag.names())
     if not tag_list:
         tag_list = ["음악"]
     for tag in tag_list:
         tag_result = await search_list_gift(tag)    
-        tag_result = tag_result[:10]
+        tag_result = tag_result[:6]
         for item in tag_result:
             item.gift_tags = await sync_to_async(list)(item.tags.names())
-        result.append(tag_result)
-    return result
+        user_tag.append(tag_result)
+    return msg_request + user_tag[0]
 
 
 async def search_gift_list_service(keyword:str = None):
