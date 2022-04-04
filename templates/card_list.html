@@ -24,8 +24,10 @@
                     {% endfor %}
                 {% endif %}
             </div>
-            <button class="copyurl" href="#" onclick="clip(); return false;">링크 복사하기</button>
-            <button class="startbutton" type="submit"><strong>메시지 남기기</strong></button>
+            <div class="btn-wrapper">
+                <button class="copyurl" href="#" onclick="clip(); return false;"><strong>링크 복사하기</strong></button>
+                <button class="startbutton" type="submit"><strong>메시지 남기기</strong></button>
+            </div>
         </form>
     </div>
     <script src="{% static 'js/main.js' %}"></script>
