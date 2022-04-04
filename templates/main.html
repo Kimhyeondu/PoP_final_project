@@ -5,20 +5,12 @@
 {% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel='stylesheet' href="{% static 'css/main.css' %}" media='screen'>
-
+    <link rel='stylesheet' href="/static/css/main.css" media="screen">
 {% endblock %}
 
 
 {% block main %}
-    <div id="container">
-        <form method="GET" action="/card/write/{{ user_id }}">
-            <div class="background">
-                <div class="text_box">
-                    <p>링크를 지인들에게 공유해서 메시지를 받아보세요!</p>
-                </div>
-            </div>
-        </form>
-    </div>
-    <script src="{% static 'js/main.js' %}"></script>
 
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="/static/js/main.js"></script>
 {% endblock %}

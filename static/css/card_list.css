@@ -1,0 +1,106 @@
+/*#navbar{*/
+/*    display: none;*/
+/*}*/
+#container {
+    /*border : 1px solid lightgray;*/
+    max-width: 500px;
+    height: 800px;
+    background-color: #faffe1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 19%;
+    margin-top: 50px;
+}
+#container form {
+    width: 100%;
+}
+
+.background {
+    /*min-width: 335px;*/
+    /*min-height: 560px;*/
+    max-width: 100%;
+    height: 600px;
+    background-image: url("https://sparta-team11.s3.ap-northeast-2.amazonaws.com/img/yellow_background.jpg");
+    background-size: cover;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.text_box {
+    font-size: 15px;
+    width: 92%;
+
+    /*background-color: #FFEBCC;*/
+}
+
+.background img {
+    position: absolute;
+    width: 100px;
+}
+
+
+.area_box {
+    position: absolute;
+    width: 30%;
+    height: 16%;
+
+    cursor: pointer;
+    /* background-color: deeppink; */
+    /*top: 0;*/
+    /*left: 0;*/
+}
+.btn-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 5rem;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+.btn-wrapper  .startbutton {
+    /*margin-top: 2%;*/
+    width: 45%;
+    height: 3.6rem;
+    background-color: rgba(255, 175, 175, 1);
+    color: white;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    transition: all 0.2s linear;
+    border: 1px solid lightgoldenrodyellow;
+    border-radius: 10px;
+}
+
+.btn-wrapper .startbutton:hover {
+    transform: scale(1.02);
+}
+
+.btn-wrapper .copyurl {
+    /*margin-top: 12%;*/
+    width: 45%;
+    height: 3.6rem;
+    background-color: dodgerblue;
+    color: white;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    transition: all 0.2s linear;
+    border: 1px solid lightgoldenrodyellow;
+    border-radius: 10px;
+
+}
+
+.btn-wrapper .copyurl:hover {
+    transform: scale(1.02);
+
+}
+
+.text {
+    margin-top: 5%;
+    font-size: 25px;
+}
