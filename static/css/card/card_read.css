@@ -22,8 +22,14 @@
     color: #FF9999;
 }
 
-.container .nav .back {
+.container .nav button {
+    border: none;
+    color: #FF9999;
+    background-color: #FBFFE2;
+    cursor: pointer;
     font-size: 2rem;
+    padding-top: 0;
+    font-weight: bolder;
 }
 
 .container .nav #delete-btn {
@@ -174,8 +180,8 @@
     .container .popup .overlay .preview {
         grid-row-start: 2;
         grid-row-end: 3;
-        width: 95%;
-        height: 75%;
+        width: 100%;
+        height: 80%;
         margin: 0 auto;
     }
 
@@ -215,7 +221,7 @@
         top: 0;
         width: 96vw;
         height: 144vh;
-        backdrop-filter: blur(3px);
+        backdrop-filter: blur(12px);
     }
 
     .container .popup .overlay {

@@ -361,6 +361,7 @@ async function postMessage() {
     data.append("author", author.value)
 
     let server_msg = await fetchPostMessage(data)
+    console.log(server_msg)
     alert(server_msg.server)
     window.location.pathname = toUserId
 }

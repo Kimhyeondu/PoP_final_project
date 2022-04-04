@@ -14,12 +14,16 @@
     <!--css-->
     {% load static %}
     <link href="{% static 'css/card/card_read.css' %}" rel="stylesheet" type="text/css">
-{#    <link href="/static/css/card/card_read.css" rel="stylesheet" type="text/css">#}
+    <!--<link href="/static/css/card/card_read.css" rel="stylesheet" type="text/css">-->
 </head>
 <body>
     <div class="container">
         <div class="nav">
-            <span class="back"  onclick="history.back()">&#11013;</span>
+            <form class="form-area" method="post" action="/card/update/{{ card.id }}">
+            {% csrf_token %}
+{#            <span class="back" type="submit">&#11013;</span>#}
+            <button type="submit">&#11013;</button>
+            </form>
             {% if user.id == card.to_user_id %}
             <span id="delete-btn">삭제</span>
             {% endif %}
@@ -61,6 +65,6 @@
 
     <!--js-->
     <script src="{% static 'js/card/card_read.js' %}"></script>
-    <!--<script src="/static/js/card/card_read.js"></script>-->
+{#    <script src="/static/js/card/card_read.js"></script>#}
 </body>
 </html>

@@ -39,7 +39,7 @@
 
 // 2번째 방법
 const container = document.querySelector(".background");
-const box = container.querySelectorAll(".area_box");
+const box = container.querySelectorAll(".change_num");
 
 const {width: containerWidth, height: containerHeight} =
     container.getBoundingClientRect();
@@ -47,7 +47,6 @@ const {width: containerWidth, height: containerHeight} =
 for (let i = 0; box.length; i++) {
     const {width: boxWidth, height: boxHeight} =
         box[i].getBoundingClientRect();
-
     let isDragging = null;
     let originLeft = null;
     let originTop = null;
@@ -79,10 +78,10 @@ for (let i = 0; box.length; i++) {
     // 여기에 ajax씀, url로 보내면 views함수가 실행됨 (origin left top)
 
     async function positionhandler(event) {
-        let id = event.target.alt
-        let top = event.target.style.top
-        let left = event.target.style.left
-
+        let id = this.id
+        let top = this.style.top
+        let left = this.style.left
+        console.log('id', id)
         isDragging = false;
 
         let data = new FormData()

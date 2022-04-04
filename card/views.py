@@ -3,7 +3,7 @@ from asgiref.sync import async_to_sync, sync_to_async
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
-from card.services.message_service import create_msg
+from card.services.message_service import create_msg, delete_msg, get_msg
 from card.services.deco_service import all_list_deco
 
 from card.models import Message, Gift
@@ -38,10 +38,22 @@ def card_read(request:HttpRequest, message_id:int) -> Message:
 
 
 @login_required
-def card_delete(request:HttpRequest, message_id:int) -> None:
-    msg = Message.objects.get(id=message_id)
+async def card_delete(request:HttpRequest, message_id:int) -> None:
+    msg = await sync_to_async(Message.objects.get)(id=message_id)
     user_id = msg.to_user_id
-    user= User.objects.get(id=user_id)
+    user= await sync_to_async(User.objects.get)(id=user_id)
     name = user.username
-    Message.objects.filter(id=message_id).delete()
+    await delete_msg(message_id)
     return redirect(f'/{name}')
+
+
+def read_or_unread(request: HttpRequest, message_id:int):
+    msg = Message.objects.get(id=message_id)
+    msg_receiver = User.objects.get(id=msg.to_user_id)
+    click_user = request.user
+    print(click_user.id)
+    if click_user.id == msg.to_user_id:
+        Message.objects.filter(id=message_id).update(read=1)
+        # msg = await get_msg(id=message_id)
+        # await sync_to_async(msg.update)(read=1)
+    return redirect(f'/{msg_receiver.username}')

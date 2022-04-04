@@ -11,8 +11,9 @@
     align-items: center;
     justify-content: center;
     padding-bottom: 19%;
-    margin-top: 50px;
+    margin-top: 30px;
 }
+
 #container form {
     width: 100%;
 }
@@ -34,26 +35,15 @@
 .text_box {
     font-size: 15px;
     width: 92%;
-
-    /*background-color: #FFEBCC;*/
 }
-
-.background img {
-    position: absolute;
-    width: 100px;
-}
-
 
 .area_box {
     position: absolute;
-    width: 30%;
+    width: 100px;
     height: 16%;
-
     cursor: pointer;
-    /* background-color: deeppink; */
-    /*top: 0;*/
-    /*left: 0;*/
 }
+
 .btn-wrapper {
     display: flex;
     justify-content: space-around;
@@ -62,7 +52,8 @@
     padding-top: 1rem;
     margin-top: 1rem;
 }
-.btn-wrapper  .startbutton {
+
+.btn-wrapper .startbutton {
     /*margin-top: 2%;*/
     width: 45%;
     height: 3.6rem;
@@ -103,4 +94,42 @@
 .text {
     margin-top: 5%;
     font-size: 25px;
+}
+
+.msg_to {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 2rem;
+    font-weight: bolder;
+    margin-bottom: 0;
+}
+
+.read_card_wrapper{
+    width: 130px;
+    height: 130px;
+    position: absolute;
+}
+
+.read_card_wrapper .read_card {
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.read_card_wrapper .read_card_content {
+    width: 100px;
+    height: 75px;
+    font-weight: 500;
+    font-size: 12px;
+    margin: 20px 15px;
+    position: absolute;
+    display: -webkit-box;
+    white-space: normal;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    cursor: pointer;
+    letter-spacing: -1.2px;
 }
