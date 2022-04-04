@@ -119,10 +119,10 @@
 
 .read_card_wrapper .read_card_content {
     width: 100px;
-    height: 100px;
+    height: 75px;
     font-weight: 500;
-    font-size: 1rem;
-    margin: 15px;
+    font-size: 12px;
+    margin: 20px 15px;
     position: absolute;
     display: -webkit-box;
     white-space: normal;
@@ -131,5 +131,5 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     cursor: pointer;
-    letter-spacing: -1.6px;
+    letter-spacing: -1.2px;
 }

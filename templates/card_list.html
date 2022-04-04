@@ -4,11 +4,11 @@
 
 {% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{#    <link rel='stylesheet' href="{% static 'css/card_list.css' %}" media='screen'>#}
+    <link rel='stylesheet' href="{% static 'css/card_list.css' %}" media='screen'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/card_list.css" media="screen">
+    <!--<link rel="stylesheet" href="/static/css/card_list.css" media="screen">-->
 {% endblock %}
 
 
@@ -28,7 +28,7 @@
                              style="top:{{ mesg.top }}px; left:{{ mesg.left }}px;">
                         {% else %}
                         <div class="read_card_wrapper change_num" id="{{ mesg.id }}" style="top:{{ mesg.top }}px; left:{{ mesg.left }}px;">
-                            <img src="https://sparta-team11.s3.ap-northeast-2.amazonaws.com/img/card-img.jpeg"
+                            <img src="https://sparta-team11.s3.ap-northeast-2.amazonaws.com/img/card_img.jpg"
                              class="read_card"/>
                             <p class="read_card_content">{{ mesg.msg }}</p>
                         </div>
@@ -42,6 +42,6 @@
             </div>
         </form>
     </div>
-{#    <script src="{% static 'js/card_list.js' %}"></script>#}
-    <script src="/static/js/card_list.js"></script>
+    <script src="{% static 'js/card_list.js' %}"></script>
+    <!--<script src="/static/js/card_list.js"></script>-->
 {% endblock %}
