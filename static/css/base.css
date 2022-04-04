@@ -30,16 +30,18 @@ body{
     height: 80px;
     display: grid;
     grid-gap: 1px;
-    grid-template-columns: 0.5fr 5fr 2fr;
-    grid-template-areas: "a b c . . . ";
+    grid-template-columns: repeat(7,1fr);
     font-size: 0.1rem;
 }
-
+.nav-wrapper .logo {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
 .logo img {
     display: inline-block;
     margin: 0;
     height: 80px;
-    grid-area: a;
+    /*grid-area: a;*/
 }
 
 #menu {
@@ -61,15 +63,17 @@ body{
     display: inline-block;
     list-style: none;
     margin: 0;
+    padding: 0;
     transition: transform 0.5s ease-out;
     -webkit-transition: transform 0.5s ease-out;
-    grid-area: c;
     width: 100%;
     height: 80px;
+    grid-column-start: 7;
+    grid-column-end: 8;
 }
 
 .burger {
-    max-width: 20px;
+    max-width: 25px;
 }
 
 /*                                */

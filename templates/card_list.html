@@ -5,12 +5,16 @@
 {% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel='stylesheet' href="{% static 'css/card_list.css' %}" media='screen'>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+{#    <link rel="stylesheet" href="/static/css/card_list.css" media="screen">#}
 {% endblock %}
 
 
 {% block main %}
     <div id="container">
+        <p class="msg_to">To. {{ username }}</p>
         <form method="GET" action="/card/write/{{ user_id }}">
             <div class="background">
                 {% if not listall %}

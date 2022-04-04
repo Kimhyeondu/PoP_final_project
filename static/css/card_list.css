@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
     padding-bottom: 19%;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 #container form {
     width: 100%;
@@ -103,4 +103,11 @@
 .text {
     margin-top: 5%;
     font-size: 25px;
+}
+
+.msg_to {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 2rem;
+    font-weight: bolder;
+    margin-bottom: 0;
 }
