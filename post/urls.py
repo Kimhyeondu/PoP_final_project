@@ -1,11 +1,10 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path
 
 from . import views
 
 urlpatterns = [
     path("", views.main, name="main"),
+    path("<int:user_id>", views.id_to_username, name="id_to_username"),
     path("<str:username>", views.CardList, name="CardList"),
     path("upload", views.upload, name="upload"),
 ]
