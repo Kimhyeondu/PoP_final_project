@@ -34,6 +34,7 @@ class Message(TimeStampedModel):
     author = models.CharField(max_length=200, blank=True)
     top = models.IntegerField(default=0)
     left = models.IntegerField(default=0)
+    read = models.BooleanField(default=False)
 
 
 class Decoration(TimeStampedModel):

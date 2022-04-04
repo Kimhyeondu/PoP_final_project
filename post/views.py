@@ -1,5 +1,7 @@
 from asgiref.sync import sync_to_async
 from django.shortcuts import redirect, render
+
+from card.models import Message
 from card.services.message_service import list_to_user_msg
 from user.models import User
 
