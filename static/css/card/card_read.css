@@ -34,7 +34,7 @@
 
 .container .nav #delete-btn {
     font-size: 1.2rem;
-    margin-top : 0.6rem;
+    margin-top: 0.6rem;
     letter-spacing: 1px;
 }
 
@@ -108,17 +108,13 @@
 }
 
 .container .gifticon {
-    /* margin: 6% auto; */
-    width: 315px;
-    height: 290px;
-    margin-top: -21px;
+    margin: -6px auto 20px;
 }
 
 .container .gifticon .preview {
-    width: 100%;
-    height: 100%;
     cursor: pointer;
     border-radius: 6px;
+    width: 200px;
 }
 
 
@@ -159,10 +155,13 @@
 
     .container .popup .overlay {
         display: grid;
-        grid-template-rows: 3.2rem 36rem;
+        grid-template-rows: 3.2rem 42rem;
         justify-content: center;
         margin-top: 24%;
+        width: 430px;
+        margin-left: 32px;
     }
+
 
     .container .popup .overlay .close-icon {
         grid-row-end: 2;
@@ -208,6 +207,7 @@
         margin-left: 2rem;
         cursor: pointer;
     }
+
 }
 
 @media (min-width: 300px) and (max-width: 500px) {

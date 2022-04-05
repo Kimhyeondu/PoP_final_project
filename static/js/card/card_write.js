@@ -137,7 +137,7 @@ function showRecommendList(jsondata) {
     $gsCont.innerHTML = ""
     // let tagList = jsondata.slice(1);
 
-    let reList = [jsondata.slice(0,6)];
+    let reList = [jsondata.slice(0,8)];
     reList.forEach(giftList => {
         let $reListCon = document.createElement("div")
         $reListCon.className = "gift_box_container"
@@ -159,7 +159,7 @@ function showRecommendList(jsondata) {
         });
     });
 
-    let tagList = [jsondata.slice(6,)];
+    let tagList = [jsondata.slice(8,)];
     tagList.forEach(giftList => {
         let $reListCon = document.createElement("div")
         $reListCon.className = "gift_box_container"

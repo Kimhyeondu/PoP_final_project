@@ -8,20 +8,46 @@ from asgiref.sync import sync_to_async
 import httpx
 
 
-async def use_api_reco(msg:str):
+# async def use_api_reco(msg:str):
+#     data = {"msg": msg}
+#     url = "http://3.37.15.2:8000/api/v1/"
+#     async with httpx.AsyncClient() as client:
+#         r = await client.post(url, data=data)
+#         jsondata = r.json()
+#         tag = jsondata["tag"]
+#         array = jsondata["index"]
+#         return tag, array
+# async def recommend_gift_list(id: int, msg: str = ""):
+#     # 메시지 분석 후 추천 부분
+#     msg_response, index_array = await use_api_reco(msg)
+#     msg_request = await search_list_coupon(index_array)
+#
+#     # 유저 선호 태그 리스트
+#     user_tag = []
+#     user = await sync_to_async(User.objects.get)(id=id)
+#     tag_list = await sync_to_async(list)(user.tag.names())
+#     if not tag_list:
+#         tag_list = ["음악"]
+#     for tag in tag_list:
+#         tag_result = await search_list_gift(tag)
+#         tag_result = tag_result[:10]
+#         user_tag += tag_result
+#     shuffle(user_tag)
+#     return msg_request + user_tag[:8]
+
+def use_api_reco(msg: str):
     data = {"msg": msg}
     url = "http://3.37.15.2:8000/api/v1/"
-    async with httpx.AsyncClient() as client:
-        r = await client.post(url, data=data)
-        jsondata = r.json()
-        tag = jsondata["tag"]
-        array = jsondata["index"]
-        return tag, array
+    r = httpx.post(url, data=data)
+    jsondata = r.json()
+    tag = jsondata["tag"]
+    array = jsondata["index"]
+    return tag, array
 
 
-async def recommend_gift_list(id:int, msg:str = ""):
+async def recommend_gift_list(id: int, msg: str = ""):
     # 메시지 분석 후 추천 부분
-    msg_response, index_array = await use_api_reco(msg)
+    msg_response, index_array = use_api_reco(msg)
     msg_request = await search_list_coupon(index_array)
 
     # 유저 선호 태그 리스트
@@ -31,16 +57,16 @@ async def recommend_gift_list(id:int, msg:str = ""):
     if not tag_list:
         tag_list = ["음악"]
     for tag in tag_list:
-        tag_result = await search_list_gift(tag)    
+        tag_result = await search_list_gift(tag)
         tag_result = tag_result[:10]
         user_tag += tag_result
     shuffle(user_tag)
     return msg_request + user_tag[:8]
 
 
-async def search_gift_list_service(keyword:str = None):
+async def search_gift_list_service(keyword: str = None):
     if not keyword:
-        return 202, {"err_msg":"검색어를 입력하세요."}
+        return 202, {"err_msg": "검색어를 입력하세요."}
     else:
         glist = await search_list_gift(keyword)
         if glist:
@@ -49,13 +75,13 @@ async def search_gift_list_service(keyword:str = None):
             glist.reverse()
             return 200, glist
         else:
-            return 202, {"err_msg":"검색 결과가 없습니다."}
+            return 202, {"err_msg": "검색 결과가 없습니다."}
 
 
-async def decoration_move_service(id:int, top:int, left:int):
+async def decoration_move_service(id: int, top: int, left: int):
     msg1 = await get_msg(id=id)
     if msg1.top == top and msg1.left == left:
-        return 200, {"url":f"/card/read/{id}"}
+        return 200, {"url": f"/card/read/{id}"}
     else:
         await update_msg(id=id, top=top, left=left)
         return 204, None
