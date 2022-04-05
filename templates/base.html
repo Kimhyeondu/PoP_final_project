@@ -40,16 +40,16 @@
                 <ul class="sub">
                     {% if user.is_authenticated %}
                     <div class="menu">
-                        <li>{{ user.username }}님 안녕하세요!</li>
+                        <li><p>{{ user.username }}님 <br> 반가워요&#x2B50;</p></li>
                         <li><a href="/{{ user.username }}">받은 메시지</a></li>
                         <li><a href="/mypage/">프로필 수정</a></li>
-                        <li><a href="/logout/">로그아웃</a></li>
+                        <li><a href="/logout">로그아웃</a></li>
                     </div>
                     {% else %}
                     <div class="menu">
-                        <li>환영합니다!</li>
-                        <li><a href="/signin/">로그인</a></li>
-                        <li><a href="/signup/">회원가입</a></li>
+                        <li><p>안녕하세요&#x1F433;</p></li>
+                        <li><a href="/sign-in/">로그인</a></li>
+                        <li><a href="/sign-up/">회원가입</a></li>
                     </div>
                     {% endif %}
                 </ul>
