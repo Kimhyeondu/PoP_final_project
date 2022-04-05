@@ -158,7 +158,11 @@ function showRecommendList(jsondata) {
             element.addEventListener("click", giftSelect)
         });
     });
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 71bef26f43ed6baab2265625d0bbddcc5c05cf18
     let tagList = [jsondata.slice(6,)];
     tagList.forEach(giftList => {
         let $reListCon = document.createElement("div")
@@ -180,7 +184,11 @@ function showRecommendList(jsondata) {
         });
     });
 
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 71bef26f43ed6baab2265625d0bbddcc5c05cf18
 }
 
 function fetchSearch(data) {
