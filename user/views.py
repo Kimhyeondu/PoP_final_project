@@ -65,57 +65,57 @@ def mypage(request):
 #         return redirect(reverse('user:mypage'))
 #     else:
 #         return render(request, "user/signin.html", {'msg':'아이디 혹은 비밀번호가 다릅니다.'})
-
-class LoginView(LogoutOnlyView, FormView):
-    form_class = LoginForm
-    success_url = reverse_lazy("user:mypage")
-    template_name = "user/signin.html"
-
-    def form_valid(self, form):
-        username = form.cleaned_data.get("username")
-        password = form.cleaned_data.get("password")
-        user = authenticate(self.request, username=username, password=password)
-        if user is not None:
-            messages.success(self.request, f'어서오세요 {username}님 !')
-            login(self.request, user)
-            if user.tag.names():
-                self.success_url = "/"
-        return super().form_valid(form)
-
-
-
-class SignUpView(LogoutOnlyView, FormView):
-    form_class = SignUpForm
-    success_url = reverse_lazy("user:mypage")
-    template_name = "user/signup.html"
-
-    def form_valid(self, form):
-        form.save()
-        username = form.cleaned_data.get("username")
-        password = form.cleaned_data.get("password")
-        user = authenticate(self.request, username=username, password=password)
-        if user is not None:
-            messages.success(self.request, f'환영합니다 {username}님 !')
-            login(self.request, user)
-        return super().form_valid(form)
-
-
-def is_id(request):
-    username = request.POST.get('username', '')
-    try:
-        User.objects.get(username=username)
-        return JsonResponse({'msg': '이미 사용중인 아이디 입니다.'})
-    except:
-        return JsonResponse({'msg': '사용하셔도 좋습니다.'})
-
-
-def is_email(request):
-    email = request.POST.get('email', '')
-    try:
-        User.objects.get(email=email)
-        return JsonResponse({'msg': '이미 사용중인 이메일 입니다.'})
-    except:
-        return JsonResponse({'msg': '사용하셔도 좋습니다.'})
+#
+# class LoginView(LogoutOnlyView, FormView):
+#     form_class = LoginForm
+#     success_url = reverse_lazy("user:mypage")
+#     template_name = "user/signin.html"
+#
+#     def form_valid(self, form):
+#         username = form.cleaned_data.get("username")
+#         password = form.cleaned_data.get("password")
+#         user = authenticate(self.request, username=username, password=password)
+#         if user is not None:
+#             messages.success(self.request, f'어서오세요 {username}님 !')
+#             login(self.request, user)
+#             if user.tag.names():
+#                 self.success_url = "/"
+#         return super().form_valid(form)
+#
+#
+#
+# class SignUpView(LogoutOnlyView, FormView):
+#     form_class = SignUpForm
+#     success_url = reverse_lazy("user:mypage")
+#     template_name = "user/signup.html"
+#
+#     def form_valid(self, form):
+#         form.save()
+#         username = form.cleaned_data.get("username")
+#         password = form.cleaned_data.get("password")
+#         user = authenticate(self.request, username=username, password=password)
+#         if user is not None:
+#             messages.success(self.request, f'환영합니다 {username}님 !')
+#             login(self.request, user)
+#         return super().form_valid(form)
+#
+#
+# def is_id(request):
+#     username = request.POST.get('username', '')
+#     try:
+#         User.objects.get(username=username)
+#         return JsonResponse({'msg': '이미 사용중인 아이디 입니다.'})
+#     except:
+#         return JsonResponse({'msg': '사용하셔도 좋습니다.'})
+#
+#
+# def is_email(request):
+#     email = request.POST.get('email', '')
+#     try:
+#         User.objects.get(email=email)
+#         return JsonResponse({'msg': '이미 사용중인 이메일 입니다.'})
+#     except:
+#         return JsonResponse({'msg': '사용하셔도 좋습니다.'})
 
 
 # def sign_up(request):
@@ -150,60 +150,60 @@ def is_email(request):
 #                 return JsonResponse({'ok':'ok'})
 
 
-def to_kakao(request):
-    # REST_API_KEY = os.environ.get('REST_API_KEY')
-    REST_API_KEY = 'bfdd7a7b9b1f9f256c089fceafbe03a4'
-    # REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
-    REDIRECT_URI = 'http://127.0.0.1:8000/kakao/callback'
-    return redirect(
-        f'https://kauth.kakao.com/oauth/authorize?client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&response_type=code')
-
-
-def from_kakao(request):
-    # REST_API_KEY = os.environ.get('REST_API_KEY')
-    REST_API_KEY = 'bfdd7a7b9b1f9f256c089fceafbe03a4'
-    # REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
-    REDIRECT_URI = 'http://127.0.0.1:8000/kakao/callback'
-    code = request.GET.get('code', 'None')
-    if code is None:
-        # 코드 발급 x
-        error = "카카오 로그인 실패. 다시 한 번 시도해 주세요."
-        return render(request, 'user/no_use/signin.html', {"kakao_error": error})
-
-    headers = {'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'}
-    get_token = requests.post(
-        f'https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&code={code}',
-        headers=headers)
-    get_token = get_token.json()
-    if get_token.get('error', None) is not None:
-        # 에러발생
-        error = "카카오 로그인 실패. 다시 한 번 시도해 주세요."
-        return render(request, 'user/no_use/signin.html', {"kakao_error":error})
-    token = get_token.get('access_token', None)
-
-    headers = {'Authorization': f'Bearer {token}'}
-    get_info = requests.post(f'https://kapi.kakao.com/v2/user/me', headers=headers)
-    info = get_info.json()
-    properties = info.get('properties')
-    username = properties.get('nickname', None)
-    kakao_account = info.get('kakao_account')
-    profile_img = properties.get('profile_image', None)
-    email = kakao_account.get('email', None)
-    if email is None:
-        error = "이메일은 필수 동의 사항입니다."
-        return render(request, 'user/no_use/signin.html', {"kakao_error":error})
-    try:
-        user = User.objects.filter(email=email)
-        if user.login_method != User.LOGIN_KAKAO:
-            error = '이미 사용 중인 이메일 입니다.'
-            return render(request, 'user/no_use/signin.html', {"kakao_error":error})
-    except:
-        user = User.objects.create(username=username, profile_img=profile_img, email=email, login_method=User.LOGIN_KAKAO)
-        user.set_unusable_password()
-        user.save()
-
-    login(request, user)
-    return redirect('/mypage')
+# def to_kakao(request):
+#     # REST_API_KEY = os.environ.get('REST_API_KEY')
+#     REST_API_KEY = 'bfdd7a7b9b1f9f256c089fceafbe03a4'
+#     # REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
+#     REDIRECT_URI = 'http://127.0.0.1:8000/kakao/callback'
+#     return redirect(
+#         f'https://kauth.kakao.com/oauth/authorize?client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&response_type=code')
+#
+#
+# def from_kakao(request):
+#     # REST_API_KEY = os.environ.get('REST_API_KEY')
+#     REST_API_KEY = 'bfdd7a7b9b1f9f256c089fceafbe03a4'
+#     # REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
+#     REDIRECT_URI = 'http://127.0.0.1:8000/kakao/callback'
+#     code = request.GET.get('code', 'None')
+#     if code is None:
+#         # 코드 발급 x
+#         error = "카카오 로그인 실패. 다시 한 번 시도해 주세요."
+#         return render(request, 'user/no_use/signin.html', {"kakao_error": error})
+#
+#     headers = {'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'}
+#     get_token = requests.post(
+#         f'https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&code={code}',
+#         headers=headers)
+#     get_token = get_token.json()
+#     if get_token.get('error', None) is not None:
+#         # 에러발생
+#         error = "카카오 로그인 실패. 다시 한 번 시도해 주세요."
+#         return render(request, 'user/no_use/signin.html', {"kakao_error":error})
+#     token = get_token.get('access_token', None)
+#
+#     headers = {'Authorization': f'Bearer {token}'}
+#     get_info = requests.post(f'https://kapi.kakao.com/v2/user/me', headers=headers)
+#     info = get_info.json()
+#     properties = info.get('properties')
+#     username = properties.get('nickname', None)
+#     kakao_account = info.get('kakao_account')
+#     profile_img = properties.get('profile_image', None)
+#     email = kakao_account.get('email', None)
+#     if email is None:
+#         error = "이메일은 필수 동의 사항입니다."
+#         return render(request, 'user/no_use/signin.html', {"kakao_error":error})
+#     try:
+#         user = User.objects.filter(email=email)
+#         if user.login_method != User.LOGIN_KAKAO:
+#             error = '이미 사용 중인 이메일 입니다.'
+#             return render(request, 'user/no_use/signin.html', {"kakao_error":error})
+#     except:
+#         user = User.objects.create(username=username, profile_img=profile_img, email=email, login_method=User.LOGIN_KAKAO)
+#         user.set_unusable_password()
+#         user.save()
+#
+#     login(request, user)
+#     return redirect('/mypage')
 
 
 def sign_up_view(request):
@@ -230,7 +230,7 @@ def sign_up_view(request):
                 return render(request, 'user/signup.html', {'error': '사용중인 이름 입니다.'})
             else:   # 유저 생성
                 User.objects.create_user(username=username, password=password,  bio=bio)
-                return redirect('/sign-in')
+                return redirect('/sign-in/')
 
 
 def sign_in_view(request):
