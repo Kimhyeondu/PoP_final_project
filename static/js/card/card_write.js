@@ -136,26 +136,6 @@ function showRecommendList(jsondata) {
     $gcCont.innerHTML = ""
     $gsCont.innerHTML = ""
     // let tagList = jsondata.slice(1);
-    let tagList = [jsondata.slice(6,)];
-    tagList.forEach(giftList => {
-        let $reListCon = document.createElement("div")
-        $reListCon.className = "gift_box_container"
-        $reListCon.innerHTML = '<div class="gift_tag">유저 선호 태그 관련 선물</div>'
-        let $reWrap = document.createElement("div")
-        $reWrap.className = "gift_box_wrap"
-        $reListCon.appendChild($reWrap)
-        giftList.forEach(e => {
-            let gBox = document.createElement("div")
-            gBox.className = "gift_box"
-            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
-            $reWrap.append(gBox)
-        });
-        $gcCont.appendChild($reListCon)
-        giftWrap = document.querySelectorAll(".gift_box_wrap");
-        giftWrap.forEach(element => {
-            element.addEventListener("click", giftSelect)
-        });
-    });
 
     let reList = [jsondata.slice(0,6)];
     reList.forEach(giftList => {
@@ -178,6 +158,29 @@ function showRecommendList(jsondata) {
             element.addEventListener("click", giftSelect)
         });
     });
+    
+    let tagList = [jsondata.slice(6,)];
+    tagList.forEach(giftList => {
+        let $reListCon = document.createElement("div")
+        $reListCon.className = "gift_box_container"
+        $reListCon.innerHTML = '<div class="gift_tag">유저 선호 태그 관련 선물</div>'
+        let $reWrap = document.createElement("div")
+        $reWrap.className = "gift_box_wrap"
+        $reListCon.appendChild($reWrap)
+        giftList.forEach(e => {
+            let gBox = document.createElement("div")
+            gBox.className = "gift_box"
+            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
+            $reWrap.append(gBox)
+        });
+        $gcCont.appendChild($reListCon)
+        giftWrap = document.querySelectorAll(".gift_box_wrap");
+        giftWrap.forEach(element => {
+            element.addEventListener("click", giftSelect)
+        });
+    });
+
+    
 }
 
 function fetchSearch(data) {
