@@ -166,7 +166,8 @@
 
 }
 
-.to_whom .right-wrapper {    font-size: 13px;
+.to_whom .right-wrapper {
+    font-size: 13px;
     display: -webkit-box;
     white-space: normal;
     text-overflow: ellipsis;
@@ -188,12 +189,14 @@
     font-size: 13px;
     text-align: center;
 }
+
 .to_whom .small-text div {
     height: 1px;
     background-color: grey;
     width: 92%;
     margin: 0 auto 4px;
 }
+
 .to_whom .small-text p {
 
 }
@@ -202,10 +205,12 @@
     width: 70%;
     text-align: center;
 }
+
 .how-to-use .title {
     font-weight: 600;
     text-align: center;
 }
+
 .how-to-use .sub-title {
     font-weight: 900;
     font-size: 18px;
@@ -213,6 +218,7 @@
     margin-bottom: 0.6rem;
     text-align: center;
 }
+
 .how-to-use .sub-text {
     width: 100%;
     margin: 0 auto;

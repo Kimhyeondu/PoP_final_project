@@ -43,7 +43,8 @@ def mypage(request):
         user.tag.clear()
         user.tag.add(*tags)
         user.save()
-        return redirect("/mypage")
+        msg = "수정 완료"
+        return render(request, "user/edit_profile.html", {'modified':msg})
 
 
     # true_user = auth.authenticate(request, username=username, password=password)
