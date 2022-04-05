@@ -1,14 +1,13 @@
-from asgiref.sync import async_to_sync, sync_to_async
+from asgiref.sync import sync_to_async
 
-from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
-from card.services.message_service import create_msg, delete_msg, get_msg
+from card.services.message_service import create_msg, delete_msg
 from card.services.deco_service import all_list_deco
 
 from card.models import Message, Gift
 from user.models import User
-
+import random
 
 # Create your views here.
 async def card_write(request:HttpRequest, id:int):
@@ -21,8 +20,11 @@ async def card_write(request:HttpRequest, id:int):
             deco = request.POST.get("deco")
             title = request.POST.get("title")
             author = request.POST.get("author")
-            await create_msg(to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author)
-            
+            top = random.randrange(0,520)
+            left = random.randrange(0, 400)
+            # await create_msg(to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author)
+            await create_msg(
+                to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author, top=top, left=left)
             return JsonResponse({"server":"저장 완료!"})
         deco_list = await all_list_deco()
         return await sync_to_async(render)(request, "card/card_write.html", {"to_user_id":id, "deco_list":deco_list})
