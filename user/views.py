@@ -11,6 +11,7 @@ from .forms import LoginForm, SignUpForm
 from .models import User
 import os
 import requests
+from django.contrib.auth import get_user_model
 
 
 # Create your views here.
@@ -150,19 +151,25 @@ def is_email(request):
 
 
 def to_kakao(request):
-    REST_API_KEY = os.environ.get('REST_API_KEY')
-    REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
+    # REST_API_KEY = os.environ.get('REST_API_KEY')
+    REST_API_KEY = 'bfdd7a7b9b1f9f256c089fceafbe03a4'
+    # REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
+    REDIRECT_URI = 'http://127.0.0.1:8000/kakao/callback'
     return redirect(
         f'https://kauth.kakao.com/oauth/authorize?client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&response_type=code')
 
 
 def from_kakao(request):
-    REST_API_KEY = os.environ.get('REST_API_KEY')
-    REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
+    # REST_API_KEY = os.environ.get('REST_API_KEY')
+    REST_API_KEY = 'bfdd7a7b9b1f9f256c089fceafbe03a4'
+    # REDIRECT_URI = 'https://paperonpresent.com/kakao/callback'
+    REDIRECT_URI = 'http://127.0.0.1:8000/kakao/callback'
     code = request.GET.get('code', 'None')
     if code is None:
         # 코드 발급 x
-        return redirect('/')
+        error = "카카오 로그인 실패. 다시 한 번 시도해 주세요."
+        return render(request, 'user/no_use/signin.html', {"kakao_error": error})
+
     headers = {'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'}
     get_token = requests.post(
         f'https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&code={code}',
@@ -170,7 +177,8 @@ def from_kakao(request):
     get_token = get_token.json()
     if get_token.get('error', None) is not None:
         # 에러발생
-        return redirect('/')
+        error = "카카오 로그인 실패. 다시 한 번 시도해 주세요."
+        return render(request, 'user/no_use/signin.html', {"kakao_error":error})
     token = get_token.get('access_token', None)
 
     headers = {'Authorization': f'Bearer {token}'}
@@ -182,16 +190,13 @@ def from_kakao(request):
     profile_img = properties.get('profile_image', None)
     email = kakao_account.get('email', None)
     if email is None:
-        # 이메일 동의 안하면 로그인 불가 처리..
-        return redirect('/sign-in')
+        error = "이메일은 필수 동의 사항입니다."
+        return render(request, 'user/no_use/signin.html', {"kakao_error":error})
     try:
-        user = User.objects.get(email=email)
-
+        user = User.objects.filter(email=email)
         if user.login_method != User.LOGIN_KAKAO:
-            print('카카오로 가입하지 않은 다른 아이디가 존재함')
-            return redirect('/')
-
-
+            error = '이미 사용 중인 이메일 입니다.'
+            return render(request, 'user/no_use/signin.html', {"kakao_error":error})
     except:
         user = User.objects.create(username=username, profile_img=profile_img, email=email, login_method=User.LOGIN_KAKAO)
         user.set_unusable_password()
@@ -199,3 +204,55 @@ def from_kakao(request):
 
     login(request, user)
     return redirect('/mypage')
+
+
+def sign_up_view(request):
+    if request.method == 'GET':
+        user = request.user.is_authenticated  # 로그인 여부
+        if user: # 로그인한 상태여서 회원가입 페이지 띄어줄 필요 없음
+            return redirect('/')
+        else:
+            return render(request, 'user/signup.html')
+    elif request.method == 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        password2 = request.POST.get('password2', '')
+
+        if password != password2:   # 비밀번호 확인이 틀렸을 때
+            return render(request, 'user/signup.html', {'error': '패스워드를 확인해 주세요'})
+        else:
+            if username == '' or password == '' or password2 == '':    # 아이디나 비밀번호 입력이 공란일 때
+                return render(request, 'user/signup.html', {'error': '아이디/패스워드는 필수 입력사항 입니다'})
+
+            exist_user = get_user_model().objects.filter(username=username)
+            if exist_user:  # 아이디 중복 확인
+                return render(request, 'user/signup.html', {'error': '사용중인 이름 입니다.'})
+            else:   # 유저 생성
+                User.objects.create_user(username=username, password=password)
+                return redirect('/sign-in')
+
+
+def sign_in_view(request):
+    if request.method == 'GET':
+        user = request.user.is_authenticated
+        if user:    # 로그인한 상태여서 로그인하는 화면 띄어줄 필요 없음음
+            return redirect('/')
+        else:
+            return render(request, 'user/signin.html')
+
+    elif request.method == 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+
+        me = auth.authenticate(request, username=username, password=password)
+        if me is not None: # username이란 사용자의 정보가 비어있지 않다 (있다)
+            auth.login(request, me) # 그 정보로 로그인
+            return redirect('/')
+
+        else:
+            return render(request, 'user/signin.html', {'error': '아이디와 패스워드를 확인해 주세요.'})
+
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect('/')

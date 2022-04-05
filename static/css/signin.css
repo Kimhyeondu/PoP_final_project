@@ -71,3 +71,45 @@ input {
     font-size: small;
     padding-left: 5px;
 }
+
+.login-box .logo {
+    width: 180px;
+    margin: 20px 0;
+}
+.form-group {
+    width: 240px;
+}
+.form-group label {
+    display: inline-block;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.form-control {
+    height: 44px;
+}
+.to_login {
+    width: 100%;
+    color: #fff;
+    background-color: #ffafb0;
+    border-color: #ffafb0;
+}
+.to_login:hover {
+    width: 100%;
+    color: #ffafb0;
+    background-color: #fff;
+    border: 1.5px solid #ffafb0;
+    font-weight: 500;
+}
+.to_signup{
+    width: 100%;
+    color:  #ffafb0;
+    margin-top: 10px;
+    /*background-color: #ffafb0;*/
+    /*border-color: #ffafb0;*/
+}
+.to_signup:hover {
+    width: 100%;
+    color: #fff;
+    background-color: #ffafb0;
+    border-color: #ffafb0;
+}

@@ -6,7 +6,7 @@
     margin: 0 auto ;
     height: 90vh;
     background-color: #faffe1;
-    padding: 10px;
+    /*padding: 10px;*/
 }
 
 .img-box {
@@ -48,4 +48,43 @@ input {
 .error-msg {
     font-size: small;
     padding-left: 5px;
+}
+
+.signup-box .logo {
+    width: 180px;
+    margin-top: 20px;
+    margin-bottom: 18px;
+}
+.form-group {
+    width: 240px;
+}
+.form-group label {
+    display: inline-block;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.form-control {
+    height: 44px;
+}
+.to_signup {
+    color: #fff;
+    background-color: #ffafb0;
+    border-color: #ffafb0;
+}
+.to_signup:hover {
+    color: #ffafb0;
+    background-color: #fff;
+    border: 1.5px solid #ffafb0;
+    font-weight: 500;
+}
+.to_login{
+    color:  #ffafb0;
+    margin-top: 10px;
+    /*background-color: #ffafb0;*/
+    /*border-color: #ffafb0;*/
+}
+.to_login:hover {
+    color: #fff;
+    background-color: #ffafb0;
+    border-color: #ffafb0;
 }

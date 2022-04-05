@@ -15,13 +15,11 @@ class UserAdmin(UserAdmin):
                 "fields":(
                     'username',
                     'password',
-                    'email',
                     "profile_img",
                     'tag',
-                    'login_method'
                 )
             }
         ),
     )
     
-    list_display = ('username','email','tag')
+    list_display = ('username','tag')
