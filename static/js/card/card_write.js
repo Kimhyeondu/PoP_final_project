@@ -136,26 +136,6 @@ function showRecommendList(jsondata) {
     $gcCont.innerHTML = ""
     $gsCont.innerHTML = ""
     // let tagList = jsondata.slice(1);
-    let tagList = [jsondata.slice(6,)];
-    tagList.forEach(giftList => {
-        let $reListCon = document.createElement("div")
-        $reListCon.className = "gift_box_container"
-        $reListCon.innerHTML = '<div class="gift_tag">유저 선호 태그 관련 선물</div>'
-        let $reWrap = document.createElement("div")
-        $reWrap.className = "gift_box_wrap"
-        $reListCon.appendChild($reWrap)
-        giftList.forEach(e => {
-            let gBox = document.createElement("div")
-            gBox.className = "gift_box"
-            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
-            $reWrap.append(gBox)
-        });
-        $gcCont.appendChild($reListCon)
-        giftWrap = document.querySelectorAll(".gift_box_wrap");
-        giftWrap.forEach(element => {
-            element.addEventListener("click", giftSelect)
-        });
-    });
 
     let reList = [jsondata.slice(0,6)];
     reList.forEach(giftList => {
@@ -178,10 +158,33 @@ function showRecommendList(jsondata) {
             element.addEventListener("click", giftSelect)
         });
     });
+
+    let tagList = [jsondata.slice(6,)];
+    tagList.forEach(giftList => {
+        let $reListCon = document.createElement("div")
+        $reListCon.className = "gift_box_container"
+        $reListCon.innerHTML = '<div class="gift_tag">유저 선호 태그 관련 선물</div>'
+        let $reWrap = document.createElement("div")
+        $reWrap.className = "gift_box_wrap"
+        $reListCon.appendChild($reWrap)
+        giftList.forEach(e => {
+            let gBox = document.createElement("div")
+            gBox.className = "gift_box"
+            gBox.innerHTML = `<img src="${e.gift_img}" alt="${e.id}" class="gift_img"><div class="gift_img_name">${e.gift_name}</div>`
+            $reWrap.append(gBox)
+        });
+        $gcCont.appendChild($reListCon)
+        giftWrap = document.querySelectorAll(".gift_box_wrap");
+        giftWrap.forEach(element => {
+            element.addEventListener("click", giftSelect)
+        });
+    });
+
+
 }
 
 function fetchSearch(data) {
-    return new Promise((receive) => { 
+    return new Promise((receive) => {
         fetch("/api/v1/card/search/", {
             method:"POST",
             body: data,
@@ -191,8 +194,8 @@ function fetchSearch(data) {
             receive(response);
         }).catch((err)=>{
             console.info(err);
-        }); 
-    }); 
+        });
+    });
 }
 
 function showSearchList(jsondata) {
@@ -215,7 +218,7 @@ function showSearchList(jsondata) {
     giftWrap.forEach(element => {
         element.addEventListener("click", giftSelect)
     });
-    
+
 }
 
 
@@ -252,12 +255,12 @@ async function searchGift() {
 $search.addEventListener('keyup', (e)=>{
     if (e.keyCode === 13) {
         searchGift();
-    }  
+    }
 });
 
 $searchButton.addEventListener("click", searchGift)
 
-function nameSelectedGift() {    
+function nameSelectedGift() {
     try {
         let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0];
         let $src = giftSelected.firstChild.src;
@@ -271,7 +274,7 @@ function nameSelectedGift() {
 
 function giftSelect(event) {
     // console.info(event)
-    giftWrap.forEach(el => {        
+    giftWrap.forEach(el => {
         Array.from(el.children).forEach(e=>{
             e.className = "gift_box"
         })
@@ -301,7 +304,7 @@ function giftPageMoved() {
     } catch (error) {
         alert("선물을 선택하세요!")
     }
-    
+
 }
 
 
@@ -326,7 +329,7 @@ authorBtn.addEventListener("click", ()=>{
 
 
 function fetchPostMessage(data) {
-    return new Promise((receive) => { 
+    return new Promise((receive) => {
         fetch(pathname, {
             method:"POST",
             body: data,
@@ -336,8 +339,8 @@ function fetchPostMessage(data) {
             receive(response.json());
         }).catch((e)=>{
             console.info(err + " url : " + url);
-        }); 
-    }); 
+        });
+    });
 }
 
 

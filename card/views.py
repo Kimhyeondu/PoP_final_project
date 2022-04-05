@@ -37,8 +37,7 @@ def card_read(request:HttpRequest, message_id:int) -> Message:
     return render(request, "card/card_read.html", {"card" : card, "gift":gift})
 
 
-@login_required
-async def card_delete(request:HttpRequest, message_id:int) -> None:
+async def card_delete(request:HttpRequest, message_id:int):
     msg = await sync_to_async(Message.objects.get)(id=message_id)
     user_id = msg.to_user_id
     user= await sync_to_async(User.objects.get)(id=user_id)
