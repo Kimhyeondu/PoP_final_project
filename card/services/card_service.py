@@ -1,3 +1,4 @@
+from random import shuffle
 from django.shortcuts import redirect
 from card.models import Gift, Message
 from user.models import User
@@ -31,11 +32,10 @@ async def recommend_gift_list(id:int, msg:str = ""):
         tag_list = ["음악"]
     for tag in tag_list:
         tag_result = await search_list_gift(tag)    
-        tag_result = tag_result[:6]
-        for item in tag_result:
-            item.gift_tags = await sync_to_async(list)(item.tags.names())
-        user_tag.append(tag_result)
-    return msg_request + user_tag[0]
+        tag_result = tag_result[:10]
+        user_tag += tag_result
+    shuffle(user_tag)
+    return msg_request + user_tag[:8]
 
 
 async def search_gift_list_service(keyword:str = None):
@@ -44,8 +44,9 @@ async def search_gift_list_service(keyword:str = None):
     else:
         glist = await search_list_gift(keyword)
         if glist:
-            for item in glist:
-                item.gift_tags = await sync_to_async(list)(item.tags.names())
+            if len(glist) > 10:
+                glist = glist[-10:]
+            glist.reverse()
             return 200, glist
         else:
             return 202, {"err_msg":"검색 결과가 없습니다."}
@@ -58,4 +59,3 @@ async def decoration_move_service(id:int, top:int, left:int):
     else:
         await update_msg(id=id, top=top, left=left)
         return 204, None
-
