@@ -59,4 +59,3 @@ async def decoration_move_service(id:int, top:int, left:int):
     else:
         await update_msg(id=id, top=top, left=left)
         return 204, None
-

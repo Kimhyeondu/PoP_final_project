@@ -158,7 +158,7 @@ function showRecommendList(jsondata) {
             element.addEventListener("click", giftSelect)
         });
     });
-    
+
     let tagList = [jsondata.slice(6,)];
     tagList.forEach(giftList => {
         let $reListCon = document.createElement("div")
@@ -180,11 +180,11 @@ function showRecommendList(jsondata) {
         });
     });
 
-    
+
 }
 
 function fetchSearch(data) {
-    return new Promise((receive) => { 
+    return new Promise((receive) => {
         fetch("/api/v1/card/search/", {
             method:"POST",
             body: data,
@@ -194,8 +194,8 @@ function fetchSearch(data) {
             receive(response);
         }).catch((err)=>{
             console.info(err);
-        }); 
-    }); 
+        });
+    });
 }
 
 function showSearchList(jsondata) {
@@ -218,7 +218,7 @@ function showSearchList(jsondata) {
     giftWrap.forEach(element => {
         element.addEventListener("click", giftSelect)
     });
-    
+
 }
 
 
@@ -255,12 +255,12 @@ async function searchGift() {
 $search.addEventListener('keyup', (e)=>{
     if (e.keyCode === 13) {
         searchGift();
-    }  
+    }
 });
 
 $searchButton.addEventListener("click", searchGift)
 
-function nameSelectedGift() {    
+function nameSelectedGift() {
     try {
         let giftSelected = document.getElementsByClassName("gift_box selected_gift")[0];
         let $src = giftSelected.firstChild.src;
@@ -274,7 +274,7 @@ function nameSelectedGift() {
 
 function giftSelect(event) {
     // console.info(event)
-    giftWrap.forEach(el => {        
+    giftWrap.forEach(el => {
         Array.from(el.children).forEach(e=>{
             e.className = "gift_box"
         })
@@ -304,7 +304,7 @@ function giftPageMoved() {
     } catch (error) {
         alert("선물을 선택하세요!")
     }
-    
+
 }
 
 
@@ -329,7 +329,7 @@ authorBtn.addEventListener("click", ()=>{
 
 
 function fetchPostMessage(data) {
-    return new Promise((receive) => { 
+    return new Promise((receive) => {
         fetch(pathname, {
             method:"POST",
             body: data,
@@ -339,8 +339,8 @@ function fetchPostMessage(data) {
             receive(response.json());
         }).catch((e)=>{
             console.info(err + " url : " + url);
-        }); 
-    }); 
+        });
+    });
 }
 
 

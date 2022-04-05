@@ -12,3 +12,4 @@ class User(AbstractUser):
 
     profile_img = models.ImageField(upload_to='avatar/',)
     tag = TaggableManager(blank=True)
+    bio = models.CharField(max_length=256, default='')
