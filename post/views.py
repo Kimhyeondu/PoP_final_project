@@ -5,7 +5,9 @@ from user.models import User
 
 
 def main(request):
-    return render(request, "main.html")
+    new = User.objects.order_by("-date_joined")
+    hot = User.objects.order_by("-msg_count")
+    return render(request, "main.html", {"new": new[:8],"hot":hot[:8]})
 
 
 async def CardList(request, username: str):
@@ -24,7 +26,7 @@ async def CardList(request, username: str):
                                                {"user_id": user_id, "username": username, "user_img": user_img,
                                                 "bio": bio})
     except User.DoesNotExist:
-        return redirect('/sign-up/')
+        return redirect('/')
 
 
 async def id_to_username(request, user_id: int):

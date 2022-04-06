@@ -25,6 +25,9 @@ async def card_write(request:HttpRequest, id:int):
             # await create_msg(to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author)
             await create_msg(
                 to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author, top=top, left=left)
+            user = await sync_to_async(User.objects.get)(id=to_user_id)
+            user.msg_count += 1
+            await sync_to_async(user.save)()
             return JsonResponse({"server":"저장 완료!"})
         deco_list = await all_list_deco()
         return await sync_to_async(render)(request, "card/card_write.html", {"to_user_id":id, "deco_list":deco_list})
@@ -33,10 +36,10 @@ async def card_write(request:HttpRequest, id:int):
 
 
 
-def card_read(request:HttpRequest, message_id:int) -> Message:
-    card = Message.objects.get(id=message_id)
-    gift = Gift.objects.get(id=card.gift_id)
-    return render(request, "card/card_read.html", {"card" : card, "gift":gift})
+async def card_read(request:HttpRequest, message_id:int) -> Message:
+    card = await sync_to_async(Message.objects.get)(id=message_id)
+    gift = await sync_to_async(Gift.objects.get)(id=card.gift_id)
+    return await sync_to_async(render)(request, "card/card_read.html", {"card" : card, "gift":gift})
 
 
 async def card_delete(request:HttpRequest, message_id:int):
@@ -52,9 +55,6 @@ def read_or_unread(request: HttpRequest, message_id:int):
     msg = Message.objects.get(id=message_id)
     msg_receiver = User.objects.get(id=msg.to_user_id)
     click_user = request.user
-    print(click_user.id)
     if click_user.id == msg.to_user_id:
         Message.objects.filter(id=message_id).update(read=1)
-        # msg = await get_msg(id=message_id)
-        # await sync_to_async(msg.update)(read=1)
     return redirect(f'/{msg_receiver.username}')
