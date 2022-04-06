@@ -80,7 +80,7 @@ const message = document.getElementById("message")
 const messageResult = document.getElementById("message_result")
 const modal_wrap = document.createElement("div")
 modal_wrap.className = "modal_wrap"
-modal_wrap.innerHTML = "<div class='modal_div'>잠시만 기다려 주세요</div>"
+modal_wrap.innerHTML = "<div class='modal_div'><div class='modal_text'>잠시만 기다려 주세요</div></div>"
 
 
 function fetchRecommend(data) {
