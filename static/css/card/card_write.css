@@ -196,13 +196,21 @@ h3 {
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     width: 200px;
-    height: 200px;
+    height: 100px;
     z-index: 15;
     background-color: #FBFFE2;
     border-radius: 10px;
     color: #FF9999;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+.modal_wrap .modal_div .modal_text {
+    width: 100%;
+}
+
+
 
 /* 선물페이지 */
 .search_wrap {

@@ -8,46 +8,20 @@ from asgiref.sync import sync_to_async
 import httpx
 
 
-# async def use_api_reco(msg:str):
-#     data = {"msg": msg}
-#     url = "http://3.37.15.2:8000/api/v1/"
-#     async with httpx.AsyncClient() as client:
-#         r = await client.post(url, data=data)
-#         jsondata = r.json()
-#         tag = jsondata["tag"]
-#         array = jsondata["index"]
-#         return tag, array
-# async def recommend_gift_list(id: int, msg: str = ""):
-#     # 메시지 분석 후 추천 부분
-#     msg_response, index_array = await use_api_reco(msg)
-#     msg_request = await search_list_coupon(index_array)
-#
-#     # 유저 선호 태그 리스트
-#     user_tag = []
-#     user = await sync_to_async(User.objects.get)(id=id)
-#     tag_list = await sync_to_async(list)(user.tag.names())
-#     if not tag_list:
-#         tag_list = ["음악"]
-#     for tag in tag_list:
-#         tag_result = await search_list_gift(tag)
-#         tag_result = tag_result[:10]
-#         user_tag += tag_result
-#     shuffle(user_tag)
-#     return msg_request + user_tag[:8]
-
-def use_api_reco(msg: str):
+async def use_api_reco(msg:str):
     data = {"msg": msg}
     url = "http://3.37.15.2:8000/api/v1/"
-    r = httpx.post(url, data=data)
-    jsondata = r.json()
-    tag = jsondata["tag"]
-    array = jsondata["index"]
-    return tag, array
+    async with httpx.AsyncClient() as client:
+        r = await client.post(url, data=data, timeout=None)
+        jsondata = r.json()
+        tag = jsondata["tag"]
+        array = jsondata["index"]
+        return tag, array
 
 
 async def recommend_gift_list(id: int, msg: str = ""):
     # 메시지 분석 후 추천 부분
-    msg_response, index_array = use_api_reco(msg)
+    msg_response, index_array = await use_api_reco(msg)
     msg_request = await search_list_coupon(index_array)
 
     # 유저 선호 태그 리스트
