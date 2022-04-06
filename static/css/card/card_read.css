@@ -40,6 +40,8 @@
 
 .container .message-wrapper {
     width: 100%;
+    position: absolute;
+    top: 310px;
     /* margin: 1rem auto; */
 }
 
@@ -50,11 +52,12 @@
     white-space: nowrap;
     word-wrap: break-word;
     text-overflow: ellipsis;
-    width: 100%;
+    width: 80%;
     margin-top: 15px;
     line-height: 110%;
     text-align: center;
     overflow: hidden;
+    margin: auto;
 }
 
 .container .message-wrapper .send_user {
@@ -72,13 +75,13 @@
 }
 
 .container .message-wrapper .content {
-    margin-top: 85px;
-    width: 100%;
+    /* margin-top: 85px; */
+    width: 230px;
     height: 13rem;
     overflow: auto;
     /*padding: 10px;*/
     /* min-height: 20rem; */
-    /* margin: 0 4%; */
+    margin: 90px auto 0 auto;
     /* background-color: #FFEBCC; */
     /* border-radius: 1.8rem; */
 }
