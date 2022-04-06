@@ -223,8 +223,10 @@ def sign_up_view(request):
         if password != password2:   # 비밀번호 확인이 틀렸을 때
             return render(request, 'user/signup.html', {'error': '패스워드를 확인해 주세요'})
         else:
-            if username == '' or password == '' or password2 == '':    # 아이디나 비밀번호 입력이 공란일 때
+            if username.strip() == '' or password.strip() == '' or password2.strip() == '':    # 아이디나 비밀번호 입력이 공란일 때
                 return render(request, 'user/signup.html', {'error': '아이디/패스워드는 필수 입력사항 입니다'})
+            elif bio.strip() == '':
+                return render(request, 'user/signup.html', {'error': '소개글을 작성해 주세요'})
 
             exist_user = get_user_model().objects.filter(username=username)
             if exist_user:  # 아이디 중복 확인
