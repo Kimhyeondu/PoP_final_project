@@ -61,7 +61,7 @@ async def update_msg(id:int, to_user_id:int = None, gift_id:int = None, msg:str 
 
 
 async def delete_msg(id):
-    await sync_delete_msg(id=id)
+    await sync_to_async(sync_delete_msg)(id=id)
 
 
 @transaction.atomic
