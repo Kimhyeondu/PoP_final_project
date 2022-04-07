@@ -1,11 +1,22 @@
-from asgiref.sync import sync_to_async
+from asgiref.sync import sync_to_async, async_to_sync
 from typing import cast, List
+from django.db import transaction
 
 from card.models import Gift, Message
+from user.models import User
 
 async def create_msg(to_user_id:int, gift_id:int, msg:str = "", deco:str = "1", title:str = "", author:str = "", top:int = 0, left:int = 0):
-    new_msg = await sync_to_async(Message.objects.create)(to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author, top=top, left=left)
+    new_msg = await sync_to_async(sync_create_msg)(to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author, top=top, left=left)
     return cast(Message, new_msg)
+
+
+@transaction.atomic
+def sync_create_msg(to_user_id:int, gift_id:int, msg:str = "", deco:str = "1", title:str = "", author:str = "", top:int = 0, left:int = 0):
+    new_msg = Message.objects.create(to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author, top=top, left=left)
+    user = User.objects.get(id=to_user_id)
+    user.msg_count += 1
+    user.save()
+    return new_msg
 
 
 @sync_to_async
@@ -50,7 +61,16 @@ async def update_msg(id:int, to_user_id:int = None, gift_id:int = None, msg:str 
 
 
 async def delete_msg(id):
-    msg = await get_msg(id=id)
-    await sync_to_async(msg.delete)()
+    await sync_delete_msg(id=id)
+
+
+@transaction.atomic
+def sync_delete_msg(id):
+    msg = async_to_sync(get_msg)(id=id)
+    user = msg.to_user
+    user.msg_count -= 1
+    user.save()
+    msg.delete()
+
 
 
