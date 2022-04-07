@@ -33,7 +33,7 @@ class TestMessageService(TransactionTestCase):
         temp_file = tempfile.NamedTemporaryFile()
         test_image = get_temporary_image(temp_file).name
         # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
-        user1 = User.objects.create(username="username2", profile_img=test_image, email="test2@email.com", login_method=User.LOGIN_EMAIL)
+        user1 = User.objects.create(username="username2", profile_img=test_image, email="test2@email.com")
         gift1 = async_to_sync(create_gift)(gift_name="gift_name", gift_img=test_image, gift_desc="gift_desc", tags="다이어트")
         to_user_id = user1.id
         gift_id = gift1.id
@@ -44,14 +44,13 @@ class TestMessageService(TransactionTestCase):
         top = 0
         left = 0
         try:
-            with self.assertNumQueries(3):
+            with self.assertNumQueries(6):
                 new_message = async_to_sync(create_msg)(to_user_id=to_user_id, gift_id=gift_id, msg=msg, deco=deco, title=title, author=author, top=top, left=left)
                 self.assertEqual(new_message.to_user, user1)
                 self.assertEqual(new_message.gift, gift1)
                 self.assertEqual(new_message.msg, msg)
                 self.assertEqual(new_message.deco, deco)            
-                self.assertEqual(new_message.top, 0)            
-                self.assertEqual(new_message.left, 0)            
+        
         finally:
             tearDownModule()
 
@@ -60,7 +59,7 @@ class TestMessageService(TransactionTestCase):
         temp_file = tempfile.NamedTemporaryFile()
         test_image = get_temporary_image(temp_file).name
         # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
-        user1 = User.objects.create(username="username2", profile_img=test_image, email="test2@email.com", login_method=User.LOGIN_EMAIL)
+        user1 = User.objects.create(username="username2", profile_img=test_image, email="test2@email.com")
         gift1 = async_to_sync(create_gift)(gift_name="gift_name", gift_img=test_image, gift_desc="gift_desc", tags="다이어트")
         to_user_id = user1.id
         gift_id = gift1.id
@@ -81,8 +80,7 @@ class TestMessageService(TransactionTestCase):
                 self.assertEqual(new_message.deco, deco)            
                 self.assertEqual(new_message.title, title)            
                 self.assertEqual(new_message.author, author)            
-                self.assertEqual(new_message.top, 0)            
-                self.assertEqual(new_message.left, 0)  
+                
         finally:
             tearDownModule()
 
@@ -92,7 +90,7 @@ class TestMessageService(TransactionTestCase):
         test_image = get_temporary_image(temp_file).name
         # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
-            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
+            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i))
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
         for i in range(2,6):
             async_to_sync(create_msg)(to_user_id=1, gift_id=1, msg="msg{}".format(i), deco="deco", author=f"author{i}", title=f"title{i}")
@@ -112,7 +110,7 @@ class TestMessageService(TransactionTestCase):
         test_image = get_temporary_image(temp_file).name
         # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
-            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
+            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i))
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
         async_to_sync(create_gift)(gift_name="gift_name2", gift_img=test_image, gift_desc="gift_desc2", tags="골프")
         for i in range(2,6):
@@ -139,7 +137,7 @@ class TestMessageService(TransactionTestCase):
         test_image = get_temporary_image(temp_file).name
         # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
-            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
+            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i))
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
         async_to_sync(create_gift)(gift_name="gift_name2", gift_img=test_image, gift_desc="gift_desc2", tags="골프")
         for i in range(2,6):
@@ -166,7 +164,7 @@ class TestMessageService(TransactionTestCase):
         test_image = get_temporary_image(temp_file).name
         # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
-            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
+            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i))
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
         async_to_sync(create_gift)(gift_name="gift_name2", gift_img=test_image, gift_desc="gift_desc2", tags="골프")
         for i in range(2,6):
@@ -199,7 +197,7 @@ class TestMessageService(TransactionTestCase):
         test_image = get_temporary_image(temp_file).name
         # test_image = SimpleUploadedFile(name='logo.png', content=open("./static/img/logo.png",'rb').read(), content_type='image/png')
         for i in range(1,6):
-            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i), login_method=User.LOGIN_EMAIL)
+            User.objects.create(username="username{}".format(i), profile_img=test_image, email="test{}@email.com".format(i))
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
         async_to_sync(create_gift)(gift_name="gift_name2", gift_img=test_image, gift_desc="gift_desc2", tags="골프")
         for i in range(2,6):
@@ -208,7 +206,7 @@ class TestMessageService(TransactionTestCase):
             async_to_sync(create_msg)(to_user_id=5, gift_id=2, msg="msg{}".format(i), deco="deco", author=f"author{i}", title=f"title{i}")
 
         try:
-            with self.assertNumQueries(4):
+            with self.assertNumQueries(6):
                 list1 = async_to_sync(all_list_msg)()
                 self.assertEqual(len(list1), 7)
                 async_to_sync(delete_msg)(id=1)
