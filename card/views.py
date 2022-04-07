@@ -1,7 +1,7 @@
 from asgiref.sync import sync_to_async, async_to_sync
 
 from django.http import Http404, HttpRequest, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from card.services.message_service import create_msg, delete_msg, get_msg
 from card.services.deco_service import all_list_deco
 
@@ -12,7 +12,7 @@ import random
 # Create your views here.
 async def card_write(request:HttpRequest, id:int):
     try:
-        user = await sync_to_async(User.objects.get)(id=id)
+        user = await sync_to_async(get_object_or_404)(User, id=id)
         if request.method == "POST":
             to_user_id = request.POST.get("to_user_id")
             gift_id = request.POST.get("gift_id")
@@ -28,7 +28,7 @@ async def card_write(request:HttpRequest, id:int):
             return JsonResponse({"server":"저장 완료!"})
         deco_list = await all_list_deco()
         return await sync_to_async(render)(request, "card/card_write.html", {"to_user_id":id, "deco_list":deco_list})
-    except User.DoesNotExist:
+    except User.DoesNotExist:        
         raise Http404("존재하지 않는 유저입니다.")
 
 

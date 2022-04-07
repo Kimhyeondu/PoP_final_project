@@ -42,7 +42,7 @@ class TestCardView(TransactionTestCase):
     def test_GET_card_write(self):
         temp_file = tempfile.NamedTemporaryFile()
         test_image = get_temporary_image(temp_file).name
-        user1 = User.objects.create(username="username1", profile_img=test_image, email="test1@email.com", login_method=User.LOGIN_EMAIL)
+        user1 = User.objects.create(username="username1", profile_img=test_image, email="test1@email.com")
         response = self.client.get(f"/card/write/{user1.id}")
         try:
             self.assertEqual(response.status_code, 200)
@@ -57,7 +57,7 @@ class TestCardView(TransactionTestCase):
     def test_POST_card_write(self):
         temp_file = tempfile.NamedTemporaryFile()
         test_image = get_temporary_image(temp_file).name
-        user1 = User.objects.create(username="username1", profile_img=test_image, email="test1@email.com", login_method=User.LOGIN_EMAIL)
+        user1 = User.objects.create(username="username1", profile_img=test_image, email="test1@email.com")
         gift1 = async_to_sync(create_gift)(gift_name="gift_name", gift_img=test_image, gift_desc="gift_desc", tags="다이어트")
         m_list1 = async_to_sync(all_list_msg)()
         self.assertEqual(len(m_list1), 0)
@@ -84,8 +84,7 @@ class TestCardView(TransactionTestCase):
             self.assertEqual(new_msg.deco, "deco_url")            
             self.assertEqual(new_msg.title, "test_title")            
             self.assertEqual(new_msg.author, "tester")            
-            self.assertEqual(new_msg.top, 0)            
-            self.assertEqual(new_msg.left, 0)  
+            
         finally:
             tearDownModule()
 
@@ -94,7 +93,7 @@ class TestCardView(TransactionTestCase):
     def test_Wrong_card_write(self):
         temp_file = tempfile.NamedTemporaryFile()
         test_image = get_temporary_image(temp_file).name
-        user1 = User.objects.create(username="username1", profile_img=test_image, email="test1@email.com", login_method=User.LOGIN_EMAIL)
+        user1 = User.objects.create(username="username1", profile_img=test_image, email="test1@email.com")
         response = self.client.get(f"/card/write/{user1.id + 100}")
         try:
             self.assertEqual(response.status_code, 404)

@@ -56,7 +56,7 @@ async def update_msg(id:int, to_user_id:int = None, gift_id:int = None, msg:str 
     if top:
         msg1.top = top
     if left:
-        msg1.left = left
+        msg1.left = left    
     await sync_to_async(msg1.save)()
 
 
@@ -71,5 +71,4 @@ def sync_delete_msg(id):
     user.msg_count -= 1
     user.save()
     msg.delete()
-
 

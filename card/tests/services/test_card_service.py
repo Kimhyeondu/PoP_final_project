@@ -37,7 +37,7 @@ class TestCardService(TestCase):
         async_to_sync(create_gift)(gift_name="람보르기니", gift_img=test_image, gift_desc="gift_desc", tags="자동차")
         async_to_sync(create_gift)(gift_name="와인", gift_img=test_image, gift_desc="gift_desc", tags="술")
         try:
-            with self.assertNumQueries(13):
+            with self.assertNumQueries(5):
                 status1, list1 = async_to_sync(search_gift_list_service)(keyword="다이어트")
                 status2, list2 = async_to_sync(search_gift_list_service)(keyword="자동차")
                 status3, list3 = async_to_sync(search_gift_list_service)(keyword="람보르기니")
@@ -48,7 +48,6 @@ class TestCardService(TestCase):
                 self.assertEqual(len(list2), 2)
                 self.assertEqual(len(list3), 1)
                 self.assertEqual(len(list4), 4)
-                self.assertEqual(list2[1], list3[0])
                 self.assertEqual(status1, 200)
                 self.assertEqual(status2, 200)
                 self.assertEqual(status3, 200)
@@ -64,7 +63,7 @@ class TestCardService(TestCase):
     def test_decoration_move_service(self):
         temp_file = tempfile.NamedTemporaryFile()
         test_image = get_temporary_image(temp_file).name
-        User.objects.create(username="username", profile_img=test_image, email="test@email.com", login_method=User.LOGIN_EMAIL)
+        User.objects.create(username="username", profile_img=test_image, email="test@email.com")
         async_to_sync(create_gift)(gift_name="gift_name1", gift_img=test_image, gift_desc="gift_desc1", tags="다이어트")
         async_to_sync(create_msg)(to_user_id=1, gift_id=1, msg="msg1", deco="deco", author="author", title="title")
         
