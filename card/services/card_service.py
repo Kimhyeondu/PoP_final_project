@@ -28,14 +28,14 @@ async def recommend_gift_list(id: int, msg: str = ""):
     user_tag = []
     user = await sync_to_async(User.objects.get)(id=id)
     tag_list = await sync_to_async(list)(user.tag.names())
-    if not tag_list:
-        tag_list = ["음악"]
-    for tag in tag_list:
-        tag_result = await search_list_gift(tag)
-        tag_result = tag_result[:10]
-        user_tag += tag_result
-    shuffle(user_tag)
-    return msg_request + user_tag[:8]
+    if tag_list:
+        for tag in tag_list:
+            tag_result = await search_list_gift(tag)
+            tag_result = tag_result[:10]
+            user_tag += tag_result
+        shuffle(user_tag)
+        user_tag = user_tag[:8]
+    return msg_request + user_tag
 
 
 async def search_gift_list_service(keyword: str = None):
