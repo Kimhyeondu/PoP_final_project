@@ -49,11 +49,24 @@ function readURL(input) {
 
 const originTags = Array.from(document.querySelectorAll("#hidden_origin_tags li"))
 const tagList = Array.from(document.querySelectorAll(".tag-item"))
-originTags.forEach(element => {tagList.forEach(e => {if (element.innerText === e.innerText) {e.className = "tag-item active";}})})
+originTags.forEach(element => {
+    tagList.forEach(e => {
+        if (element.innerText === e.innerText) {
+            e.className = "tag-item active";
+        }
+    })
+})
 
 
 function preview(input) {
+    const validExtensions = ["image/jpeg", "image/jpg", "image/png", "image/JPG", "image/JPEG", "image/PNG"];
     const new_image = input.files[0];
-    const profile = document.getElementById('blah');
-    profile.src = URL.createObjectURL(new_image);
+    const type = new_image.type
+    if (validExtensions.includes(type)) {
+        const profile = document.getElementById('blah');
+        profile.src = URL.createObjectURL(new_image);
+    } else {
+        alert("이미지 파일만 업로드할 수 있습니다")
+        window.location.href = '/mypage/'
+    }
 }
