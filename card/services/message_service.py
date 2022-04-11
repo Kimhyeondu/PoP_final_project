@@ -72,5 +72,3 @@ def sync_delete_msg(id):
     user.save()
     msg.delete()
 
-
-
