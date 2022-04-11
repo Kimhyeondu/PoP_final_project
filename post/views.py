@@ -10,7 +10,7 @@ def main(request):
     return render(request, "main.html", {"new": new[:8],"hot":hot[:8]})
 
 
-async def CardList(request, username: str):
+async def CardList(request, username):
     try:
         user = await sync_to_async(User.objects.get)(username=username)
         user_id = user.id

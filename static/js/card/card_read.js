@@ -34,6 +34,6 @@ jQuery('#close-modal').click(function () {
 function delete_message() {
     const url = window.location.href;
     const arr = url.split('/');
-    // window.location.replace(`https://paperonpresent.com/card/delete/${arr[5]}`);
-    window.location.replace(`http://127.0.0.1:8000/card/delete/${arr[5]}`);
+    window.location.replace(`https://paperonpresent.com/card/delete/${arr[5]}`);
+    // window.location.replace(`http://127.0.0.1:8000/card/delete/${arr[5]}`);
 }
