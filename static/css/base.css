@@ -223,6 +223,7 @@ ul.sub div.menu li p {
 }
 @media (min-width: 500px) {
     #navbar {
-        max-width: 500px;
+        widht:100%;
+       
     }
 }
