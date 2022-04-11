@@ -17,8 +17,7 @@ body{
     top: 0;
     height: 80px;
     line-height: 80px;
-    /*width: 100%;*/
-    max-width: 500px;
+    width: 100%;
     z-index: 5;
     margin: 0 auto;
 }
@@ -243,7 +242,7 @@ body{
 }
 
 #base_contain {
-    max-width: 500px;
+    width: 100%;
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
