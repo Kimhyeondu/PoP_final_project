@@ -148,6 +148,7 @@ form {
 */
 
 #tag-list > .active {
+    color:black;
     padding: 4px 8px;
     font-size: inherit;
     line-height: normal;
