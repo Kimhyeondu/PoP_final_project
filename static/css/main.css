@@ -16,16 +16,16 @@ ul.new-users {
 
 li.user-box {
     width: 100%;
-    height: 100px;
+    height: 115px;
     background-color: #F7E9D7;
     border-radius: 20px;
-    padding: 8px 12px;
+    padding: 8px 18px;
     cursor: pointer;
 }
 
 .user-box p.to {
     font-weight: bolder;
-    margin-top: 26px;
+    margin-top: 50px;
     margin-bottom: 0;
 }
 
@@ -39,8 +39,8 @@ li.user-box {
 }
 
 .user-box img {
-    width: 45px;
-    height: 45px;
+    width: 70px;
+    height: 70px;
     border-radius: 100%;
     float: right;
 }
