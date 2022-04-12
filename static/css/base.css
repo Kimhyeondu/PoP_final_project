@@ -11,6 +11,7 @@ body{
 }
 
 #navbar {
+    max-width: 500px;
     background: rgba(255, 175, 175, 1);
     color: black;
     position: relative;
@@ -242,6 +243,7 @@ body{
 }
 
 #base_contain {
+    max-width: 500px;
     width: 100%;
     flex-direction: column;
     align-items: center;
