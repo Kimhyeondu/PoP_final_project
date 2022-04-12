@@ -4,14 +4,13 @@
 }
 
 #navbar {
-    max-width: 500px;
+    width: 100%;
     background: rgba(255, 175, 175, 1);
     color: black;
     position: relative;
     top: 0;
     height: 80px;
     line-height: 80px;
-    width: 100%;
     z-index: 5;
     margin: 0 auto;
 }
@@ -203,7 +202,6 @@
 }
 
 #base_contain {
-    max-width: 500px;
     width: 100%;
     flex-direction: column;
     align-items: center;
